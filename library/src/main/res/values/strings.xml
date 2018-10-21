@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">library</string>
+    <string name="pull_to_refresh_refreshing_label">正在加载…</string>
+    <string name="pull_to_refresh_net_error_label">网络异常</string>
+    <string name="pull_to_refresh_no_data_label">暂无数据</string>
+    <string name="pull_to_refresh_no_more_data_label">已加载全部</string>
+
+    <string name="loading">正在加载…</string>
+    <string name="load_failed">加载失败，点击重试</string>
+    <string name="load_end">  </string> <!--已加载全部-->
+
+    <string name="progress_loading">加载中，请稍候</string>
+    <string name="progress_load_error">加载失败，点击屏幕刷新</string>
+    <string name="progress_load_no_data">暂无数据</string>
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+	<color name="colorPrimary">#292836</color>
+	<color name="colorPrimaryDark">#292836</color>
+	<color name="colorAccent">#FF4081</color>
+
+
+	<color name="Pink400">#AB47BC</color>
+	<color name="Pink500">#E91E63</color>
+	<color name="Purple500">#9C27B0</color>
+	<color name="Green200">#69F0AE</color>
+	<color name="Green400">#00E676</color>
+
+	<color name="Red200_transparent_half">#FF5252</color>
+	<color name="Red200">#FF5252</color>
+	<color name="Red400">#FF1744</color>
+
+
+	<!-- 设计规范颜色值 begin -->AA
+
+	<!-- 主背景色值 -->
+	<color name="background_color">#fff8f8f8</color>
+
+    <!-- 亚克力背景色-->
+    <color name="colorOverlay">#99ffffff</color>
+
+	<!-- 字体颜色值 -->
+	<color name="text_color_blue">#0081E1</color>
+	<color name="text_color_black">#323232</color>
+	<color name="text_color_white">#ffffff</color>
+	<color name="text_color_gray">#888888</color>
+	<color name="text_color_gray_light">#A8A8A8</color>
+	<color name="text_color_red">#FF5B46</color>
+	<color name="text_color_hint">#ffaaaaaa</color>
+	<color name="text_color_input">#ff111111</color>
+
+	<color name="btn_blue_normal">#0081E1</color>
+	<color name="btn_blue_pressed">#0066FF</color>
+
+	<!-- 分割线色值 -->
+	<color name="short_blue">#48B7FF</color>
+	<color name="short_red">#FF5B46</color>
+	<color name="short_orange">#F3B720</color>
+	<color name="split_color">#D9D9D9</color>
+	<color name="border_color">#A8A8A8</color>
+
+	<!--竖分割线-->
+	<color name="vertical_line_color">#B5B5B5</color>
+
+	<!-- 透明半透明色值 -->
+	<color name="transparent">#00000000</color>
+	<color name="transparent_half">#66000000</color>
+
+	<!-- 设计规范颜色值 end-->
+
+	<!-- 黑白色值 -->
+	<color name="white">#FFFFFF</color>
+	<color name="transparent_half_white">#88ffffff</color>
+	<color name="color_11ffffff">#11ffffff</color>
+	<color name="black">#000000</color>
+	<color name="orange">#FFA500</color>
+	<color name="gray">#808080</color>
+	<color name="red">#FF0000</color>
+	<color name="gold">#FFD700</color>
+	<color name="yellow">#FFFF00</color>
+	<color name="green">#008000</color>
+	<color name="green_light_500">#8bc34a</color>
+	<color name="green_light_800">#558b2f</color>
+	<color name="blue">#0000FF</color>
+	<color name="purple">#800080</color>
+	<color name="pink">#FFC0CB</color>
+	<color name="yellow_lemon">#FFFACD</color>
+	<color name="gray_light_drak">#DADADA</color>
+	<color name="gray_light">#DFDFDF</color>
+	<color name="gray_white">#F5F5F5</color>
+	<color name="gray_slate">#708090</color>
+	<color name="blue_light">#0083FF</color>
+
+	<color name="black_p50">#7f000000</color>
+	<color name="filterTextSelect">#ffd855</color>
+
+</resources>

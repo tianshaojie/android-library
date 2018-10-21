@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    api 'com.squareup.okhttp3:okhttp:3.11.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    api 'com.squareup.okhttp3:okhttp-urlconnection:3.5.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.0'
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'
+
+    api 'com.alibaba:fastjson:1.1.70.android'
+
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    api "com.github.bumptech.glide:okhttp3-integration:4.8.0"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    // https://github.com/wasabeef/glide-transformations
+    api 'jp.wasabeef:glide-transformations:3.1.1'
+
+    api 'com.orhanobut:logger:2.1.1'
+
+    // 沉浸式状态栏：https://github.com/gyf-dev/ImmersionBar
+    api 'com.gyf.barlibrary:barlibrary:2.3.0'
+    // 侧滑返回：https://github.com/ikew0ng/SwipeBackLayout
+    api 'me.imid.swipebacklayout.lib:library:1.1.0'
+    // 组件化路由框架：https://github.com/chenenyu/Router
+    compile 'com.chenenyu.router:router:1.5.2'
+}

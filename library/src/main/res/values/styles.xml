@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- Base application theme. -->
+	<!--Application主题，即默认的Activity主题，设置为透明，可以配合swipeBack -->
+	<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<!-- swipeBack + 沉浸式状态栏 组合使用，在4.4系统需要设置为透明 -->
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<!-- Application主题即默认的Activity主题，设置为透明，配合swipeBack -->
+		<!-- 会对Activity转场动画有影响 -->
+		<!--<item name="android:windowIsTranslucent">true</item>-->
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<!-- 设置activity切换动画 -->
+		<!--<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>-->
+	</style>
+
+	<style name="AppTheme" parent="AppTheme.Base">
+	</style>
+
+	<!--<style name="animation_translucent_translate" parent="@android:style/Animation.Translucent">-->
+		<!--<item name="android:windowEnterAnimation">@anim/activity_open_in_anim</item>-->
+		<!--<item name="android:windowExitAnimation">@anim/activity_open_out_anim</item>-->
+	<!--</style>-->
+
+	<!-- animation 样式 -->
+	<style name="ActivityAnimation" parent="@android:style/Animation">
+		<item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+		<item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+		<item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+		<item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+	</style>
+
+	<style name="SwipeBackLayout">
+		<item name="edge_size">20dip</item>
+		<item name="shadow_left">@drawable/shadow_left</item>
+		<item name="shadow_right">@drawable/shadow_right</item>
+		<item name="shadow_bottom">@drawable/shadow_bottom</item>
+	</style>
+
+	<style name="CommonListViewStyle">
+		<item name="android:divider">@drawable/list_view_divider</item>
+		<item name="android:listSelector">@drawable/list_item_selector</item>
+		<item name="android:fadingEdge">none</item>
+		<item name="android:scrollbars">none</item>
+		<item name="android:fastScrollEnabled">false</item>
+		<item name="android:scrollingCache">true</item>
+		<item name="android:smoothScrollbar">true</item>
+	</style>
+
+	<!-- Toolbar -->
+	<style name="Theme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+		<item name="titleMargin">0dp</item>
+		<!-- 修改toolbar中按钮图标的颜色 -->
+		<item name="colorControlNormal">@color/white</item>
+		<item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+		<item name="toolbarNavigationButtonStyle">@style/ToolbarNavigationButtonStyle</item>
+		<!--标题与NavigationIcon的距离-->
+		<item name="contentInsetStart">0dp</item>
+		<item name="contentInsetStartWithNavigation">0dp</item>
+	</style>
+
+	<!-- Toolbar Menu 间距 -->
+	<style name="ActionButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
+		<item name="android:minWidth">@dimen/toolbar_height</item>
+		<item name="android:padding">0dp</item>
+	</style>
+
+	<!-- Toolbar 返回按钮 间距 -->
+	<style name="ToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
+		<item name="android:minWidth">@dimen/toolbar_height</item>
+		<item name="android:padding">0dp</item>
+		<item name="android:scaleType">centerInside</item>
+	</style>
+
+	<!-- Toolbar 溢出图标颜色 -->
+	<style name="Theme.Toolbar.OverflowMenuTheme" parent="Theme.AppCompat.NoActionBar">
+		<!-- 设置Menu菜单背景色 -->
+		<item name="android:itemBackground">@android:color/white</item>
+		<!-- 设置Menu菜单字体颜色 -->
+		<item name="android:textColorPrimary">@android:color/black</item>
+		<!-- 设置Menu窗口不覆盖Toolbar视图 -->
+		<item name="overlapAnchor">false</item>
+	</style>
+
+	<style name="TransparentDialog" parent="@style/AlertDialog.AppCompat.Light">
+		<item name="android:windowFrame">@null</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowIsFloating">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
+
+	<style name="Theme.Toolbar.Transparent">
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+
+</resources>
