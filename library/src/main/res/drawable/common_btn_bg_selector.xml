@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- 填充色 -->
+            <solid android:color="@color/transparent_half_white" />
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/gray_light"/>
+            <!-- 圆角 -->
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- 填充色 -->
+            <solid android:color="@color/color_11ffffff" />
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/gray_light"/>
+            <!-- 圆角 -->
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+
+    <!--<item android:drawable="@drawable/common_btn_bg_pressed" android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/common_btn_bg_normal" />-->
+</selector>
