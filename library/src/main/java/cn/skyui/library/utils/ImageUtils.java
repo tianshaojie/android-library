@@ -35,7 +35,7 @@ import android.support.annotation.IntRange;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import com.windward.vii.library.data.constant.MemoryConstants;
+import cn.skyui.library.data.constant.MemoryConstants;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

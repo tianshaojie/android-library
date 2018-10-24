@@ -1,6 +1,6 @@
 package cn.skyui.library.utils;
 
-import com.windward.vii.library.data.constant.TimeConstants;
+import cn.skyui.library.data.constant.TimeConstants;
 
 import java.text.DateFormat;
 import java.text.ParseException;

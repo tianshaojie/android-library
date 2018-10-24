@@ -10,15 +10,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import com.windward.vii.library.data.constant.MemoryConstants;
-import com.windward.vii.library.data.constant.TimeConstants;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+
+import cn.skyui.library.data.constant.MemoryConstants;
+import cn.skyui.library.data.constant.TimeConstants;
 
 /**
  * <pre>
