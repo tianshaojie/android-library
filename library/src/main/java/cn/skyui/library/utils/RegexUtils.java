@@ -1,6 +1,6 @@
 package cn.skyui.library.utils;
 
-import com.windward.vii.library.data.constant.RegexConstants;
+import cn.skyui.library.data.constant.RegexConstants;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,8 +3,6 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 27
 
-
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
@@ -33,13 +31,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    api 'com.orhanobut:logger:2.1.1'
+    api 'com.alibaba:fastjson:1.1.70.android'
     api 'com.squareup.okhttp3:okhttp:3.11.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     api 'com.squareup.okhttp3:okhttp-urlconnection:3.5.0'
@@ -50,21 +50,32 @@ dependencies {
     api 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
     api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.0'
     api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'
-
-    api 'com.alibaba:fastjson:1.1.70.android'
-
     api 'com.github.bumptech.glide:glide:4.8.0'
-    api "com.github.bumptech.glide:okhttp3-integration:4.8.0"
+    api 'com.github.bumptech.glide:okhttp3-integration:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     // https://github.com/wasabeef/glide-transformations
     api 'jp.wasabeef:glide-transformations:3.1.1'
-
-    api 'com.orhanobut:logger:2.1.1'
-
+    // If you want to use the GPU Filters
+    api 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     // 沉浸式状态栏：https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
     // 侧滑返回：https://github.com/ikew0ng/SwipeBackLayout
     api 'me.imid.swipebacklayout.lib:library:1.1.0'
     // 组件化路由框架：https://github.com/chenenyu/Router
-    compile 'com.chenenyu.router:router:1.5.2'
+    api 'com.chenenyu.router:router:1.5.2'
+    annotationProcessor 'com.chenenyu.router:compiler:1.5.1'
+    // RecyclerAdapter框架：https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
+    // 高斯模糊：https://github.com/wasabeef/Blurry
+    api 'jp.wasabeef:blurry:2.1.1'
+    // https://github.com/Dimezis/BlurView
+    api 'com.eightbitlab:supportrenderscriptblur:1.0.1'
+    api 'com.eightbitlab:blurview:1.3.4'
+    // https://github.com/tbruyelle/RxPermissions
+    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    api 'com.youth.banner:banner:1.4.10'
+    api 'com.amap.api:location:4.1.0'
+    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    api 'me.relex:circleindicator:1.2.2@aar'
+    api 'com.tencent:mmkv:1.0.10'
 }
