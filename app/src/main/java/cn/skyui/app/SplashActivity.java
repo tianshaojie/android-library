@@ -7,7 +7,6 @@ import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 
 import cn.skyui.library.base.activity.BaseActivity;
-import cn.skyui.library.data.model.User;
 
 /**
  * @author tianshaojie
