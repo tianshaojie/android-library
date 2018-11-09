@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">android-library</string>
+
+    <string-array name="modules">
+        <item>app</item>
+        <!--<item>module-support</item>-->
+        <!--<item>module-ugc</item>-->
+        <!--<item>module-facetime</item>-->
+        <!--<item>module-video</item>-->
+    </string-array>
+
+
+    <string name="main_navigation_home">首页</string>
+    <string name="main_navigation_im">消息</string>
+    <string name="main_navigation_favorite">关注</string>
+    <string name="main_navigation_user">我的</string>
 </resources>
