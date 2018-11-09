@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <!-- 背景颜色，在上图中该颜色为黑色 -->
+    <item android:drawable="@color/colorPrimary" />
+    <!-- 黑色背景上的其他图片元素，比如 一个居中显示的 logo 图标-->
+    <item android:top="100dp">
+        <bitmap
+            android:gravity="top|center_horizontal"
+            android:src="@drawable/logo" />
+    </item>
+    <!--&lt;!&ndash; 右上角的图标元素 &ndash;&gt;-->
+    <!--<item>-->
+        <!--<bitmap-->
+            <!--android:gravity="top|right"-->
+            <!--android:src="@drawable/top_right" />-->
+    <!--</item>-->
+    <!--&lt;!&ndash; 最下面的文字，注意这里有个 bottom 设置 &ndash;&gt;-->
+    <!--<item android:bottom="30dp">-->
+        <!--<bitmap-->
+            <!--android:gravity="bottom"-->
+            <!--android:src="@drawable/bottom_text" />-->
+    <!--</item>-->
+</layer-list>

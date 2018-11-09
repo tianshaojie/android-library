@@ -1,0 +1,22 @@
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@drawable/widget_bar_interest_normal" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />-->
+    <!--<item android:drawable="@drawable/widget_bar_interest_press" android:state_enabled="true" android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/widget_bar_interest_press" android:state_checked="true" android:state_enabled="true" />-->
+    <!--<item android:drawable="@drawable/widget_bar_interest_normal" />-->
+<!--</selector>-->
+
+
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@drawable/tab_video_normal" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />-->
+    <!--<item android:drawable="@drawable/tab_video_selected" android:state_enabled="true" android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/tab_video_selected" android:state_checked="true" android:state_enabled="true" />-->
+    <!--<item android:drawable="@drawable/tab_video_normal" />-->
+<!--</selector>-->
+
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_favorite_primary_24dp" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />
+    <item android:drawable="@drawable/ic_favorite_accent_24dp" android:state_enabled="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/ic_favorite_accent_24dp" android:state_checked="true" android:state_enabled="true" />
+    <item android:drawable="@drawable/ic_favorite_primary_24dp" />
+</selector>
