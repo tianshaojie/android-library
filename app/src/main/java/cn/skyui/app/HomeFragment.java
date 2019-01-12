@@ -13,8 +13,8 @@ import com.orhanobut.logger.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.skyui.app.library.base.fragment.BaseFragment;
-import cn.skyui.app.library.utils.DeviceUtils;
+import cn.skyui.library.base.fragment.BaseFragment;
+import cn.skyui.library.utils.DeviceUtils;
 
 public class HomeFragment extends BaseFragment {
 

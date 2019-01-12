@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 
-import cn.skyui.app.library.base.activity.BaseActivity;
+import cn.skyui.library.base.activity.BaseActivity;
 
 /**
  * @author tianshaojie

@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import cn.skyui.app.library.LibraryInitManager;
+import cn.skyui.library.LibraryInitManager;
 
 public class App extends Application {
 

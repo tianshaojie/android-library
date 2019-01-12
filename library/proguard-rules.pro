@@ -199,8 +199,8 @@
 }
 
 # https://github.com/franmontiel/PersistentCookieJar [source copy]
--dontwarn cn.skyui.app.library.http.cookie.**
--keep class cn.skyui.app.library.http.cookie.**
+-dontwarn cn.skyui.library.http.cookie.**
+-keep class cn.skyui.library.http.cookie.**
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -246,8 +246,8 @@
 -keep class android.support.**{*;}
 
 # 实现或继承此接口的类，其共有属性和方法将不参与混淆
--keep public interface cn.skyui.app.library.common.NotObfuscateInterface{public *;}
--keep class * implements com.cn.skyui.app.library.common.NotObfuscateInterface{
+-keep public interface cn.skyui.library.common.NotObfuscateInterface{public *;}
+-keep class * implements com.cn.skyui.library.common.NotObfuscateInterface{
 	<methods>;
 	<fields>;
 }
