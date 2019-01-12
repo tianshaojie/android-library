@@ -13,8 +13,8 @@ import com.eightbitlab.supportrenderscriptblur.SupportRenderScriptBlur;
 import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
 
-import cn.skyui.library.base.activity.BaseActivity;
-import cn.skyui.library.utils.ToastUtils;
+import cn.skyui.app.library.base.activity.BaseActivity;
+import cn.skyui.app.library.utils.ToastUtils;
 import eightbitlab.com.blurview.BlurView;
 
 /**

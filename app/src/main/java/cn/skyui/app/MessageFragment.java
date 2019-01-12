@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.skyui.library.base.fragment.BaseFragment;
+import cn.skyui.app.library.base.fragment.BaseFragment;
 
 /**
  * @author tianshaojie
