@@ -1,5 +1,7 @@
 package cn.skyui.library.http;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -30,7 +32,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitFactory {
 
-    public static final String BASE_URL = "http://39.107.102.34:8080/";
+    public static final String BASE_URL = "http://39.107.102.34:8090/";
 
     private static final long DEFAULT_READ_TIMEOUT = 15;
     private static final long DEFAULT_WRITE_TIMEOUT = 20;
@@ -40,7 +42,7 @@ public class RetrofitFactory {
     private static HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
     public static OkHttpClient httpClient = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            // .addNetworkInterceptor(new StethoInterceptor()) // Facebook强大的监测工具：Stetho
+            .addNetworkInterceptor(new StethoInterceptor()) // Facebook强大的监测工具：Stetho
             .addInterceptor(new HttpHeaderInterceptor())    // 添加通用的Header
             .addInterceptor(new CommonParamsInterceptor())
             .addInterceptor(new HttpCacheInterceptor())
@@ -107,7 +109,8 @@ public class RetrofitFactory {
                     .header("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode())
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
-                    .header("token", Header.token)
+//                    .header("token", Header.token)
+                    .header("token", "399BC3885E300C0B9B801DF15A84EA3B")
                     .method(original.method(), original.body())
                     .build();
             return chain.proceed(request);
@@ -122,9 +125,9 @@ public class RetrofitFactory {
 
             if (request.method().equals("GET")) {
                 HttpUrl httpUrl = request.url().newBuilder()
-                        .addQueryParameter("version", AppUtils.getAppVersionCode() + "")
-                        .addQueryParameter("device", DeviceUtils.getAndroidID())
-                        .addQueryParameter("timestamp", String.valueOf(System.currentTimeMillis()))
+//                        .addQueryParameter("version", AppUtils.getAppVersionCode() + "")
+//                        .addQueryParameter("device", DeviceUtils.getAndroidID())
+//                        .addQueryParameter("timestamp", String.valueOf(System.currentTimeMillis()))
                         .build();
                 request = request.newBuilder().url(httpUrl).build();
             } else if (request.method().equals("POST")) {
@@ -137,9 +140,9 @@ public class RetrofitFactory {
                     }
 
                     formBody = bodyBuilder
-                            .addEncoded("version", AppUtils.getAppVersionCode() + "")
-                            .addEncoded("device", DeviceUtils.getAndroidID())
-                            .addEncoded("timestamp", String.valueOf(System.currentTimeMillis()))
+//                            .addEncoded("version", AppUtils.getAppVersionCode() + "")
+//                            .addEncoded("device", DeviceUtils.getAndroidID())
+//                            .addEncoded("timestamp", String.valueOf(System.currentTimeMillis()))
                             .build();
 
                     request = request.newBuilder().post(formBody).build();

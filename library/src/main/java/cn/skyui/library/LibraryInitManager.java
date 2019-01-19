@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.chenenyu.router.Configuration;
 import com.chenenyu.router.Router;
+import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.mmkv.MMKV;
@@ -25,7 +26,7 @@ public class LibraryInitManager {
         initRouter(isDebug, modules);
 //        initCrashReporter(application);
 //        initLeakCanary(application);
-//        initStetho(application);
+        initStetho(application);
     }
 
     private static void initUtils(Application application, boolean isDebug) {
@@ -84,12 +85,12 @@ public class LibraryInitManager {
 //        Bugly.init(application, "c57feab2c2", AppUtils.isDebug());
 //    }
 //
-//    /**
-//     * Facebook调试工具，Chrome输入chrome://inspect
-//     */
-//    private static void initStetho(Application application) {
-//        Stetho.initializeWithDefaults(application);
-//    }
+    /**
+     * Facebook调试工具，Chrome输入chrome://inspect
+     */
+    private static void initStetho(Application application) {
+        Stetho.initializeWithDefaults(application);
+    }
 //
 //    public static void initUpgrade(Application application, Class<? extends Activity> clazz) {
 //        /**

@@ -86,4 +86,8 @@ dependencies {
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     api 'me.relex:circleindicator:1.2.2@aar'
     api 'com.tencent:mmkv:1.0.10'
+
+    // Facebook调试工具，Chrome浏览器输入chrome://inspect
+    api 'com.facebook.stetho:stetho:1.4.2'
+    api 'com.facebook.stetho:stetho-okhttp3:1.4.1'
 }
