@@ -14,7 +14,7 @@ public class User implements Serializable {
 
     public String token = "";   // 登录Token
     public String imToken = ""; // 融云 IM Token
-    public long userId = 0;    // 业务用户ID，也是融云IM用户ID
+    public long userId = 2;    // 业务用户ID，也是融云IM用户ID
     public int status = 1;     // 用户资料完善状态，1：未完善，2：已完善；
     public boolean isLogin = false;
     public UserDetailVO detail = new UserDetailVO();
