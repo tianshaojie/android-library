@@ -32,7 +32,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitFactory {
 
-    public static final String BASE_URL = "http://39.107.102.34:8090/";
+    public static final String BASE_URL = "http://preview.skyui.cn/";
 
     private static final long DEFAULT_READ_TIMEOUT = 15;
     private static final long DEFAULT_WRITE_TIMEOUT = 20;
@@ -110,7 +110,7 @@ public class RetrofitFactory {
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
 //                    .header("token", Header.token)
-                    .header("token", "399BC3885E300C0B9B801DF15A84EA3B")
+                    .header("token", Header.token)
                     .method(original.method(), original.body())
                     .build();
             return chain.proceed(request);
@@ -125,9 +125,9 @@ public class RetrofitFactory {
 
             if (request.method().equals("GET")) {
                 HttpUrl httpUrl = request.url().newBuilder()
-//                        .addQueryParameter("version", AppUtils.getAppVersionCode() + "")
-//                        .addQueryParameter("device", DeviceUtils.getAndroidID())
-//                        .addQueryParameter("timestamp", String.valueOf(System.currentTimeMillis()))
+                        .addQueryParameter("version", AppUtils.getAppVersionCode() + "")
+                        .addQueryParameter("device", DeviceUtils.getAndroidID())
+                        .addQueryParameter("timestamp", String.valueOf(System.currentTimeMillis()))
                         .build();
                 request = request.newBuilder().url(httpUrl).build();
             } else if (request.method().equals("POST")) {
@@ -140,9 +140,9 @@ public class RetrofitFactory {
                     }
 
                     formBody = bodyBuilder
-//                            .addEncoded("version", AppUtils.getAppVersionCode() + "")
-//                            .addEncoded("device", DeviceUtils.getAndroidID())
-//                            .addEncoded("timestamp", String.valueOf(System.currentTimeMillis()))
+                            .addEncoded("version", AppUtils.getAppVersionCode() + "")
+                            .addEncoded("device", DeviceUtils.getAndroidID())
+                            .addEncoded("timestamp", String.valueOf(System.currentTimeMillis()))
                             .build();
 
                     request = request.newBuilder().post(formBody).build();
