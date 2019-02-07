@@ -82,7 +82,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             mImmersionBar = ImmersionBar.with(this)
                     .titleBar(toolbar)
                     .keyboardEnable(true)
-                    .navigationBarColor(R.color.colorPrimary);
+                    .navigationBarColor(R.color.black);
             mImmersionBar.init();
 
             if(toolbar instanceof Toolbar) {
