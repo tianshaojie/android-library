@@ -25,7 +25,7 @@ public class BaseFragment extends RxFragment {
     }
 
     protected AppCompatActivity mActivity;
-//    protected ImmersionBar mImmersionBar;
+    protected ImmersionBar mImmersionBar;
 
     @Override
     public void onAttach(Context context) {
@@ -36,17 +36,17 @@ public class BaseFragment extends RxFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        if (isImmersionBarEnabled()) {
-//            View toolbar = view.findViewById(R.id.toolbar);
-//            if(toolbar != null) {
-//                TextView toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
-//                if(toolbarTitle != null && getArguments() != null && getArguments().getString("title") != null) {
-//                    toolbarTitle.setText(getArguments().getString("title"));
-//                }
-//                ImmersionBar.setTitleBar(mActivity, toolbar);
-//            }
-//            initImmersionBar();
-//        }
+        if (isImmersionBarEnabled()) {
+            View toolbar = view.findViewById(R.id.toolbar);
+            if(toolbar != null) {
+                TextView toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+                if(toolbarTitle != null && getArguments() != null && getArguments().getString("title") != null) {
+                    toolbarTitle.setText(getArguments().getString("title"));
+                }
+                ImmersionBar.setTitleBar(mActivity, toolbar);
+            }
+            initImmersionBar();
+        }
     }
 
     /**
@@ -61,15 +61,15 @@ public class BaseFragment extends RxFragment {
      * 初始化沉浸式，子类可覆盖
      */
     protected void initImmersionBar() {
-//        mImmersionBar = ImmersionBar.with(this);
-//        mImmersionBar.keyboardEnable(true).navigationBarWithKitkatEnable(false).init();
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.keyboardEnable(true).navigationBarWithKitkatEnable(false).init();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        if (mImmersionBar != null) {
-//            mImmersionBar.destroy();
-//        }
+        if (mImmersionBar != null) {
+            mImmersionBar.destroy();
+        }
     }
 }
