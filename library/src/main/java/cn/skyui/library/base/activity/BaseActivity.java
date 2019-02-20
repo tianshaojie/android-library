@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
-import cn.skyui.library.R;
 import cn.skyui.library.utils.KeyboardUtils;
 import cn.skyui.library.utils.imm.IMMLeaks;
+
+import cn.skyui.library.R;
+import de.greenrobot.event.EventBus;
 
 /**
  * 处理通用逻辑（二级界面请使用子类侧滑返回BaseSwipeBackActivity）
@@ -82,7 +83,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             mImmersionBar = ImmersionBar.with(this)
                     .titleBar(toolbar)
                     .keyboardEnable(true)
-                    .navigationBarColor(R.color.black);
+                    .navigationBarColor(R.color.colorPrimary);
             mImmersionBar.init();
 
             if(toolbar instanceof Toolbar) {
@@ -161,6 +162,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         super.onDestroy();
         if (mImmersionBar != null) {
             mImmersionBar.destroy();
+        }
+        if(EventBus.getDefault().isRegistered(mActivity)) {
+            EventBus.getDefault().unregister(mActivity);
+        }
+    }
+
+    public void registerEventBus() {
+        if(!EventBus.getDefault().isRegistered(mActivity)) {
+            EventBus.getDefault().register(mActivity);
         }
     }
 }

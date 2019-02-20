@@ -1,11 +1,7 @@
 package cn.skyui.library.http;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import com.meituan.android.walle.WalleChannelReader;
 
 import cn.skyui.library.http.converter.FastJsonConverterFactory;
 import cn.skyui.library.http.cookie.PersistentCookieJar;
@@ -17,6 +13,12 @@ import cn.skyui.library.utils.AppUtils;
 import cn.skyui.library.utils.DeviceUtils;
 import cn.skyui.library.utils.NetworkUtils;
 import cn.skyui.library.utils.Utils;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.ConnectionSpec;
@@ -32,7 +34,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitFactory {
 
-    public static final String BASE_URL = "http://preview.skyui.cn/";
+    public static final String BASE_URL = "https://shidianyue.com/";
 
     private static final long DEFAULT_READ_TIMEOUT = 15;
     private static final long DEFAULT_WRITE_TIMEOUT = 20;
@@ -55,10 +57,6 @@ public class RetrofitFactory {
             .cookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(Utils.getApp()))) // 持久化cookie到本地（服务器控制cookie、免登陆）
             .connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT, ConnectionSpec.MODERN_TLS)) //支持HTTPS，明文Http与比较新的Https
             .build();
-
-//    public static ApiService getApiService() {
-//        return createService(ApiService.class);
-//    }
 
     /**
      * 通过此方法创建ApiService：
@@ -105,12 +103,16 @@ public class RetrofitFactory {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request original = chain.request();
+            String channel = WalleChannelReader.getChannel(Utils.getApp());
+            channel = channel != null ? channel : "guanwang";
             Request request = original.newBuilder()
                     .header("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode())
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
-//                    .header("token", Header.token)
                     .header("token", Header.token)
+                    .header("channel", channel)
+                    .header("version", AppUtils.getAppVersionCode() + "")
+                    .header("device", DeviceUtils.getAndroidID())
                     .method(original.method(), original.body())
                     .build();
             return chain.proceed(request);
@@ -124,11 +126,7 @@ public class RetrofitFactory {
             Request request = chain.request();
 
             if (request.method().equals("GET")) {
-                HttpUrl httpUrl = request.url().newBuilder()
-                        .addQueryParameter("version", AppUtils.getAppVersionCode() + "")
-                        .addQueryParameter("device", DeviceUtils.getAndroidID())
-                        .addQueryParameter("timestamp", String.valueOf(System.currentTimeMillis()))
-                        .build();
+                HttpUrl httpUrl = request.url().newBuilder().build();
                 request = request.newBuilder().url(httpUrl).build();
             } else if (request.method().equals("POST")) {
                 if (request.body() instanceof FormBody) {
@@ -138,13 +136,7 @@ public class RetrofitFactory {
                     for (int i = 0; i < formBody.size(); i++) {
                         bodyBuilder.addEncoded(formBody.encodedName(i), formBody.encodedValue(i));
                     }
-
-                    formBody = bodyBuilder
-                            .addEncoded("version", AppUtils.getAppVersionCode() + "")
-                            .addEncoded("device", DeviceUtils.getAndroidID())
-                            .addEncoded("timestamp", String.valueOf(System.currentTimeMillis()))
-                            .build();
-
+                    formBody = bodyBuilder.build();
                     request = request.newBuilder().post(formBody).build();
                 }
             }

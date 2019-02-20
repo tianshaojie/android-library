@@ -14,6 +14,7 @@ import cn.skyui.library.R;
 public class ProgressDialog extends android.support.v7.app.AlertDialog {
 
     private String loadingMessage;
+    private TextView textView;
 
     public ProgressDialog(Context context) {
         super(context, R.style.TransparentDialog);
@@ -28,10 +29,7 @@ public class ProgressDialog extends android.support.v7.app.AlertDialog {
     private void init() {
         setCanceledOnTouchOutside(false);
         setContentView(R.layout.layout_progress_dialog);
-        TextView textView = findViewById(R.id.textView);
-        if(loadingMessage != null && loadingMessage.length() > 0) {
-            textView.setText(loadingMessage);
-        }
+        textView = findViewById(R.id.textView);
         if(getWindow() != null) {
             WindowManager.LayoutParams params = getWindow().getAttributes();
             params.width = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -40,7 +38,16 @@ public class ProgressDialog extends android.support.v7.app.AlertDialog {
         }
     }
 
-    public void setLoadingMessage(String msg) {
+    public ProgressDialog setLoadingMessage(String msg) {
         this.loadingMessage = msg;
+        return this;
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        if(loadingMessage != null && loadingMessage.length() > 0) {
+            textView.setText(loadingMessage);
+        }
     }
 }
