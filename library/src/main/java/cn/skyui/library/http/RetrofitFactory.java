@@ -109,8 +109,10 @@ public class RetrofitFactory {
                     .header("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode())
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
-//                    .header("token", Header.token)
                     .header("token", Header.token)
+                    .header("channel", "github")
+                    .header("version", AppUtils.getAppVersionCode() + "")
+                    .header("device", DeviceUtils.getAndroidID())
                     .method(original.method(), original.body())
                     .build();
             return chain.proceed(request);
