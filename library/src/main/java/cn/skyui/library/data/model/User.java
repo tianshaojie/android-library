@@ -7,6 +7,7 @@ import com.tencent.mmkv.MMKV;
 import java.io.Serializable;
 
 import cn.skyui.library.data.constant.Constants;
+import cn.skyui.library.http.interceptor.HttpHeaderInterceptor;
 import cn.skyui.library.utils.StringUtils;
 
 public class User implements Serializable {
@@ -40,6 +41,7 @@ public class User implements Serializable {
             this.detail.getAccount().setId(userId);
             this.status = object.getIntValue("status");
             this.isLogin = true;
+            HttpHeaderInterceptor.addHeader("token", this.token);
         }
         return getInstance();
     }
@@ -52,6 +54,7 @@ public class User implements Serializable {
         this.status = 1;
         this.detail = new UserDetailVO();
         this.location = null;
+        HttpHeaderInterceptor.removeHeader("token");
     }
 
     public void updateStatus(int status) {
