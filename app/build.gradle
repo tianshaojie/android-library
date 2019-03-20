@@ -17,6 +17,10 @@ android {
                 arguments = ["moduleName": project.name]
             }
         }
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
     buildTypes {
         debug {

@@ -1,21 +1,17 @@
 package cn.skyui.app;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.chenenyu.router.annotation.Route;
-import com.eightbitlab.supportrenderscriptblur.SupportRenderScriptBlur;
 import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
 
 import cn.skyui.library.base.activity.BaseActivity;
 import cn.skyui.library.utils.ToastUtils;
-import eightbitlab.com.blurview.BlurView;
 
 /**
  * @author tianshaojie
@@ -45,13 +41,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        BlurView blurViewBottom = findViewById(R.id.blurView);
-        final Drawable background = blurViewBottom.getBackground();
-        blurViewBottom.setupWith((ViewGroup) blurViewBottom.getParent())
-                .windowBackground(background)
-                .blurAlgorithm(new SupportRenderScriptBlur(this))
-                .blurRadius(20f);
-
         RadioGroup group = findViewById(R.id.group);
 
         // 点击效果
