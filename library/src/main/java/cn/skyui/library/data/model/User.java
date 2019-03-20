@@ -7,7 +7,6 @@ import com.tencent.mmkv.MMKV;
 import java.io.Serializable;
 
 import cn.skyui.library.data.constant.Constants;
-import cn.skyui.library.http.model.Header;
 import cn.skyui.library.utils.StringUtils;
 
 public class User implements Serializable {
@@ -31,7 +30,6 @@ public class User implements Serializable {
     }
 
     public User init() {
-//        String response = SPUtils.getInstance().getString(Constants.SharedPreferences.USER, "");
         String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
@@ -42,7 +40,6 @@ public class User implements Serializable {
             this.detail.getAccount().setId(userId);
             this.status = object.getIntValue("status");
             this.isLogin = true;
-            Header.token = this.token;
         }
         return getInstance();
     }
@@ -55,17 +52,14 @@ public class User implements Serializable {
         this.status = 1;
         this.detail = new UserDetailVO();
         this.location = null;
-        Header.token = this.token;
     }
 
     public void updateStatus(int status) {
         this.status = status;
-//        String response = SPUtils.getInstance().getString(Constants.SharedPreferences.USER, "");
         String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
             object.put("status", status);
-//            SPUtils.getInstance().put(Constants.SharedPreferences.USER, object.toJSONString());
             MMKV.defaultMMKV().encode(Constants.SharedPreferences.USER, object.toJSONString());
         }
     }
