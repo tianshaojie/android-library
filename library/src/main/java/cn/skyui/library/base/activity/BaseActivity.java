@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.umeng.message.PushAgent;
+
 import cn.skyui.library.utils.KeyboardUtils;
 import cn.skyui.library.utils.imm.IMMLeaks;
 
@@ -48,6 +50,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         // 修复系统输入法Bug：在15<=API<=23存在内存泄漏，https://zhuanlan.zhihu.com/p/20828861
         IMMLeaks.fixFocusedViewLeak(getApplication());
         mActivity = this;
+        PushAgent.getInstance(this).onAppStart();
         if(APP_STATUS  != APP_STATUS_NORMAL) {
             Router.build("splash").go(this);
             finish();
