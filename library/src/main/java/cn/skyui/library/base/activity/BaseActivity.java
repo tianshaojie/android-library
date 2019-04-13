@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.umeng.analytics.MobclickAgent;
+
 import cn.skyui.library.utils.KeyboardUtils;
 import cn.skyui.library.utils.imm.IMMLeaks;
 
@@ -149,6 +151,20 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 //                .statusBarColor(R.color.colorPrimary)
 //                .navigationBarColor(R.color.colorPrimary);
 //        mImmersionBar.init();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
