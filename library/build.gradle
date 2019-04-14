@@ -131,4 +131,5 @@ dependencies {
     // ViewPager指示器：https://github.com/hackware1993/MagicIndicator
     api 'com.github.hackware1993:MagicIndicator:1.5.0'
     api 'com.umeng.umsdk:analytics:8.0.0'
+    api 'com.umeng.umsdk:push:5.0.2'
 }
