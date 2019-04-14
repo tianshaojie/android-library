@@ -10,6 +10,7 @@ import cn.skyui.library.http.cookie.persistence.SharedPrefsCookiePersistor;
 import cn.skyui.library.http.model.Header;
 import cn.skyui.library.http.utils.HttpsUtils;
 import cn.skyui.library.utils.AppUtils;
+import cn.skyui.library.utils.ChannelUtils;
 import cn.skyui.library.utils.DeviceUtils;
 import cn.skyui.library.utils.NetworkUtils;
 import cn.skyui.library.utils.Utils;
@@ -103,14 +104,12 @@ public class RetrofitFactory {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request original = chain.request();
-            String channel = WalleChannelReader.getChannel(Utils.getApp());
-            channel = channel != null ? channel : "guanwang";
             Request request = original.newBuilder()
                     .header("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode())
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
                     .header("token", Header.token)
-                    .header("channel", channel)
+                    .header("channel", ChannelUtils.getChannel())
                     .header("version", AppUtils.getAppVersionCode() + "")
                     .header("device", DeviceUtils.getAndroidID())
                     .method(original.method(), original.body())
