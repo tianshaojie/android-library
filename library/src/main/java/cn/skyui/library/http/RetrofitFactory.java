@@ -109,7 +109,7 @@ public class RetrofitFactory {
                     .header("Accept", "application/json")
                     .header("Content-type", "application/json")
                     .header("token", Header.token)
-                    .header("channel", ChannelUtils.getChannel())
+                    .header("channel", ChannelUtils.getChannel(Utils.getApp()))
                     .header("version", AppUtils.getAppVersionCode() + "")
                     .header("device", DeviceUtils.getAndroidID())
                     .method(original.method(), original.body())
