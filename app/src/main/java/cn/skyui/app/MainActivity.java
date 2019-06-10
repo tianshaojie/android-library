@@ -29,8 +29,7 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fragmentManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateSafely(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         ImmersionBar.with(this).init();
         fragmentManager = getSupportFragmentManager();

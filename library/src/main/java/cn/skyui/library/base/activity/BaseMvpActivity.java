@@ -12,8 +12,7 @@ public abstract class BaseMvpActivity<V extends IView, P extends BasePresenter<V
     private P mPresenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateSafely(Bundle savedInstanceState) {
         setContentView(getContentViewId());
         mPresenter = createPresenter();
         if (mPresenter != null) {
