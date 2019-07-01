@@ -50,4 +50,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     annotationProcessor 'com.chenenyu.router:compiler:1.5.1'
     implementation project(':library')
+    implementation 'com.qw:soulpermission:1.1.8'
 }
