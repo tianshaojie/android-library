@@ -17,5 +17,6 @@
     <item android:drawable="@drawable/ic_message_primary_24px" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />
     <item android:drawable="@drawable/ic_message_accent_24px" android:state_enabled="true" android:state_pressed="true" />
     <item android:drawable="@drawable/ic_message_accent_24px" android:state_checked="true" android:state_enabled="true" />
+    <item android:drawable="@drawable/ic_message_accent_24px" android:state_selected="true" android:state_enabled="true" />
     <item android:drawable="@drawable/ic_message_primary_24px" />
 </selector>

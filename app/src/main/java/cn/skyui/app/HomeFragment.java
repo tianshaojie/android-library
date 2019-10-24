@@ -13,10 +13,11 @@ import com.orhanobut.logger.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.skyui.app.main.BaseLazyLoadFragment;
 import cn.skyui.library.base.fragment.BaseFragment;
 import cn.skyui.library.utils.DeviceUtils;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseLazyLoadFragment {
 
     public static Fragment newInstance(String title) {
         HomeFragment homeFragment = new HomeFragment();
@@ -88,99 +89,6 @@ public class HomeFragment extends BaseFragment {
         param.put("model", DeviceUtils.getModel());
         param.put("deviceId", DeviceUtils.getAndroidID());
 
-        button.setOnClickListener(view1 -> {
-//            RetrofitFactory.createService(ApiService.class).sendSms(mobile)
-//                    .compose(bindUntilEvent(FragmentEvent.DESTROY)) // Bind Lifecycle 防止内存泄漏
-//                    .flatMap(httpResponse -> RetrofitFactory.createService(ApiService.class).loginMapParam(param))
-//                    .compose(RxSchedulers.io2main())
-//                    .retryWhen(new RetryWhenException(2, 1000, 2000))
-//                    .subscribe(new HttpObserver<User>(getActivity()) {
-//                        @Override
-//                        protected void onSuccess(User response) {
-//                            Logger.i(response.toString());
-//                            ToastUtils.showShort(response.toString());
-//                        }
-//                    });
-
-            // 使用BaseObserver简化subscribe
-//            apiService.sendSms(mobile)
-//                    .flatMap(new Function<HttpResponse, ObservableSource<HttpResponse<User>>>() {
-//                        @Override
-//                        public ObservableSource<HttpResponse<User>> apply(@NonNull HttpResponse httpResponse) {
-//                            return apiService.loginMapParam(param);
-//                        }
-//                    })
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new HttpObserver<User>(getActivity()) {
-//                        @Override
-//                        protected void onSuccess(User response) {
-//                            Logger.i(response.toString());
-//                        }
-//                    });
-
-            // subscribe原始Observer实现，比较繁琐
-//            apiService.sendSms(mobile)
-//                    .flatMap(new Function<HttpResponse, ObservableSource<HttpResponse<User>>>() {
-//                        @Override
-//                        public ObservableSource<HttpResponse<User>> apply(@NonNull HttpResponse httpResponse) {
-//                            return apiService.loginMapParam(param);
-//                        }
-//                    })
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Observer<HttpResponse<User>>() {
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//                            Logger.i("onSubscribe");
-//                        }
-//
-//                        @Override
-//                        public void onNext(HttpResponse<User> value) {
-//                            if(value.isSuccess()) {
-//                                Logger.i(value.getBody().toString());
-//                            } else {
-//                                ToastUtils.showShort(value.getMsg());
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Logger.i(e.getMessage());
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                            Logger.i("onComplete");
-//                        }
-//                    });
-
-            // 原始多参数，传递麻烦，可以转化为map
-//            RetrofitFactory.getService().login("13521468436", "536885", 2, "7.0.1", "xiaomi", DeviceUtils.getModel(), DeviceUtils.getAndroidID())
-//                    .subscribeOn(Schedulers.newThread())
-//                    .observeOn(Schedulers.io())
-//                    .subscribe(new Observer<HttpResponse<User>>() {
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//                            Logger.i("onSubscribe");
-//                        }
-//
-//                        @Override
-//                        public void onNext(HttpResponse<User> value) {
-//                            Logger.i(value.toString());
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Logger.i(e.getMessage());
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                            Logger.i("onComplete");
-//                        }
-//                    });
-        });
     }
 
 
@@ -197,5 +105,16 @@ public class HomeFragment extends BaseFragment {
         super.onDestroy();
         Logger.i("fragment.isDetached=" + isDetached());
         Logger.i("getActivity.isFinishing=" + getActivity().isFinishing());
+    }
+
+
+    @Override
+    public void onShow() {
+
+    }
+
+    @Override
+    public void onHide() {
+
     }
 }

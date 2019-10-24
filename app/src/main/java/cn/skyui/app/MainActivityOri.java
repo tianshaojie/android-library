@@ -21,8 +21,7 @@ import eightbitlab.com.blurview.BlurView;
  * @author tianshaojie
  * @date 2018/1/15
  */
-@Route("main")
-public class MainActivity extends BaseActivity {
+public class MainActivityOri extends BaseActivity {
 
     private static final String TAB_INDEX_KEY = "tabIndex";
     private static final String[] FRAGMENT_TAGS = new String[]{
@@ -35,7 +34,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_ori);
         ImmersionBar.with(this).init();
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState != null) {

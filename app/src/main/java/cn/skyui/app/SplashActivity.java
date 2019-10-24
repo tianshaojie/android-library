@@ -1,11 +1,13 @@
 package cn.skyui.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.chenenyu.router.Router;
 import com.gyf.barlibrary.ImmersionBar;
 
+import cn.skyui.app.main.MainActivity;
 import cn.skyui.library.base.activity.BaseActivity;
 
 /**
@@ -26,12 +28,10 @@ public class SplashActivity extends Activity {
     }
 
     private void enter() {
-        Router.build("main").go(this);
-//        if(User.getInstance().isLogin) {
-//            Router.build("main").go(this);
-//        } else {
-//            Router.build("login").go(this);
-//        }
+        Intent intent = new Intent();
+//        intent.putExtra(MainActivity.SELECTED_INDEX, 2);
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
