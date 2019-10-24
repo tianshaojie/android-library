@@ -2,6 +2,7 @@ package cn.skyui.app.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,8 +35,7 @@ public class MainActivity extends BaseActivity {
     private List<BaseLazyLoadFragment> fragments = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         initFragment();
         initView();

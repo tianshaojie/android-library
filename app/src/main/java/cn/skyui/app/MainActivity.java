@@ -17,7 +17,6 @@ import cn.skyui.library.utils.ToastUtils;
  * @author tianshaojie
  * @date 2018/1/15
  */
-@Route("main")
 public class MainActivity extends BaseActivity {
 
     private static final String TAB_INDEX_KEY = "tabIndex";
