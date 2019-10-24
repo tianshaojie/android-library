@@ -26,7 +26,6 @@ public class LibraryInitManager {
         initRouter(isDebug, modules);
 //        initCrashReporter(application);
 //        initLeakCanary(application);
-//        initStetho(application);
         initStetho(application);
     }
 
