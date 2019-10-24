@@ -1,5 +1,7 @@
 package cn.skyui.library.http;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -30,7 +32,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitFactory {
 
-    public static final String BASE_URL = "http://39.107.102.34:8080/";
+    public static final String BASE_URL = "http://preview.skyui.cn/";
 
     private static final long DEFAULT_READ_TIMEOUT = 15;
     private static final long DEFAULT_WRITE_TIMEOUT = 20;
@@ -40,7 +42,7 @@ public class RetrofitFactory {
     private static HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
     public static OkHttpClient httpClient = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            // .addNetworkInterceptor(new StethoInterceptor()) // Facebook强大的监测工具：Stetho
+            .addNetworkInterceptor(new StethoInterceptor()) // Facebook强大的监测工具：Stetho
             .addInterceptor(new HttpHeaderInterceptor())    // 添加通用的Header
             .addInterceptor(new CommonParamsInterceptor())
             .addInterceptor(new HttpCacheInterceptor())
@@ -54,17 +56,13 @@ public class RetrofitFactory {
             .connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT, ConnectionSpec.MODERN_TLS)) //支持HTTPS，明文Http与比较新的Https
             .build();
 
-//    public static ApiService getApiService() {
-//        return createService(ApiService.class);
-//    }
-
     /**
-     * 通过此方法创建ApiService：
+     * 通过此方法创建ApiService：RxJava版本
      * 注意：createService自动包装RxJava适配器，如果不使用RxJava请使用createServiceOriginal
      * Create diff module ApiService
-     * @param serviceClass
-     * @param <T>
-     * @return
+     * @param serviceClass 通常是接口类 ApiService.class
+     * @param <T> 接口泛型
+     * @return Retrofit 接口
      */
     public static <T> T createService(Class<T> serviceClass) {
         String baseUrl = "";
@@ -84,10 +82,10 @@ public class RetrofitFactory {
     }
 
     /**
-     *
-     * @param serviceClass
-     * @param <T>
-     * @return
+     * Retrofit原始Service
+     * @param serviceClass 通常是接口类 ApiService.class
+     * @param <T> 接口泛型
+     * @return Retrofit 接口
      */
     public static <T> T createServiceOriginal(Class<T> serviceClass) {
         Retrofit retrofit = new Retrofit.Builder()

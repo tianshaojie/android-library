@@ -50,8 +50,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if(APP_STATUS  != APP_STATUS_NORMAL) {
             Router.build("splash").go(this);
             finish();
+            return;
         }
+        onCreateSafely(savedInstanceState);
     }
+
+    /**
+     * 提供给子Activity设置界面的接口，不要在onCreate中初始化界面
+     * @param savedInstanceState
+     */
+    protected abstract void onCreateSafely(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -82,7 +90,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             mImmersionBar = ImmersionBar.with(this)
                     .titleBar(toolbar)
                     .keyboardEnable(true)
-                    .navigationBarColor(R.color.colorPrimary);
+                    .navigationBarColor(R.color.black);
             mImmersionBar.init();
 
             if(toolbar instanceof Toolbar) {

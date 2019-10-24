@@ -17,6 +17,7 @@ import cn.skyui.app.main.BaseLazyLoadFragment;
 import cn.skyui.library.base.fragment.BaseFragment;
 import cn.skyui.library.utils.DeviceUtils;
 
+
 public class HomeFragment extends BaseLazyLoadFragment {
 
     public static Fragment newInstance(String title) {

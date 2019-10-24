@@ -7,6 +7,7 @@ import com.tencent.mmkv.MMKV;
 import java.io.Serializable;
 
 import cn.skyui.library.data.constant.Constants;
+import cn.skyui.library.http.interceptor.HttpHeaderInterceptor;
 import cn.skyui.library.http.model.Header;
 import cn.skyui.library.utils.StringUtils;
 
@@ -14,8 +15,8 @@ public class User implements Serializable {
 
     public String token = "";   // 登录Token
     public String imToken = ""; // 融云 IM Token
-    public long userId = 0;    // 业务用户ID，也是融云IM用户ID
-    public int status = 1;     // 用户资料完善状态，1：未完善，2：已完善；
+    public long userId = 0;     // 业务用户ID，也是融云IM用户ID
+    public int status = 1;      // 用户资料完善状态，1：未完善，2：已完善；
     public boolean isLogin = false;
     public UserDetailVO detail = new UserDetailVO();
     public UserLocation location;
@@ -31,7 +32,6 @@ public class User implements Serializable {
     }
 
     public User init() {
-//        String response = SPUtils.getInstance().getString(Constants.SharedPreferences.USER, "");
         String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
@@ -42,7 +42,7 @@ public class User implements Serializable {
             this.detail.getAccount().setId(userId);
             this.status = object.getIntValue("status");
             this.isLogin = true;
-            Header.token = this.token;
+            HttpHeaderInterceptor.addHeader("token", this.token);
         }
         return getInstance();
     }
@@ -55,17 +55,15 @@ public class User implements Serializable {
         this.status = 1;
         this.detail = new UserDetailVO();
         this.location = null;
-        Header.token = this.token;
+        HttpHeaderInterceptor.removeHeader("token");
     }
 
     public void updateStatus(int status) {
         this.status = status;
-//        String response = SPUtils.getInstance().getString(Constants.SharedPreferences.USER, "");
         String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
             object.put("status", status);
-//            SPUtils.getInstance().put(Constants.SharedPreferences.USER, object.toJSONString());
             MMKV.defaultMMKV().encode(Constants.SharedPreferences.USER, object.toJSONString());
         }
     }
