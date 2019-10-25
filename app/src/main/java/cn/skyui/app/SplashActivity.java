@@ -31,7 +31,7 @@ public class SplashActivity extends Activity {
 
     private void enter() {
         Intent intent = new Intent();
-//        intent.putExtra(MainActivity.SELECTED_INDEX, 2);
+        intent.putExtra(MainActivity.SELECTED_INDEX, -4);
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
         finish();

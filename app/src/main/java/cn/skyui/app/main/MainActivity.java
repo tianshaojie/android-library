@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.chenenyu.router.annotation.Route;
@@ -74,20 +73,19 @@ public class MainActivity extends BaseActivity {
 
         radioGroup = findViewById(R.id.group);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            int index = group.indexOfChild(group.findViewById(checkedId));
-            showSelectedFragment(index);
+            showSelectedFragment(group.indexOfChild(group.findViewById(checkedId)));
         });
     }
 
     private void showSelectedFragment(int index) {
+        if(index < 0 || index >= fragments.size()) {
+            index = 0;
+        }
         for(int i = 0; i < radioGroup.getChildCount(); i++) {
             radioGroup.getChildAt(i).setSelected(false);
         }
         if(index != selectedFragmentIndex) {
-            BaseLazyLoadFragment hideFragment = fragments.get(selectedFragmentIndex);
-            if(hideFragment != null) {
-                hideFragment.hide();
-            }
+            fragments.get(selectedFragmentIndex).hide();
         }
         selectedFragmentIndex = index;
         radioGroup.getChildAt(selectedFragmentIndex).setSelected(true);
