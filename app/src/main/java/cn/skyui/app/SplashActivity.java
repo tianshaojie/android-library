@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.chenenyu.router.Router;
+import com.chenenyu.router.annotation.Route;
 import com.gyf.barlibrary.ImmersionBar;
 
 import cn.skyui.app.main.MainActivity;
@@ -14,6 +15,7 @@ import cn.skyui.library.base.activity.BaseActivity;
  * @author tianshaojie
  * @date 2018/1/15
  */
+@Route("splash")
 public class SplashActivity extends Activity {
 
     @Override
@@ -29,7 +31,7 @@ public class SplashActivity extends Activity {
 
     private void enter() {
         Intent intent = new Intent();
-        intent.putExtra(MainActivity.SELECTED_INDEX, 2);
+//        intent.putExtra(MainActivity.SELECTED_INDEX, 2);
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
         finish();

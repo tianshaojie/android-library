@@ -37,20 +37,19 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        initFragment();
+        initFragments();
         initView();
-        selectedFragmentIndex = getIntent().getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);
-        showSelectedFragment();
+        showSelectedFragment(getIntent().getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        selectedFragmentIndex = intent.getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);
-        showSelectedFragment();
+        showSelectedFragment(intent.getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));
     }
 
-    private void initFragment() {
+    private void initFragments() {
+        fragments.clear();
         fragments.add(MyStockFragment.newInstance("首页"));
         fragments.add(MyStockFragment.newInstance("关注"));
         fragments.add(MyStockFragment.newInstance("消息"));
@@ -72,33 +71,25 @@ public class MainActivity extends BaseActivity {
                 return fragments.size();
             }
         });
-        fragmentViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                BaseLazyLoadFragment hideFragment = fragments.get(selectedFragmentIndex);
-                if(hideFragment != null) {
-                    hideFragment.hide();
-                    radioGroup.getChildAt(selectedFragmentIndex).setSelected(false);
-                }
-                BaseLazyLoadFragment showFragment = fragments.get(position);
-                if(showFragment != null) {
-                    showFragment.show();
-                    radioGroup.getChildAt(position).setSelected(true);
-                }
-                selectedFragmentIndex = position;
-            }
-        });
 
         radioGroup = findViewById(R.id.group);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            fragmentViewPager.setCurrentItem(group.indexOfChild(group.findViewById(checkedId)));
+            int index = group.indexOfChild(group.findViewById(checkedId));
+            showSelectedFragment(index);
         });
     }
 
-    private void showSelectedFragment() {
+    private void showSelectedFragment(int index) {
         for(int i = 0; i < radioGroup.getChildCount(); i++) {
-            radioGroup.getChildAt(selectedFragmentIndex).setSelected(false);
+            radioGroup.getChildAt(i).setSelected(false);
         }
+        if(index != selectedFragmentIndex) {
+            BaseLazyLoadFragment hideFragment = fragments.get(selectedFragmentIndex);
+            if(hideFragment != null) {
+                hideFragment.hide();
+            }
+        }
+        selectedFragmentIndex = index;
         radioGroup.getChildAt(selectedFragmentIndex).setSelected(true);
         fragmentViewPager.setCurrentItem(selectedFragmentIndex);
         fragmentViewPager.post(() -> fragments.get(selectedFragmentIndex).show());

@@ -55,7 +55,7 @@ public class MyStockFragment extends BaseLazyLoadFragment {
     public void onShow() {
         Logger.i("show - %s", title);
         if(textView != null) {
-            textView.postDelayed(() -> textView.setText(title + (i++)), 1500);
+            textView.postDelayed(() -> textView.setText(title + (i++)), 500);
         }
     }
 
@@ -63,7 +63,7 @@ public class MyStockFragment extends BaseLazyLoadFragment {
     public void onHide() {
         Logger.i("hide - %s", title);
         if(textView != null) {
-            textView.postDelayed(() -> textView.setText("--"), 1500);
+            textView.postDelayed(() -> textView.setText("--"), 500);
         }
     }
 }
