@@ -47,5 +47,9 @@
         <item name="android:textColor">@drawable/selector_bottom_bar_textview_color</item>
     </style>
 
-
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

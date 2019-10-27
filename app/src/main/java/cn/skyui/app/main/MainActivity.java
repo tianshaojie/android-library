@@ -8,11 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.widget.RadioGroup;
 
 import com.chenenyu.router.annotation.Route;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.skyui.app.MyStockFragment;
+import cn.skyui.app.main.fragment.HomeFragment;
+import cn.skyui.app.main.fragment.MineFragment;
+import cn.skyui.app.main.fragment.TempFragment;
 import cn.skyui.app.R;
 import cn.skyui.library.base.activity.BaseActivity;
 import cn.skyui.library.utils.ToastUtils;
@@ -36,6 +39,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        ImmersionBar.with(this).statusBarColor(R.color.colorPrimary).init();
         initFragments();
         initView();
         showSelectedFragment(getIntent().getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));
@@ -49,10 +53,10 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(MyStockFragment.newInstance("首页"));
-        fragments.add(MyStockFragment.newInstance("关注"));
-        fragments.add(MyStockFragment.newInstance("消息"));
-        fragments.add(MyStockFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("首页"));
+        fragments.add(TempFragment.newInstance("关注"));
+        fragments.add(TempFragment.newInstance("消息"));
+        fragments.add(MineFragment.newInstance("我的"));
     }
 
     private void initView() {

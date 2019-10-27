@@ -12,22 +12,16 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     private static final String TAG = "BaseLazyLoadFragment";
     private boolean isVisible = false;
     private boolean isViewInitiated = false;
-    String title = "";
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         isViewInitiated = true;
-        if(getArguments() != null) {
-            title = getArguments().getString("title");
-        }
-        Log.i(TAG, "execute onViewCreated() " + title);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "execute onResume() " + title + ", isVisible = " + isVisible);
         if(isVisible) {
             onShow();
         }

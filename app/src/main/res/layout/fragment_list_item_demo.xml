@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_45"
+    android:gravity="left|center_vertical"
+    android:paddingLeft="@dimen/space_16"
+    android:text="没有搜到任何用户"
+    android:textColor="@color/colorPrimary" />

@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 
 import cn.skyui.app.main.MainActivity;
 import cn.skyui.library.base.activity.BaseActivity;
@@ -31,7 +30,7 @@ public class SplashActivity extends Activity {
 
     private void enter() {
         Intent intent = new Intent();
-        intent.putExtra(MainActivity.SELECTED_INDEX, -4);
+        intent.putExtra(MainActivity.SELECTED_INDEX, -1);
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -41,6 +40,5 @@ public class SplashActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         getWindow().getDecorView().getHandler().removeCallbacksAndMessages(null);
-        ImmersionBar.with(this).destroy();
     }
 }

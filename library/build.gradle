@@ -65,8 +65,10 @@ dependencies {
     api 'jp.wasabeef:glide-transformations:3.1.1'
     // If you want to use the GPU Filters
     api 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-    // 沉浸式状态栏：https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.barlibrary:barlibrary:2.3.0'
+    // 基础依赖包，必须要依赖
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // fragment快速实现（可选）
+    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     // 侧滑返回：https://github.com/ikew0ng/SwipeBackLayout
     api 'me.imid.swipebacklayout.lib:library:1.1.0'
     // 组件化路由框架：https://github.com/chenenyu/Router

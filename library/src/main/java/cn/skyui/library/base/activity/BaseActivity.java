@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chenenyu.router.Router;
-import com.gyf.barlibrary.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import cn.skyui.library.R;
@@ -38,7 +37,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**
      * 沉浸式状态栏和沉浸式导航栏管理，支持Android 4.4 以上
      */
-    protected ImmersionBar mImmersionBar;
+//    protected ImmersionBar mImmersionBar;
     private TextView mToolbarTitle;
 
     @Override
@@ -84,31 +83,31 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        View toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            // 带Toolbar使用沉浸式，直接设置titleBar，结合SwipeBack，也需要在setContentView之后初始化ImmersionBar
-            mImmersionBar = ImmersionBar.with(this)
-                    .titleBar(toolbar)
-                    .keyboardEnable(true)
-                    .navigationBarColor(R.color.black);
-            mImmersionBar.init();
-
-            if(toolbar instanceof Toolbar) {
-                setSupportActionBar((Toolbar) toolbar);
-                // 显示返回键
-                if(getSupportActionBar() != null) {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                }
-            }
-
-            // 隐藏默认标题
-            mToolbarTitle = toolbar.findViewById(R.id.toolbar_title);
-            if (mToolbarTitle != null && getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
-            }
-        } else {
+//        View toolbar = findViewById(R.id.toolbar);
+//        if (toolbar != null) {
+//            // 带Toolbar使用沉浸式，直接设置titleBar，结合SwipeBack，也需要在setContentView之后初始化ImmersionBar
+//            mImmersionBar = ImmersionBar.with(this)
+//                    .titleBar(toolbar)
+//                    .keyboardEnable(true)
+//                    .navigationBarColor(R.color.black);
+//            mImmersionBar.init();
+//
+//            if(toolbar instanceof Toolbar) {
+//                setSupportActionBar((Toolbar) toolbar);
+//                // 显示返回键
+//                if(getSupportActionBar() != null) {
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//                }
+//            }
+//
+//            // 隐藏默认标题
+//            mToolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+//            if (mToolbarTitle != null && getSupportActionBar() != null) {
+//                getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            }
+//        } else {
             initImmersionBar();
-        }
+//        }
     }
 
     /**
@@ -147,8 +146,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void initImmersionBar() {
         // 如果Activity+Fragment，Fragment自带Toolbar，并通过ToolImmersionBar.titleBar(toolbar)管理
         // 则Activity不用fitsSystemWindows(true)
-        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.keyboardEnable(true).init();
+//        mImmersionBar = ImmersionBar.with(this);
+//        mImmersionBar.keyboardEnable(true).init();
 
         // 如果Activity&子Fragment布局没有Toolbar，可否覆盖该方法设置fitsSystemWindows(true)
 //        mImmersionBar = ImmersionBar.with(this)
@@ -167,8 +166,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mImmersionBar != null) {
-            mImmersionBar.destroy();
-        }
+//        if (mImmersionBar != null) {
+//            mImmersionBar.destroy();
+//        }
     }
 }
