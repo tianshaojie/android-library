@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.skyui.app.main.fragment.HomeFragment;
-import cn.skyui.app.main.fragment.MineFragment;
-import cn.skyui.app.main.fragment.TempFragment;
+//import cn.skyui.app.main.fragment.MineFragment;
+//import cn.skyui.app.main.fragment.TempFragment;
 import cn.skyui.app.R;
 import cn.skyui.library.base.activity.BaseActivity;
 import cn.skyui.library.utils.ToastUtils;
@@ -54,9 +54,12 @@ public class MainActivity extends BaseActivity {
     private void initFragments() {
         fragments.clear();
         fragments.add(HomeFragment.newInstance("首页"));
-        fragments.add(TempFragment.newInstance("关注"));
-        fragments.add(TempFragment.newInstance("消息"));
-        fragments.add(MineFragment.newInstance("我的"));
+        fragments.add(HomeFragment.newInstance("首页"));
+        fragments.add(HomeFragment.newInstance("首页"));
+        fragments.add(HomeFragment.newInstance("首页"));
+//        fragments.add(TempFragment.newInstance("关注"));
+//        fragments.add(TempFragment.newInstance("消息"));
+//        fragments.add(MineFragment.newInstance("我的"));
     }
 
     private void initView() {
