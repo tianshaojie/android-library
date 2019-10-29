@@ -67,7 +67,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
         super.onViewCreated(view, savedInstanceState);
 
         fragments.add(SubListFragment.newInstance());
-        fragments.add(SubListFragment.newInstance());
+        fragments.add(SubWebViewFragment.newInstance());
 
         appBar = view.findViewById(R.id.app_bar);
         bgContent = view.findViewById(R.id.bg_content);

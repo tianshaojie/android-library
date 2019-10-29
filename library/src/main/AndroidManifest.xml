@@ -1,2 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.skyui.library" />
+    package="cn.skyui.library">
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

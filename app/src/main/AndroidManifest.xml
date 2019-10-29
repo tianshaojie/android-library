@@ -41,8 +41,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
     </application>
 
 </manifest>

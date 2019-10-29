@@ -23,9 +23,8 @@ public class SplashActivity extends Activity {
 //        setTheme(R.style.SplashThemeHuawei);
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this).transparentBar().init();
-        getWindow().getDecorView().postDelayed(this::enter, 100);
-
-
+//        getWindow().getDecorView().postDelayed(this::enter, 100);
+        enter();
     }
 
     private void enter() {
@@ -39,6 +38,6 @@ public class SplashActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getWindow().getDecorView().getHandler().removeCallbacksAndMessages(null);
+//        getWindow().getDecorView().getHandler().removeCallbacksAndMessages(null);
     }
 }
