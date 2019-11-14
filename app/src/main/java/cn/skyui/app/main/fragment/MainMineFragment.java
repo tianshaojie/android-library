@@ -17,14 +17,14 @@ import java.util.List;
 import cn.skyui.app.R;
 import cn.skyui.app.main.BaseLazyLoadFragment;
 
-public class MineFragment extends BaseLazyLoadFragment {
+public class MainMineFragment extends BaseLazyLoadFragment {
 
-    public static MineFragment newInstance(String title) {
-        MineFragment mineFragment = new MineFragment();
+    public static MainMineFragment newInstance(String title) {
+        MainMineFragment mainMineFragment = new MainMineFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
-        mineFragment.setArguments(bundle);
-        return mineFragment;
+        mainMineFragment.setArguments(bundle);
+        return mainMineFragment;
     }
 
     private SlidingTabLayout tabLayout;

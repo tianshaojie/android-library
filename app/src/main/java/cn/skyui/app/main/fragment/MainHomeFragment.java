@@ -19,10 +19,10 @@ import java.util.List;
 import cn.skyui.app.R;
 import cn.skyui.app.main.BaseLazyLoadFragment;
 
-public class HomeFragment extends BaseLazyLoadFragment {
+public class MainHomeFragment extends BaseLazyLoadFragment {
 
-    public static HomeFragment newInstance(String title) {
-        HomeFragment mineFragment = new HomeFragment();
+    public static MainHomeFragment newInstance(String title) {
+        MainHomeFragment mineFragment = new MainHomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         mineFragment.setArguments(bundle);
