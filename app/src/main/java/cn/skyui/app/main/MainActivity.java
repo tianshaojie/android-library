@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.chenenyu.router.annotation.Route;
@@ -13,10 +14,8 @@ import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.skyui.app.main.fragment.HomeFragment;
-//import cn.skyui.app.main.fragment.MineFragment;
-//import cn.skyui.app.main.fragment.TempFragment;
 import cn.skyui.app.R;
+import cn.skyui.app.main.fragment.HomeFragment;
 import cn.skyui.app.main.fragment.MineFragment;
 import cn.skyui.app.main.fragment.TempFragment;
 import cn.skyui.library.base.activity.BaseActivity;
@@ -77,24 +76,29 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        radioGroup = findViewById(R.id.group);
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            showSelectedFragment(group.indexOfChild(group.findViewById(checkedId)));
+        fragmentViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                radioGroup.check(radioGroup.getChildAt(position).getId());
+            }
         });
+
+        radioGroup = findViewById(R.id.group);
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            final int index = i;
+            radioGroup.getChildAt(i).setOnClickListener(v -> showSelectedFragment(index));
+        }
     }
 
     private void showSelectedFragment(int index) {
         if(index < 0 || index >= fragments.size()) {
             index = 0;
         }
-        for(int i = 0; i < radioGroup.getChildCount(); i++) {
-            radioGroup.getChildAt(i).setSelected(false);
-        }
         if(index != selectedFragmentIndex) {
             fragments.get(selectedFragmentIndex).hide();
         }
         selectedFragmentIndex = index;
-        radioGroup.getChildAt(selectedFragmentIndex).setSelected(true);
         fragmentViewPager.setCurrentItem(selectedFragmentIndex);
         fragmentViewPager.post(() -> fragments.get(selectedFragmentIndex).show());
     }

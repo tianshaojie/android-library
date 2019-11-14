@@ -28,6 +28,7 @@
                 android:id="@+id/bottom_bar_home"
                 style="@style/main_footer_bar_radio"
                 android:drawableTop="@drawable/selector_bottom_bar_home"
+                android:checked="true"
                 android:text="@string/main_navigation_home" />
 
             <RadioButton
