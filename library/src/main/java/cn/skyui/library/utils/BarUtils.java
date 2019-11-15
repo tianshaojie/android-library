@@ -1,29 +1,40 @@
 package cn.skyui.library.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
+
+import static android.Manifest.permission.EXPAND_STATUS_BAR;
 
 /**
  * <pre>
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/09/23
- *     desc  : 栏相关工具类
+ *     desc  : utils about bar
  * </pre>
  */
 public final class BarUtils {
@@ -32,19 +43,18 @@ public final class BarUtils {
     // status bar
     ///////////////////////////////////////////////////////////////////////////
 
-    private static final int    DEFAULT_ALPHA = 112;
-    private static final String TAG_COLOR     = "TAG_COLOR";
-    private static final String TAG_ALPHA     = "TAG_ALPHA";
-    private static final int    TAG_OFFSET    = -123;
+    private static final String TAG_STATUS_BAR = "TAG_STATUS_BAR";
+    private static final String TAG_OFFSET     = "TAG_OFFSET";
+    private static final int    KEY_OFFSET     = -123;
 
     private BarUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     /**
-     * 获取状态栏高度(px)
+     * Return the status bar's height.
      *
-     * @return 状态栏高度px
+     * @return the status bar's height
      */
     public static int getStatusBarHeight() {
         Resources resources = Utils.getApp().getResources();
@@ -53,342 +63,312 @@ public final class BarUtils {
     }
 
     /**
-     * 为view增加MarginTop为状态栏高度
+     * Set the status bar's visibility.
      *
-     * @param view view
+     * @param activity  The activity.
+     * @param isVisible True to set status bar visible, false otherwise.
+     */
+    public static void setStatusBarVisibility(@NonNull final Activity activity,
+                                              final boolean isVisible) {
+        setStatusBarVisibility(activity.getWindow(), isVisible);
+    }
+
+    /**
+     * Set the status bar's visibility.
+     *
+     * @param window    The window.
+     * @param isVisible True to set status bar visible, false otherwise.
+     */
+    public static void setStatusBarVisibility(@NonNull final Window window,
+                                              final boolean isVisible) {
+        if (isVisible) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            showStatusBarView(window);
+            addMarginTopEqualStatusBarHeight(window);
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            hideStatusBarView(window);
+            subtractMarginTopEqualStatusBarHeight(window);
+        }
+    }
+
+    /**
+     * Return whether the status bar is visible.
+     *
+     * @param activity The activity.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isStatusBarVisible(@NonNull final Activity activity) {
+        int flags = activity.getWindow().getAttributes().flags;
+        return (flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) == 0;
+    }
+
+    /**
+     * Set the status bar's light mode.
+     *
+     * @param activity    The activity.
+     * @param isLightMode True to set status bar light mode, false otherwise.
+     */
+    public static void setStatusBarLightMode(@NonNull final Activity activity,
+                                             final boolean isLightMode) {
+        setStatusBarLightMode(activity.getWindow(), isLightMode);
+    }
+
+    /**
+     * Set the status bar's light mode.
+     *
+     * @param window      The window.
+     * @param isLightMode True to set status bar light mode, false otherwise.
+     */
+    public static void setStatusBarLightMode(@NonNull final Window window,
+                                             final boolean isLightMode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = window.getDecorView();
+            if (decorView != null) {
+                int vis = decorView.getSystemUiVisibility();
+                if (isLightMode) {
+                    vis |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                } else {
+                    vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                }
+                decorView.setSystemUiVisibility(vis);
+            }
+        }
+    }
+
+    /**
+     * Is the status bar light mode.
+     *
+     * @param activity The activity.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isStatusBarLightMode(@NonNull final Activity activity) {
+        return isStatusBarLightMode(activity.getWindow());
+    }
+
+    /**
+     * Is the status bar light mode.
+     *
+     * @param window The window.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isStatusBarLightMode(@NonNull final Window window) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = window.getDecorView();
+            if (decorView != null) {
+                int vis = decorView.getSystemUiVisibility();
+                return (vis & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR) != 0;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add the top margin size equals status bar's height for view.
+     *
+     * @param view The view.
      */
     public static void addMarginTopEqualStatusBarHeight(@NonNull View view) {
-        Object haveSetOffset = view.getTag(TAG_OFFSET);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        view.setTag(TAG_OFFSET);
+        Object haveSetOffset = view.getTag(KEY_OFFSET);
         if (haveSetOffset != null && (Boolean) haveSetOffset) return;
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        MarginLayoutParams layoutParams = (MarginLayoutParams) view.getLayoutParams();
         layoutParams.setMargins(layoutParams.leftMargin,
                 layoutParams.topMargin + getStatusBarHeight(),
                 layoutParams.rightMargin,
                 layoutParams.bottomMargin);
-        view.setTag(TAG_OFFSET, true);
+        view.setTag(KEY_OFFSET, true);
     }
 
     /**
-     * 为view减少MarginTop为状态栏高度
+     * Subtract the top margin size equals status bar's height for view.
      *
-     * @param view view
+     * @param view The view.
      */
     public static void subtractMarginTopEqualStatusBarHeight(@NonNull View view) {
-        Object haveSetOffset = view.getTag(TAG_OFFSET);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        Object haveSetOffset = view.getTag(KEY_OFFSET);
         if (haveSetOffset == null || !(Boolean) haveSetOffset) return;
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        MarginLayoutParams layoutParams = (MarginLayoutParams) view.getLayoutParams();
         layoutParams.setMargins(layoutParams.leftMargin,
                 layoutParams.topMargin - getStatusBarHeight(),
                 layoutParams.rightMargin,
                 layoutParams.bottomMargin);
-        view.setTag(TAG_OFFSET, false);
+        view.setTag(KEY_OFFSET, false);
+    }
+
+    private static void addMarginTopEqualStatusBarHeight(final Window window) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        View withTag = window.getDecorView().findViewWithTag(TAG_OFFSET);
+        if (withTag == null) return;
+        addMarginTopEqualStatusBarHeight(withTag);
+    }
+
+    private static void subtractMarginTopEqualStatusBarHeight(final Window window) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        View withTag = window.getDecorView().findViewWithTag(TAG_OFFSET);
+        if (withTag == null) return;
+        subtractMarginTopEqualStatusBarHeight(withTag);
     }
 
     /**
-     * 设置状态栏颜色
+     * Set the status bar's color.
      *
-     * @param activity activity
-     * @param color    状态栏颜色值
+     * @param activity The activity.
+     * @param color    The status bar's color.
      */
-    public static void setStatusBarColor(@NonNull final Activity activity,
+    public static View setStatusBarColor(@NonNull final Activity activity,
                                          @ColorInt final int color) {
-        setStatusBarColor(activity, color, DEFAULT_ALPHA, false);
+        return setStatusBarColor(activity, color, false);
     }
 
     /**
-     * 设置状态栏颜色
+     * Set the status bar's color.
      *
-     * @param activity activity
-     * @param color    状态栏颜色值
-     * @param alpha    状态栏透明度，此透明度并非颜色中的透明度
+     * @param activity The activity.
+     * @param color    The status bar's color.
+     * @param isDecor  True to add fake status bar in DecorView,
+     *                 false to add fake status bar in ContentView.
      */
-    public static void setStatusBarColor(@NonNull final Activity activity,
+    public static View setStatusBarColor(@NonNull final Activity activity,
                                          @ColorInt final int color,
-                                         @IntRange(from = 0, to = 255) final int alpha) {
-        setStatusBarColor(activity, color, alpha, false);
-    }
-
-    /**
-     * 设置状态栏颜色
-     *
-     * @param activity activity
-     * @param color    状态栏颜色值
-     * @param alpha    状态栏透明度，此透明度并非颜色中的透明度
-     * @param isDecor  {@code true}: 设置在DecorView中<br>
-     *                 {@code false}: 设置在ContentView中
-     */
-    public static void setStatusBarColor(@NonNull final Activity activity,
-                                         @ColorInt final int color,
-                                         @IntRange(from = 0, to = 255) final int alpha,
                                          final boolean isDecor) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        hideAlphaView(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return null;
         transparentStatusBar(activity);
-        addStatusBarColor(activity, color, alpha, isDecor);
+        return applyStatusBarColor(activity, color, isDecor);
     }
 
     /**
-     * 设置状态栏透明度
+     * Set the status bar's color.
      *
-     * @param activity activity
-     */
-    public static void setStatusBarAlpha(@NonNull final Activity activity) {
-        setStatusBarAlpha(activity, DEFAULT_ALPHA, false);
-    }
-
-    /**
-     * 设置状态栏透明度
-     *
-     * @param activity activity
-     */
-    public static void setStatusBarAlpha(@NonNull final Activity activity,
-                                         @IntRange(from = 0, to = 255) final int alpha) {
-        setStatusBarAlpha(activity, alpha, false);
-    }
-
-    /**
-     * 设置状态栏透明度
-     *
-     * @param activity activity
-     * @param alpha    状态栏透明度
-     * @param isDecor  {@code true}: 设置在DecorView中<br>
-     *                 {@code false}: 设置在ContentView中
-     */
-    public static void setStatusBarAlpha(@NonNull final Activity activity,
-                                         @IntRange(from = 0, to = 255) final int alpha,
-                                         final boolean isDecor) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        hideColorView(activity);
-        transparentStatusBar(activity);
-        addStatusBarAlpha(activity, alpha, isDecor);
-    }
-
-    /**
-     * 设置状态栏颜色
-     *
-     * @param fakeStatusBar 伪造状态栏
-     * @param color         状态栏颜色值
-     */
-    public static void setStatusBarColor(@NonNull final View fakeStatusBar, @ColorInt final int color) {
-        setStatusBarColor(fakeStatusBar, color, DEFAULT_ALPHA);
-    }
-
-    /**
-     * 设置状态栏颜色
-     *
-     * @param fakeStatusBar 伪造状态栏
-     * @param color         状态栏颜色值
-     * @param alpha         状态栏透明度，此透明度并非颜色中的透明度
+     * @param fakeStatusBar The fake status bar view.
+     * @param color         The status bar's color.
      */
     public static void setStatusBarColor(@NonNull final View fakeStatusBar,
-                                         @ColorInt final int color,
-                                         @IntRange(from = 0, to = 255) final int alpha) {
+                                         @ColorInt final int color) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        Activity activity = getActivityByView(fakeStatusBar);
+        if (activity == null) return;
+        transparentStatusBar(activity);
         fakeStatusBar.setVisibility(View.VISIBLE);
-        transparentStatusBar((Activity) fakeStatusBar.getContext());
         ViewGroup.LayoutParams layoutParams = fakeStatusBar.getLayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        layoutParams.height = BarUtils.getStatusBarHeight();
-        fakeStatusBar.setBackgroundColor(getStatusBarColor(color, alpha));
+        layoutParams.height = getStatusBarHeight();
+        fakeStatusBar.setBackgroundColor(color);
     }
 
     /**
-     * 设置状态栏透明度
+     * Set the custom status bar.
      *
-     * @param fakeStatusBar 伪造状态栏
+     * @param fakeStatusBar The fake status bar view.
      */
-    public static void setStatusBarAlpha(@NonNull final View fakeStatusBar) {
-        setStatusBarAlpha(fakeStatusBar, DEFAULT_ALPHA);
-    }
-
-    /**
-     * 设置状态栏透明度
-     *
-     * @param fakeStatusBar 伪造状态栏
-     * @param alpha         状态栏透明度
-     */
-    public static void setStatusBarAlpha(@NonNull final View fakeStatusBar,
-                                         @IntRange(from = 0, to = 255) final int alpha) {
+    public static void setStatusBarCustom(@NonNull final View fakeStatusBar) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        Activity activity = getActivityByView(fakeStatusBar);
+        if (activity == null) return;
+        transparentStatusBar(activity);
         fakeStatusBar.setVisibility(View.VISIBLE);
-        transparentStatusBar((Activity) fakeStatusBar.getContext());
         ViewGroup.LayoutParams layoutParams = fakeStatusBar.getLayoutParams();
-        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        layoutParams.height = BarUtils.getStatusBarHeight();
-        fakeStatusBar.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
+        if (layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    getStatusBarHeight()
+            );
+            fakeStatusBar.setLayoutParams(layoutParams);
+        } else {
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = getStatusBarHeight();
+        }
     }
 
     /**
-     * 为DrawerLayout设置状态栏颜色
-     * <p>DrawLayout需设置 {@code android:fitsSystemWindows="true"}</p>
+     * Set the status bar's color for DrawerLayout.
+     * <p>DrawLayout must add {@code android:fitsSystemWindows="true"}</p>
      *
-     * @param activity      activity
-     * @param drawer        drawerLayout
-     * @param fakeStatusBar 伪造状态栏
-     * @param color         状态栏颜色值
-     * @param isTop         drawerLayout是否在顶层
+     * @param drawer        The DrawLayout.
+     * @param fakeStatusBar The fake status bar view.
+     * @param color         The status bar's color.
      */
-    public static void setStatusBarColor4Drawer(@NonNull final Activity activity,
-                                                @NonNull final DrawerLayout drawer,
+    public static void setStatusBarColor4Drawer(@NonNull final DrawerLayout drawer,
+                                                @NonNull final View fakeStatusBar,
+                                                @ColorInt final int color) {
+        setStatusBarColor4Drawer(drawer, fakeStatusBar, color, false);
+    }
+
+    /**
+     * Set the status bar's color for DrawerLayout.
+     * <p>DrawLayout must add {@code android:fitsSystemWindows="true"}</p>
+     *
+     * @param drawer        The DrawLayout.
+     * @param fakeStatusBar The fake status bar view.
+     * @param color         The status bar's color.
+     * @param isTop         True to set DrawerLayout at the top layer, false otherwise.
+     */
+    public static void setStatusBarColor4Drawer(@NonNull final DrawerLayout drawer,
                                                 @NonNull final View fakeStatusBar,
                                                 @ColorInt final int color,
                                                 final boolean isTop) {
-        setStatusBarColor4Drawer(activity, drawer, fakeStatusBar, color, DEFAULT_ALPHA, isTop);
-    }
-
-    /**
-     * 为DrawerLayout设置状态栏颜色
-     * <p>DrawLayout需设置 {@code android:fitsSystemWindows="true"}</p>
-     *
-     * @param activity      activity
-     * @param drawer        drawerLayout
-     * @param fakeStatusBar 伪造状态栏
-     * @param color         状态栏颜色值
-     * @param alpha         状态栏透明度，此透明度并非颜色中的透明度
-     * @param isTop         drawerLayout是否在顶层
-     */
-    public static void setStatusBarColor4Drawer(@NonNull final Activity activity,
-                                                @NonNull final DrawerLayout drawer,
-                                                @NonNull final View fakeStatusBar,
-                                                @ColorInt final int color,
-                                                @IntRange(from = 0, to = 255) final int alpha,
-                                                final boolean isTop) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        drawer.setFitsSystemWindows(false);
+        Activity activity = getActivityByView(fakeStatusBar);
+        if (activity == null) return;
         transparentStatusBar(activity);
-        setStatusBarColor(fakeStatusBar, color, isTop ? alpha : 0);
-        for (int i = 0, len = drawer.getChildCount(); i < len; i++) {
+        drawer.setFitsSystemWindows(false);
+        setStatusBarColor(fakeStatusBar, color);
+        for (int i = 0, count = drawer.getChildCount(); i < count; i++) {
             drawer.getChildAt(i).setFitsSystemWindows(false);
         }
         if (isTop) {
-            hideAlphaView(activity);
+            hideStatusBarView(activity);
         } else {
-            addStatusBarAlpha(activity, alpha, false);
+            setStatusBarColor(activity, color, false);
         }
     }
 
-    /**
-     * 为DrawerLayout设置状态栏透明度
-     * <p>DrawLayout需设置 {@code android:fitsSystemWindows="true"}</p>
-     *
-     * @param activity      activity
-     * @param drawer        drawerLayout
-     * @param fakeStatusBar 伪造状态栏
-     * @param isTop         drawerLayout是否在顶层
-     */
-    public static void setStatusBarAlpha4Drawer(@NonNull final Activity activity,
-                                                @NonNull final DrawerLayout drawer,
-                                                @NonNull final View fakeStatusBar,
-                                                final boolean isTop) {
-        setStatusBarAlpha4Drawer(activity, drawer, fakeStatusBar, DEFAULT_ALPHA, isTop);
-    }
-
-    /**
-     * 为DrawerLayout设置状态栏透明度
-     * <p>DrawLayout需设置 {@code android:fitsSystemWindows="true"}</p>
-     *
-     * @param activity      activity
-     * @param drawer        drawerLayout
-     * @param fakeStatusBar 伪造状态栏
-     * @param alpha         状态栏透明度
-     * @param isTop         drawerLayout是否在顶层
-     */
-    public static void setStatusBarAlpha4Drawer(@NonNull final Activity activity,
-                                                @NonNull final DrawerLayout drawer,
-                                                @NonNull final View fakeStatusBar,
-                                                @IntRange(from = 0, to = 255) final int alpha,
-                                                final boolean isTop) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        drawer.setFitsSystemWindows(false);
-        transparentStatusBar(activity);
-        setStatusBarAlpha(fakeStatusBar, isTop ? alpha : 0);
-        for (int i = 0, len = drawer.getChildCount(); i < len; i++) {
-            drawer.getChildAt(i).setFitsSystemWindows(false);
-        }
-        if (isTop) {
-            hideAlphaView(activity);
-        } else {
-            addStatusBarAlpha(activity, alpha, false);
-        }
-    }
-
-    private static void addStatusBarColor(final Activity activity, final int color, final int alpha, boolean isDecor) {
+    private static View applyStatusBarColor(final Activity activity,
+                                            final int color,
+                                            boolean isDecor) {
         ViewGroup parent = isDecor ?
                 (ViewGroup) activity.getWindow().getDecorView() :
                 (ViewGroup) activity.findViewById(android.R.id.content);
-        View fakeStatusBarView = parent.findViewWithTag(TAG_COLOR);
+        View fakeStatusBarView = parent.findViewWithTag(TAG_STATUS_BAR);
         if (fakeStatusBarView != null) {
             if (fakeStatusBarView.getVisibility() == View.GONE) {
                 fakeStatusBarView.setVisibility(View.VISIBLE);
             }
-            fakeStatusBarView.setBackgroundColor(getStatusBarColor(color, alpha));
+            fakeStatusBarView.setBackgroundColor(color);
         } else {
-            parent.addView(createColorStatusBarView(parent.getContext(), color, alpha));
+            fakeStatusBarView = createStatusBarView(activity, color);
+            parent.addView(fakeStatusBarView);
         }
+        return fakeStatusBarView;
     }
 
-    private static void addStatusBarAlpha(final Activity activity, final int alpha, boolean isDecor) {
-        ViewGroup parent = isDecor ?
-                (ViewGroup) activity.getWindow().getDecorView() :
-                (ViewGroup) activity.findViewById(android.R.id.content);
-        View fakeStatusBarView = parent.findViewWithTag(TAG_ALPHA);
-        if (fakeStatusBarView != null) {
-            if (fakeStatusBarView.getVisibility() == View.GONE) {
-                fakeStatusBarView.setVisibility(View.VISIBLE);
-            }
-            fakeStatusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
-        } else {
-            parent.addView(createAlphaStatusBarView(parent.getContext(), alpha));
-        }
+    private static void hideStatusBarView(final Activity activity) {
+        hideStatusBarView(activity.getWindow());
     }
 
-    private static void hideColorView(final Activity activity) {
-        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        View fakeStatusBarView = decorView.findViewWithTag(TAG_COLOR);
+    private static void hideStatusBarView(final Window window) {
+        ViewGroup decorView = (ViewGroup) window.getDecorView();
+        View fakeStatusBarView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (fakeStatusBarView == null) return;
         fakeStatusBarView.setVisibility(View.GONE);
     }
 
-    private static void hideAlphaView(final Activity activity) {
-        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        View fakeStatusBarView = decorView.findViewWithTag(TAG_ALPHA);
+    private static void showStatusBarView(final Window window) {
+        ViewGroup decorView = (ViewGroup) window.getDecorView();
+        View fakeStatusBarView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (fakeStatusBarView == null) return;
-        fakeStatusBarView.setVisibility(View.GONE);
+        fakeStatusBarView.setVisibility(View.VISIBLE);
     }
 
-    private static int getStatusBarColor(final int color, final int alpha) {
-        if (alpha == 0) return color;
-        float a = 1 - alpha / 255f;
-        int red = (color >> 16) & 0xff;
-        int green = (color >> 8) & 0xff;
-        int blue = color & 0xff;
-        red = (int) (red * a + 0.5);
-        green = (int) (green * a + 0.5);
-        blue = (int) (blue * a + 0.5);
-        return Color.argb(255, red, green, blue);
-    }
-
-    /**
-     * 绘制一个和状态栏一样高的颜色矩形
-     */
-    private static View createColorStatusBarView(final Context context, final int color, final int alpha) {
-        View statusBarView = new View(context);
-        statusBarView.setLayoutParams(new LinearLayout.LayoutParams(
+    private static View createStatusBarView(final Activity activity,
+                                            final int color) {
+        View statusBarView = new View(activity);
+        statusBarView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight()));
-        statusBarView.setBackgroundColor(getStatusBarColor(color, alpha));
-        statusBarView.setTag(TAG_COLOR);
-        return statusBarView;
-    }
-
-    /**
-     * 绘制一个和状态栏一样高的黑色透明度矩形
-     */
-    private static View createAlphaStatusBarView(final Context context, final int alpha) {
-        View statusBarView = new View(context);
-        statusBarView.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight()));
-        statusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
-        statusBarView.setTag(TAG_ALPHA);
+        statusBarView.setBackgroundColor(color);
+        statusBarView.setTag(TAG_STATUS_BAR);
         return statusBarView;
     }
 
@@ -396,8 +376,14 @@ public final class BarUtils {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             int option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            window.getDecorView().setSystemUiVisibility(option);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                int vis = window.getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                window.getDecorView().setSystemUiVisibility(option | vis);
+            } else {
+                window.getDecorView().setSystemUiVisibility(option);
+            }
             window.setStatusBarColor(Color.TRANSPARENT);
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -409,15 +395,16 @@ public final class BarUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * 获取ActionBar高度
+     * Return the action bar's height.
      *
-     * @param activity activity
-     * @return ActionBar高度
+     * @return the action bar's height
      */
-    public static int getActionBarHeight(@NonNull final Activity activity) {
+    public static int getActionBarHeight() {
         TypedValue tv = new TypedValue();
-        if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            return TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources().getDisplayMetrics());
+        if (Utils.getApp().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            return TypedValue.complexToDimensionPixelSize(
+                    tv.data, Utils.getApp().getResources().getDisplayMetrics()
+            );
         }
         return 0;
     }
@@ -427,38 +414,27 @@ public final class BarUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * 显示通知栏
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>}</p>
+     * Set the notification bar's visibility.
+     * <p>Must hold {@code <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />}</p>
      *
-     * @param context        上下文
-     * @param isSettingPanel {@code true}: 打开设置<br>{@code false}: 打开通知
+     * @param isVisible True to set notification bar visible, false otherwise.
      */
-    public static void showNotificationBar(@NonNull final Context context, final boolean isSettingPanel) {
-        String methodName = (Build.VERSION.SDK_INT <= 16) ? "expand"
-                : (isSettingPanel ? "expandSettingsPanel" : "expandNotificationsPanel");
-        invokePanels(context, methodName);
+    @RequiresPermission(EXPAND_STATUS_BAR)
+    public static void setNotificationBarVisibility(final boolean isVisible) {
+        String methodName;
+        if (isVisible) {
+            methodName = (Build.VERSION.SDK_INT <= 16) ? "expand" : "expandNotificationsPanel";
+        } else {
+            methodName = (Build.VERSION.SDK_INT <= 16) ? "collapse" : "collapsePanels";
+        }
+        invokePanels(methodName);
     }
 
-    /**
-     * 隐藏通知栏
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>}</p>
-     *
-     * @param context 上下文
-     */
-    public static void hideNotificationBar(@NonNull final Context context) {
-        String methodName = (Build.VERSION.SDK_INT <= 16) ? "collapse" : "collapsePanels";
-        invokePanels(context, methodName);
-    }
-
-    /**
-     * 反射唤醒通知栏
-     *
-     * @param context    上下文
-     * @param methodName 方法名
-     */
-    private static void invokePanels(@NonNull final Context context, final String methodName) {
+    private static void invokePanels(final String methodName) {
         try {
-            Object service = context.getSystemService("statusbar");
+            @SuppressLint("WrongConstant")
+            Object service = Utils.getApp().getSystemService("statusbar");
+            @SuppressLint("PrivateApi")
             Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
             Method expand = statusBarManager.getMethod(methodName);
             expand.invoke(service);
@@ -472,10 +448,9 @@ public final class BarUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * 获取导航栏高度
-     * <p>0代表不存在</p>
+     * Return the navigation bar's height.
      *
-     * @return 导航栏高度
+     * @return the navigation bar's height
      */
     public static int getNavBarHeight() {
         Resources res = Utils.getApp().getResources();
@@ -488,18 +463,164 @@ public final class BarUtils {
     }
 
     /**
-     * 隐藏导航栏
+     * Set the navigation bar's visibility.
      *
-     * @param activity activity
+     * @param activity  The activity.
+     * @param isVisible True to set navigation bar visible, false otherwise.
      */
-    public static void hideNavBar(@NonNull final Activity activity) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) return;
-        if (getNavBarHeight() > 0) {
-            View decorView = activity.getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            decorView.setSystemUiVisibility(uiOptions);
+    public static void setNavBarVisibility(@NonNull final Activity activity, boolean isVisible) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        setNavBarVisibility(activity.getWindow(), isVisible);
+
+    }
+
+    /**
+     * Set the navigation bar's visibility.
+     *
+     * @param window    The window.
+     * @param isVisible True to set navigation bar visible, false otherwise.
+     */
+    public static void setNavBarVisibility(@NonNull final Window window, boolean isVisible) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        final ViewGroup decorView = (ViewGroup) window.getDecorView();
+        for (int i = 0, count = decorView.getChildCount(); i < count; i++) {
+            final View child = decorView.getChildAt(i);
+            final int id = child.getId();
+            if (id != View.NO_ID) {
+                String resourceEntryName = Utils.getApp()
+                        .getResources()
+                        .getResourceEntryName(id);
+                if ("navigationBarBackground".equals(resourceEntryName)) {
+                    child.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+                }
+            }
         }
+        final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (isVisible) {
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~uiOptions);
+        } else {
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | uiOptions);
+        }
+    }
+
+    /**
+     * Return whether the navigation bar visible.
+     * <p>Call it in onWindowFocusChanged will get right result.</p>
+     *
+     * @param activity The activity.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isNavBarVisible(@NonNull final Activity activity) {
+        return isNavBarVisible(activity.getWindow());
+    }
+
+    /**
+     * Return whether the navigation bar visible.
+     * <p>Call it in onWindowFocusChanged will get right result.</p>
+     *
+     * @param window The window.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isNavBarVisible(@NonNull final Window window) {
+        boolean isVisible = false;
+        ViewGroup decorView = (ViewGroup) window.getDecorView();
+        for (int i = 0, count = decorView.getChildCount(); i < count; i++) {
+            final View child = decorView.getChildAt(i);
+            final int id = child.getId();
+            if (id != View.NO_ID) {
+                String resourceEntryName = Utils.getApp()
+                        .getResources()
+                        .getResourceEntryName(id);
+                if ("navigationBarBackground".equals(resourceEntryName)
+                        && child.getVisibility() == View.VISIBLE) {
+                    isVisible = true;
+                    break;
+                }
+            }
+        }
+        if (isVisible) {
+            int visibility = decorView.getSystemUiVisibility();
+            isVisible = (visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+        }
+        return isVisible;
+    }
+
+    /**
+     * Set the navigation bar's color.
+     *
+     * @param activity The activity.
+     * @param color    The navigation bar's color.
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setNavBarColor(@NonNull final Activity activity, @ColorInt final int color) {
+        setNavBarColor(activity.getWindow(), color);
+    }
+
+    /**
+     * Set the navigation bar's color.
+     *
+     * @param window The window.
+     * @param color  The navigation bar's color.
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setNavBarColor(@NonNull final Window window, @ColorInt final int color) {
+        window.setNavigationBarColor(color);
+    }
+
+    /**
+     * Return the color of navigation bar.
+     *
+     * @param activity The activity.
+     * @return the color of navigation bar
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static int getNavBarColor(@NonNull final Activity activity) {
+        return getNavBarColor(activity.getWindow());
+    }
+
+    /**
+     * Return the color of navigation bar.
+     *
+     * @param window The window.
+     * @return the color of navigation bar
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static int getNavBarColor(@NonNull final Window window) {
+        return window.getNavigationBarColor();
+    }
+
+    /**
+     * Return whether the navigation bar visible.
+     *
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isSupportNavBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            WindowManager wm = (WindowManager) Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
+            if (wm == null) return false;
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            Point realSize = new Point();
+            display.getSize(size);
+            display.getRealSize(realSize);
+            return realSize.y != size.y || realSize.x != size.x;
+        }
+        boolean menu = ViewConfiguration.get(Utils.getApp()).hasPermanentMenuKey();
+        boolean back = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
+        return !menu && !back;
+    }
+
+    private static Activity getActivityByView(@NonNull final View view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        Log.e("BarUtils", "the view's Context is not an Activity.");
+        return null;
     }
 }

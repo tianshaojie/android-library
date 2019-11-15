@@ -96,20 +96,13 @@ dependencies {
     // api 'com.eightbitlab:supportrenderscriptblur:1.0.1'
     // api 'com.eightbitlab:blurview:1.3.4'
 
-    // https://github.com/tbruyelle/RxPermissions
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
-
-    // 轮播控件 https://github.com/youth5201314/banner
-    api 'com.youth.banner:banner:1.4.10'
-
     // 高德地图 https://mvnrepository.com/artifact/com.amap.api/location
     api 'com.amap.api:location:4.7.2'
 
-    // 轻量指示器 https://github.com/ongakuer/CircleIndicator
-    api 'me.relex:circleindicator:1.3.2'
-
     // 高性能通用 key-value 组件 https://github.com/Tencent/MMKV
-    api 'com.tencent:mmkv:1.0.23'
+    api ('com.tencent:mmkv:1.0.23')  {
+        exclude group: 'androidx.annotation', module: 'annotation'
+    }
 
     // Facebook调试工具Chrome浏览器输入chrome://inspect，https://github.com/facebook/stetho
     api 'com.facebook.stetho:stetho:1.5.1'

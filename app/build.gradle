@@ -17,10 +17,6 @@ android {
                 arguments = ["moduleName": project.name]
             }
         }
-
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
     }
     buildTypes {
         debug {
@@ -28,12 +24,20 @@ android {
             debuggable true
             buildConfigField 'boolean', 'isDebug', 'true'
             signingConfig signingConfigs.debug
+
+            ndk {
+                abiFilters "armeabi-v7a", "x86"
+            }
         }
         release {
             minifyEnabled true
             debuggable false
             buildConfigField 'boolean', 'isDebug', 'false'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
         }
     }
 
@@ -50,7 +54,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     annotationProcessor 'com.chenenyu.router:compiler:1.5.1'
     implementation project(':library')
-    implementation 'com.qw:soulpermission:1.1.8'
 
+    implementation 'com.qw:soulpermission:1.1.8'
+    implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    // 轻量指示器 https://github.com/ongakuer/CircleIndicator
+    implementation 'me.relex:circleindicator:1.3.2'
 }

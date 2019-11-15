@@ -1,17 +1,14 @@
 package cn.skyui.library.utils;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
-import android.os.StatFs;
 import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 
-import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +16,7 @@ import java.util.List;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/08/11
- *     desc  : SD卡相关工具类
+ *     desc  : utils about sdcard
  * </pre>
  */
 public final class SDCardUtils {
@@ -29,108 +26,119 @@ public final class SDCardUtils {
     }
 
     /**
-     * 判断SD卡是否可用
+     * Return whether sdcard is enabled by environment.
      *
-     * @return true : 可用<br>false : 不可用
+     * @return {@code true}: enabled<br>{@code false}: disabled
      */
-    public static boolean isSDCardEnable() {
-        return !getSDCardPaths().isEmpty();
+    public static boolean isSDCardEnableByEnvironment() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     /**
-     * 获取SD卡路径
+     * Return the path of sdcard by environment.
      *
-     * @param removable true : 外置SD卡<br>false : 内置SD卡
-     * @return SD卡路径
+     * @return the path of sdcard by environment
      */
-    @SuppressWarnings("TryWithIdenticalCatches")
-    public static List<String> getSDCardPaths(boolean removable) {
-        List<String> paths = new ArrayList<>();
-        StorageManager mStorageManager = (StorageManager) Utils.getApp()
-                .getSystemService(Context.STORAGE_SERVICE);
-        try {
-            Class<?> storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
-            Method getVolumeList = StorageManager.class.getMethod("getVolumeList");
-            Method getPath = storageVolumeClazz.getMethod("getPath");
-            Method isRemovable = storageVolumeClazz.getMethod("isRemovable");
-            Object result = getVolumeList.invoke(mStorageManager);
-            final int length = Array.getLength(result);
-            for (int i = 0; i < length; i++) {
-                Object storageVolumeElement = Array.get(result, i);
-                String path = (String) getPath.invoke(storageVolumeElement);
-                boolean res = (Boolean) isRemovable.invoke(storageVolumeElement);
-                if (removable == res) {
-                    paths.add(path);
+    public static String getSDCardPathByEnvironment() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        }
+        return "";
+    }
+
+    /**
+     * Return the information of sdcard.
+     *
+     * @return the information of sdcard
+     */
+    public static List<SDCardInfo> getSDCardInfo() {
+        List<SDCardInfo> paths = new ArrayList<>();
+        StorageManager sm =
+                (StorageManager) Utils.getApp().getSystemService(Context.STORAGE_SERVICE);
+        if (sm == null) return paths;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            List<StorageVolume> storageVolumes = sm.getStorageVolumes();
+            try {
+                //noinspection JavaReflectionMemberAccess
+                Method getPathMethod = StorageVolume.class.getMethod("getPath");
+                for (StorageVolume storageVolume : storageVolumes) {
+                    boolean isRemovable = storageVolume.isRemovable();
+                    String state = storageVolume.getState();
+                    String path = (String) getPathMethod.invoke(storageVolume);
+                    paths.add(new SDCardInfo(path, state, isRemovable));
                 }
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return paths;
-    }
+            return paths;
 
-    /**
-     * 获取SD卡路径
-     *
-     * @return SD卡路径
-     */
-    @SuppressWarnings("TryWithIdenticalCatches")
-    public static List<String> getSDCardPaths() {
-        StorageManager storageManager = (StorageManager) Utils.getApp()
-                .getSystemService(Context.STORAGE_SERVICE);
-        List<String> paths = new ArrayList<>();
-        try {
-            Method getVolumePathsMethod = StorageManager.class.getMethod("getVolumePaths");
-            getVolumePathsMethod.setAccessible(true);
-            Object invoke = getVolumePathsMethod.invoke(storageManager);
-            paths = Arrays.asList((String[]) invoke);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return paths;
-    }
-
-    /**
-     * 判断sd卡是否存在
-     *
-     * @return true:存在；false：不存在
-     */
-    public static boolean isSdcardExisting() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
         } else {
-            return false;
-        }
-    }
-
-    /**
-     * 获取SDCARD剩余存储空间 单位byte
-     *
-     * @return long
-     */
-    public static long getAvailableExternalStorageSize() {
-        if (isSdcardExisting()) {
-            File path = Environment.getExternalStorageDirectory();
-            StatFs stat = new StatFs(path.getPath());
-
-            if (Build.VERSION.SDK_INT >= 18) {
-                return stat.getAvailableBytes();
-            } else {
-                return (long) stat.getAvailableBlocks() * stat.getBlockSize();
+            try {
+                Class<?> storageVolumeClazz = Class.forName("android.os.storage.StorageVolume");
+                //noinspection JavaReflectionMemberAccess
+                Method getPathMethod = storageVolumeClazz.getMethod("getPath");
+                Method isRemovableMethod = storageVolumeClazz.getMethod("isRemovable");
+                //noinspection JavaReflectionMemberAccess
+                Method getVolumeStateMethod = StorageManager.class.getMethod("getVolumeState", String.class);
+                //noinspection JavaReflectionMemberAccess
+                Method getVolumeListMethod = StorageManager.class.getMethod("getVolumeList");
+                Object result = getVolumeListMethod.invoke(sm);
+                final int length = Array.getLength(result);
+                for (int i = 0; i < length; i++) {
+                    Object storageVolumeElement = Array.get(result, i);
+                    String path = (String) getPathMethod.invoke(storageVolumeElement);
+                    boolean isRemovable = (Boolean) isRemovableMethod.invoke(storageVolumeElement);
+                    String state = (String) getVolumeStateMethod.invoke(sm, path);
+                    paths.add(new SDCardInfo(path, state, isRemovable));
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
-        } else {
-            return 0L;
+            return paths;
+        }
+    }
+
+    public static class SDCardInfo {
+
+        private String  path;
+        private String  state;
+        private boolean isRemovable;
+
+        SDCardInfo(String path, String state, boolean isRemovable) {
+            this.path = path;
+            this.state = state;
+            this.isRemovable = isRemovable;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public boolean isRemovable() {
+            return isRemovable;
+        }
+
+        @Override
+        public String toString() {
+            return "SDCardInfo {" +
+                    "path = " + path +
+                    ", state = " + state +
+                    ", isRemovable = " + isRemovable +
+                    '}';
         }
     }
 }

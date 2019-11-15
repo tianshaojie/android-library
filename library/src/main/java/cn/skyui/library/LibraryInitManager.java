@@ -15,7 +15,6 @@ import cn.skyui.library.utils.Utils;
 /**
  * Created by tiansj on 2018/4/4.
  */
-
 public class LibraryInitManager {
 
     public static void init(Application application, boolean isDebug, String... modules) {
