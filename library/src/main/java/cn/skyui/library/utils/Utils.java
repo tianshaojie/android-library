@@ -64,7 +64,6 @@ public final class Utils {
 
     @SuppressLint("StaticFieldLeak")
     private static Application sApplication;
-    static boolean isDebug = false;
 
     private Utils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -76,13 +75,13 @@ public final class Utils {
      *
      * @param context context
      */
-//    public static void init(final Context context) {
-//        if (context == null) {
-//            init(getApplicationByReflect());
-//            return;
-//        }
-//        init((Application) context.getApplicationContext());
-//    }
+    public static void init(final Context context) {
+        if (context == null) {
+            init(getApplicationByReflect());
+            return;
+        }
+        init((Application) context.getApplicationContext());
+    }
 
     /**
      * Init utils.
@@ -90,8 +89,7 @@ public final class Utils {
      *
      * @param app application
      */
-    public static void init(final Application app, boolean debuggable) {
-        isDebug = debuggable;
+    public static void init(final Application app) {
         if (sApplication == null) {
             if (app == null) {
                 sApplication = getApplicationByReflect();
@@ -117,7 +115,7 @@ public final class Utils {
     public static Application getApp() {
         if (sApplication != null) return sApplication;
         Application app = getApplicationByReflect();
-        init(app, isDebug);
+        init(app);
         return app;
     }
 

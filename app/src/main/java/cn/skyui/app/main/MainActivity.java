@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
-import com.chenenyu.router.annotation.Route;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import cn.skyui.library.utils.ToastUtils;
  * @author tianshaojie
  * @date 2018/1/15
  */
-@Route("main")
+@Route(path = "/app/main")
 public class MainActivity extends BaseActivity {
 
     public static final String SELECTED_INDEX = "selectedIndex";

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.chenenyu.router.annotation.Route;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.gyf.immersionbar.ImmersionBar;
 
 import cn.skyui.app.main.MainActivity;
@@ -14,7 +14,7 @@ import cn.skyui.library.base.activity.BaseActivity;
  * @author tianshaojie
  * @date 2018/1/15
  */
-@Route("splash")
+@Route(path = "/app/splash")
 public class SplashActivity extends Activity {
 
     @Override

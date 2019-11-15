@@ -11,6 +11,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -83,9 +88,9 @@ dependencies {
     // 侧滑返回：https://github.com/ikew0ng/SwipeBackLayout
     api 'me.imid.swipebacklayout.lib:library:1.1.0'
 
-    // 组件化路由框架：https://github.com/chenenyu/Router
-    api 'com.chenenyu.router:router:1.5.2'
-    annotationProcessor 'com.chenenyu.router:compiler:1.5.1'
+    // 组件化路由框架：https://github.com/alibaba/ARouter
+    api 'com.alibaba:arouter-api:1.5.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 
     // RecyclerAdapter框架：https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
@@ -107,4 +112,5 @@ dependencies {
     // Facebook调试工具Chrome浏览器输入chrome://inspect，https://github.com/facebook/stetho
     api 'com.facebook.stetho:stetho:1.5.1'
     api 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
 }

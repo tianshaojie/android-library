@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import com.chenenyu.router.Router;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import cn.skyui.library.R;
 import cn.skyui.library.utils.KeyboardUtils;
 import cn.skyui.library.utils.imm.IMMLeaks;
 
@@ -47,7 +44,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         IMMLeaks.fixFocusedViewLeak(getApplication());
         mActivity = this;
         if(APP_STATUS  != APP_STATUS_NORMAL) {
-            Router.build("splash").go(this);
+            ARouter.getInstance().build("/app/splash").navigation();
             finish();
             return;
         }

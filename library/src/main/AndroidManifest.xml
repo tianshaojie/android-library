@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.skyui.library">
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <provider
+            android:authorities="${applicationId}.library.provider"
+            android:name=".LibraryInitProvider"
+            android:exported="false"
+            android:multiprocess="true"/>
+    </application>
 </manifest>

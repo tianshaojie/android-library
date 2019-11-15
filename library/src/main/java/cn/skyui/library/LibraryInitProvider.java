@@ -1,63 +1,114 @@
 package cn.skyui.library;
 
-import android.app.Application;
+import android.content.ContentProvider;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import com.chenenyu.router.Configuration;
-import com.chenenyu.router.Router;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.mmkv.MMKV;
 
 import cn.skyui.library.data.model.User;
+import cn.skyui.library.utils.AppUtils;
 import cn.skyui.library.utils.Utils;
 
 /**
- * Created by tiansj on 2018/4/4.
+ * @author tianshaojie
  */
-public class LibraryInitManager {
+public class LibraryInitProvider extends ContentProvider {
 
-    public static void init(Application application, boolean isDebug, String... modules) {
-        initUtils(application, isDebug);
-        initLogger();
-        initMMKV(application);
-        initUser();
-        initRouter(isDebug, modules);
-//        initCrashReporter(application);
-//        initLeakCanary(application);
-        initStetho(application);
+    @Override
+    public boolean onCreate() {
+        init(getContext());
+        return true;
     }
 
-    private static void initUtils(Application application, boolean isDebug) {
-        Utils.init(application, isDebug);
+    public static void init(Context context) {
+        initUtils(context);
+        initLogger();
+        initMMKV();
+        initUser();
+        initRouter();
+        initStetho();
+        Logger.e("isAppDebug = " + AppUtils.isAppDebug());
+//        initCrashReporter(context);
+//        initLeakCanary(context);
+    }
+
+    private static void initUtils(Context context) {
+        Utils.init(context);
     }
 
     private static void initLogger() {
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
+    private static void initMMKV() {
+        MMKV.initialize(Utils.getApp());
+    }
+
     private static void initUser() {
         User.getInstance().init();
     }
 
-    private static void initRouter(boolean debuggable, String... modules) {
-        Router.initialize(new Configuration.Builder()
-                // 调试模式，开启后会打印log
-                .setDebuggable(debuggable)
-                // 模块名，每个使用Router的module都要在这里注册，getResources().getStringArray(R.array.modules)
-                .registerModules(modules)
-                .build());
+    private static void initRouter() {
+        if (AppUtils.isAppDebug()) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+        ARouter.init(Utils.getApp());
     }
 
-//    private static void initLeakCanary(Application application) {
-//        LeakCanary.install(application);
+    /**
+     * Facebook调试工具，Chrome输入chrome://inspect
+     */
+    private static void initStetho() {
+        Stetho.initializeWithDefaults(Utils.getApp());
+    }
+
+    @Nullable
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public String getType(@NonNull Uri uri) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        return null;
+    }
+
+    @Override
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        return 0;
+    }
+
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        return 0;
+    }
+
+//    private static void initLeakCanary(Context context) {
+//        LeakCanary.install(context);
 //    }
 //
 //    /**
 //     * 初始化Bugly & 应用升级
-//     * @param application
+//     * @param context
 //     */
-//    private static void initCrashReporter(Application application) {
+//    private static void initCrashReporter(Context context) {
 //        /***** Beta高级设置 *****/
 //        /**
 //         * true表示app启动自动初始化升级模块; false不会自动初始化;
@@ -81,17 +132,11 @@ public class LibraryInitManager {
 ////        strategy.setAppChannel(APP_CHANNEL);
 //
 //        /***** 统一初始化Bugly产品，包含Beta *****/
-//        Bugly.init(application, "c57feab2c2", AppUtils.isDebug());
+//        Bugly.init(context, "c57feab2c2", AppUtils.isDebug());
 //    }
 //
-    /**
-     * Facebook调试工具，Chrome输入chrome://inspect
-     */
-    private static void initStetho(Application application) {
-        Stetho.initializeWithDefaults(application);
-    }
 //
-//    public static void initUpgrade(Application application, Class<? extends Activity> clazz) {
+//    public static void initUpgrade(Context context, Class<? extends Activity> clazz) {
 //        /**
 //         * 设置升级检查周期为60s(默认检查周期为0s)，60s内SDK不重复向后台请求策略);
 //         */
@@ -131,13 +176,10 @@ public class LibraryInitManager {
 //        Beta.canShowUpgradeActs.add(clazz);
 //
 //        // 完成初始化
-//        Beta.init(application,true);
+//        Beta.init(context,true);
 //
 //        // 主动检查一次
 //        Beta.checkUpgrade(false, false);
 //    }
 
-    private static void initMMKV(Application application) {
-        MMKV.initialize(application);
-    }
 }

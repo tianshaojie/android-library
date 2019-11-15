@@ -3,7 +3,7 @@ package cn.skyui.library.http;
 import android.app.Activity;
 import android.content.Context;
 
-import com.chenenyu.router.Router;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
@@ -92,7 +92,7 @@ public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
                     context = Utils.getApp();
                 }
             }
-            Router.build("LoginByPhone").go(context);
+            ARouter.getInstance().build("/app/login").navigation();
         }
         if(e.getMsg() != null && e.getMsg().length() > 0) {
             ToastUtils.showShort(e.getMsg());

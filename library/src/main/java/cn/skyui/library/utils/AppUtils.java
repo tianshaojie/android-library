@@ -173,45 +173,41 @@ public final class AppUtils {
         return false;
     }
 
-    public static boolean isDebug() {
-        return Utils.isDebug;
+    /**
+     * Return whether it is a debug application.
+     *
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isAppDebug() {
+        return isAppDebug(Utils.getApp().getPackageName());
     }
 
-//    /**
-//     * Return whether it is a debug application.
-//     *
-//     * @return {@code true}: yes<br>{@code false}: no
-//     */
-//    public static boolean isAppDebug() {
-//        return isAppDebug(Utils.getApp().getPackageName());
-//    }
-//
-//    /**
-//     * Return whether it is a debug application.
-//     *
-//     * @param packageName The name of the package.
-//     * @return {@code true}: yes<br>{@code false}: no
-//     */
-//    public static boolean isAppDebug(final String packageName) {
-//        if (isSpace(packageName)) return false;
-//        try {
-//            PackageManager pm = Utils.getApp().getPackageManager();
-//            ApplicationInfo ai = pm.getApplicationInfo(packageName, 0);
-//            return ai != null && (ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-//
-//    /**
-//     * Return whether it is a system application.
-//     *
-//     * @return {@code true}: yes<br>{@code false}: no
-//     */
-//    public static boolean isAppSystem() {
-//        return isAppSystem(Utils.getApp().getPackageName());
-//    }
+    /**
+     * Return whether it is a debug application.
+     *
+     * @param packageName The name of the package.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isAppDebug(final String packageName) {
+        if (isSpace(packageName)) return false;
+        try {
+            PackageManager pm = Utils.getApp().getPackageManager();
+            ApplicationInfo ai = pm.getApplicationInfo(packageName, 0);
+            return ai != null && (ai.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Return whether it is a system application.
+     *
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isAppSystem() {
+        return isAppSystem(Utils.getApp().getPackageName());
+    }
 
     /**
      * Return whether it is a system application.
