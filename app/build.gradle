@@ -34,7 +34,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             ndk {
-                abiFilters "armeabi-v7a"
+                abiFilters "armeabi-v7a", "x86"
             }
         }
     }
@@ -51,10 +51,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':library')
+    implementation project(':module-main')
+    implementation project(':module-market')
 
     implementation 'com.qw:soulpermission:1.1.8'
     implementation 'com.youth.banner:banner:1.4.10'
-    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     // 轻量指示器 https://github.com/ongakuer/CircleIndicator
     implementation 'me.relex:circleindicator:1.3.2'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'

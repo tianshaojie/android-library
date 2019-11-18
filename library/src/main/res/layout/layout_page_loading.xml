@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:text="@string/progress_loading"
-            android:textColor="@color/text_color_gray"
+            android:textColor="@color/fz_common_white"
             android:textSize="@dimen/text_size_15" />
     </LinearLayout>
 

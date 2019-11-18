@@ -1,24 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <!-- Main不要设置android:windowIsTranslucent=true，会造成动画失效-->
-    <style name="AppTheme.Main" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <!-- 不加此属性，会造成4.4手机statusBar和toolbar之前多一条线 -->
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <!-- Splash直接设置背景，防止启动黑屏 -->
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowNoTitle">true</item>
@@ -27,29 +8,5 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/splash_bg</item>
         <!--<item name="android:windowFullscreen">true</item>-->
-    </style>
-
-
-    <style name="footer_bar">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@null</item>
-        <item name="android:button">@null</item>
-    </style>
-
-    <style name="main_footer_bar_radio" parent="footer_bar">
-        <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:drawablePadding">0dp</item>
-        <item name="android:textSize">@dimen/text_size_10</item>
-        <item name="android:textColor">@drawable/selector_bottom_bar_textview_color</item>
-    </style>
-
-    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">normal</item>
     </style>
 </resources>

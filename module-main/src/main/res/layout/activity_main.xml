@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <cn.skyui.module.main.fragment.CustomViewPager
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:clipChildren="false">
+
+        <RadioGroup
+            android:id="@+id/group"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clipChildren="false"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/bottom_bar_home"
+                style="@style/main_footer_bar_radio"
+                android:drawableTop="@drawable/selector_bottom_bar_home"
+                android:checked="true"
+                android:text="@string/main_navigation_market" />
+
+            <RadioButton
+                android:id="@+id/bottom_bar_favorite"
+                style="@style/main_footer_bar_radio"
+                android:drawableTop="@drawable/selector_bottom_bar_trade"
+                android:text="@string/main_navigation_news" />
+
+
+            <RadioButton
+                android:id="@+id/bottom_bar_message"
+                style="@style/main_footer_bar_radio"
+                android:drawableTop="@drawable/selector_bottom_bar_news"
+                android:text="@string/main_navigation_trade" />
+
+            <RadioButton
+                android:id="@+id/bottom_bar_member"
+                style="@style/main_footer_bar_radio"
+                android:drawableTop="@drawable/selector_bottom_bar_mine"
+                android:text="@string/main_navigation_mine" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/fz_common_form_split_color" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,22 @@
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@drawable/widget_bar_im_normal" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />-->
+    <!--<item android:drawable="@drawable/widget_bar_im_press" android:state_enabled="true" android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/widget_bar_im_press" android:state_checked="true" android:state_enabled="true" />-->
+    <!--<item android:drawable="@drawable/widget_bar_im_normal" />-->
+<!--</selector>-->
+
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--<item android:drawable="@drawable/tab_micro_normal" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />-->
+    <!--<item android:drawable="@drawable/tab_micro_selected" android:state_enabled="true" android:state_pressed="true" />-->
+    <!--<item android:drawable="@drawable/tab_micro_selected" android:state_checked="true" android:state_enabled="true" />-->
+    <!--<item android:drawable="@drawable/tab_micro_normal" />-->
+<!--</selector>-->
+
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_bottom_bar_news_checked" android:state_enabled="true" android:state_focused="true" android:state_pressed="false" />
+    <item android:drawable="@drawable/ic_bottom_bar_news_checked" android:state_enabled="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/ic_bottom_bar_news_checked" android:state_checked="true" android:state_enabled="true" />
+    <item android:drawable="@drawable/ic_bottom_bar_news_checked" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_bottom_bar_news" />
+</selector>

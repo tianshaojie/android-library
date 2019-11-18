@@ -42,7 +42,7 @@
 	<style name="Theme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 		<item name="titleMargin">0dp</item>
 		<!-- 修改toolbar中按钮图标的颜色 -->
-		<item name="colorControlNormal">@color/white</item>
+		<item name="colorControlNormal">@color/fz_common_white</item>
 		<item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
 		<item name="toolbarNavigationButtonStyle">@style/ToolbarNavigationButtonStyle</item>
 		<!--标题与NavigationIcon的距离-->

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- 01 APP主色 -->
+  <color name="colorPrimary">#000F1A</color>
+  <color name="colorPrimaryDark">@color/colorPrimary</color>
+  <color name="colorAccent">#FD9716</color>
+  <!-- 主背景色值 -->
+  <color name="background_color">#ff02121F</color>
+  <!-- 主页底栏色值 -->
+  <color name="bottom_bar_primary">@color/fz_common_main_color</color>
+  <color name="bottom_bar_text_primary">@color/fz_common_gray_03</color>
+  <color name="bottom_bar_text_accent">@color/colorAccent</color>
+
+  <!-- 02 价格&行情数据颜色 -->
+  <color name="fz_common_red">#FF325E</color>
+  <color name="fz_common_green">#1ED489</color>
+  <color name="fz_common_gray">#A4B1BF</color>
+  <color name="fz_common_white">#EEF2F4</color>
+  <color name="fz_common_red_dark">#E24848</color>
+  <color name="fz_common_blue">#1B7ECA</color>
+
+  <!-- 03 线条颜色 -->
+  <color name="fz_common_line_white">#FFFFFF</color>
+  <color name="fz_common_line_yellow">#E6A120</color>
+  <color name="fz_common_line_purple">#9C5CF6</color>
+  <color name="fz_common_line_blue_light">#3C94EB</color>
+  <color name="fz_common_line_red_dark">#D14B4B</color>
+  <color name="fz_common_line_green_light">#1DAAA7</color>
+
+  <!-- 04 场景颜色 -->
+  <color name="fz_common_main_color">#121E2E</color>
+  <color name="fz_common_form_split_color">#2F3840</color>
+  <color name="fz_common_gray_01">#A4B1BF</color>
+  <color name="fz_common_gray_02">#5A6875</color>
+  <color name="fz_common_gray_03">#657380</color>
+
+  <!-- 05 弹窗颜色 -->
+  <color name="fz_common_dialog_background">#1B2838</color>
+  <color name="fz_common_toast_background">#e602121F</color>
+  <color name="fz_common_popwindow_background">#9602121F</color>
+
+  <color name="fz_l2_tip_textcolor">#FF68563F</color>
+
+  <color name="fz_common_color_hint">#965A6875</color>
+  <color name="fz_common_edit_background">#0C1521</color>
+</resources>

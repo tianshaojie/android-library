@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">module-main</string>
+
+    <string name="main_navigation_market">行情</string>
+    <string name="main_navigation_trade">交易</string>
+    <string name="main_navigation_news">资讯</string>
+    <string name="main_navigation_mine">我的</string>
+</resources>
