@@ -16,9 +16,10 @@ import java.util.List;
 
 import cn.skyui.library.base.activity.BaseActivity;
 import cn.skyui.library.utils.ToastUtils;
-import cn.skyui.module.main.fragment.BaseLazyLoadFragment;
+import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.module.main.fragment.CustomViewPager;
 import cn.skyui.module.main.fragment.TempFragment;
+import cn.skyui.moudle.market.fragment.MainMarketFragment;
 
 /**
  * @author tianshaojie
@@ -53,7 +54,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(TempFragment.newInstance("首页"));
+        fragments.add(MainMarketFragment.newInstance());
         fragments.add(TempFragment.newInstance("关注"));
         fragments.add(TempFragment.newInstance("消息"));
         fragments.add(TempFragment.newInstance("我的"));

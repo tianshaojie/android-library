@@ -1,4 +1,4 @@
-package cn.skyui.module.main.fragment;
+package cn.skyui.library.base.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

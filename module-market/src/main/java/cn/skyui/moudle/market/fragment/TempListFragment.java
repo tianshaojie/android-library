@@ -1,4 +1,4 @@
-package cn.skyui.module.main.fragment;
+package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +15,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.Arrays;
 
 import cn.skyui.library.base.fragment.BaseFragment;
-import cn.skyui.module.main.R;
+import cn.skyui.moudle.market.R;
 
-public class SubListFragment extends BaseFragment {
+public class TempListFragment extends BaseFragment {
 
-    public static SubListFragment newInstance() {
-        return new SubListFragment();
+    public static TempListFragment newInstance() {
+        return new TempListFragment();
     }
 
     private View rootView;

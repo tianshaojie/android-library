@@ -35,14 +35,14 @@
                 android:id="@+id/bottom_bar_favorite"
                 style="@style/main_footer_bar_radio"
                 android:drawableTop="@drawable/selector_bottom_bar_trade"
-                android:text="@string/main_navigation_news" />
+                android:text="@string/main_navigation_trade" />
 
 
             <RadioButton
                 android:id="@+id/bottom_bar_message"
                 style="@style/main_footer_bar_radio"
                 android:drawableTop="@drawable/selector_bottom_bar_news"
-                android:text="@string/main_navigation_trade" />
+                android:text="@string/main_navigation_news" />
 
             <RadioButton
                 android:id="@+id/bottom_bar_member"
