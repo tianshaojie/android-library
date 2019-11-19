@@ -21,20 +21,20 @@ import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.library.widget.tabstrip.PagerSlidingTabStrip;
 import cn.skyui.moudle.market.R;
 
-public class MainMarketFragment extends BaseLazyLoadFragment {
+public class MainQuoteFragment extends BaseLazyLoadFragment {
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private PagerSlidingTabStrip tabStrip;
 
     public static BaseLazyLoadFragment newInstance() {
-        return new MainMarketFragment();
+        return new MainQuoteFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main_market, container, false);
+        return inflater.inflate(R.layout.fragment_main_quote, container, false);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
 //                return MyStockTabFragment.newInstance();
             } else if (position == 1) {
 //                return new MarketTabFragment();
-                return TempListFragment.newInstance();
+                return MarketTabFragment.newInstance();
             } else {
                 return null;
             }

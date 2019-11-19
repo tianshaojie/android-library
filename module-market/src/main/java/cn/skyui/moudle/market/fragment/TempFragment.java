@@ -1,4 +1,4 @@
-package cn.skyui.module.main.fragment;
+package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.orhanobut.logger.Logger;
 
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
-import cn.skyui.module.main.R;
+import cn.skyui.moudle.market.R;
 
 /**
  * @author tianshaojie

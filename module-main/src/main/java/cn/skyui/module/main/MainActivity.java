@@ -9,17 +9,20 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.skyui.library.base.activity.BaseActivity;
+import cn.skyui.library.utils.StringUtils;
 import cn.skyui.library.utils.ToastUtils;
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.module.main.fragment.CustomViewPager;
-import cn.skyui.module.main.fragment.TempFragment;
-import cn.skyui.moudle.market.fragment.MainMarketFragment;
+import cn.skyui.module.main.model.MainIntentProtocol;
+import cn.skyui.moudle.market.fragment.TempFragment;
+import cn.skyui.moudle.market.fragment.MainQuoteFragment;
 
 /**
  * @author tianshaojie
@@ -28,10 +31,9 @@ import cn.skyui.moudle.market.fragment.MainMarketFragment;
 @Route(path = "/main/main")
 public class MainActivity extends BaseActivity {
 
-    public static final String SELECTED_INDEX = "selectedIndex";
-    public static final int DEFAULT_SELECTED_INDEX = 0;
-
-    private int selectedFragmentIndex = DEFAULT_SELECTED_INDEX;
+    private int selectedTabIndex = MainIntentProtocol.DEFAULT_SELECTED_INDEX;
+    // 外部跳转到首页的协议类
+    private MainIntentProtocol protocol;
 
     private RadioGroup radioGroup;
     private CustomViewPager fragmentViewPager;
@@ -43,20 +45,37 @@ public class MainActivity extends BaseActivity {
         ImmersionBar.with(this).statusBarColor(R.color.colorPrimary).init();
         initFragments();
         initView();
-        showSelectedFragment(getIntent().getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));
+        initByIntent(getIntent());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        showSelectedFragment(intent.getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));
+        initByIntent(intent);
+    }
+
+    private void initByIntent(Intent intent) {
+        if(intent == null) {
+            return;
+        }
+        protocol = getIntent().getParcelableExtra(MainIntentProtocol.MAIN_PROTOCOL);
+        if(protocol == null) {
+            protocol =  MainIntentProtocol.DEFAULT;
+        }
+        showSelectedFragment(protocol.primaryTabIndex);
+        updateFragmentArguments(protocol.bundle);
+        if(StringUtils.isNotEmpty(protocol.openPageRouter)) {
+            ARouter.getInstance().build(protocol.openPageRouter)
+                    .withBundle(MainIntentProtocol.MAIN_PROTOCOL_BUNDLE, protocol.bundle)
+                    .navigation();
+        }
     }
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(MainMarketFragment.newInstance());
-        fragments.add(TempFragment.newInstance("关注"));
-        fragments.add(TempFragment.newInstance("消息"));
+        fragments.add(MainQuoteFragment.newInstance());
+        fragments.add(TempFragment.newInstance("交易"));
+        fragments.add(TempFragment.newInstance("资讯"));
         fragments.add(TempFragment.newInstance("我的"));
     }
 
@@ -95,12 +114,19 @@ public class MainActivity extends BaseActivity {
         if(index < 0 || index >= fragments.size()) {
             index = 0;
         }
-        if(index != selectedFragmentIndex) {
-            fragments.get(selectedFragmentIndex).hide();
+        if(index == selectedTabIndex) {
+            return;
         }
-        selectedFragmentIndex = index;
-        fragmentViewPager.setCurrentItem(selectedFragmentIndex);
-        fragmentViewPager.post(() -> fragments.get(selectedFragmentIndex).show());
+        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).hide());
+        selectedTabIndex = index;
+        fragmentViewPager.setCurrentItem(selectedTabIndex);
+        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).show());
+    }
+
+    private void updateFragmentArguments(Bundle bundle) {
+        if(bundle != null) {
+            fragments.get(selectedTabIndex).setArguments(bundle);
+        }
     }
 
     private long firstTime = 0;

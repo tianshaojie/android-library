@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
 
 import cn.skyui.library.base.activity.BaseActivity;
-import cn.skyui.module.main.MainActivity;
+import cn.skyui.module.main.model.MainIntentProtocol;
 
 /**
  * @author tianshaojie
@@ -26,7 +26,10 @@ public class SplashActivity extends Activity {
     }
 
     private void enter() {
-        ARouter.getInstance().build("/main/main").withInt(MainActivity.SELECTED_INDEX, MainActivity.DEFAULT_SELECTED_INDEX).navigation();
+        MainIntentProtocol protocol = new MainIntentProtocol(0);
+        ARouter.getInstance().build("/main/main")
+                .withParcelable(MainIntentProtocol.MAIN_PROTOCOL, protocol)
+                .navigation();
         finish();
     }
 }
