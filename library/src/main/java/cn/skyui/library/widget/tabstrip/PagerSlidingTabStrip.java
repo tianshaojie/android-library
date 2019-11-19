@@ -15,6 +15,7 @@
 
 package cn.skyui.library.widget.tabstrip;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -58,6 +59,7 @@ import cn.skyui.library.R;
  * tabTextSize             标签的文字大小
  * tabTextColor            标签的文字颜色
  * selectedTabTextColor    被选中标签的文字颜色
+ * selectedTabTextBold     被选中标签的文字是否加粗，默认false
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
@@ -66,7 +68,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     }
 
     // @formatter:off
-    private static final int[] ATTRS = new int[]{
+    private static final int[] ATTRS = new int[] {
             android.R.attr.textSize,
             android.R.attr.textColor
     };
@@ -97,6 +99,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private boolean shouldExpand = false;
     private boolean textAllCaps = true;
     private boolean indicatorInFollower = false;
+    private boolean selectedTabTextBold = false;
 
     private int scrollOffset = 52;
     private int indicatorHeight = 8;
@@ -150,19 +153,17 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
 
-//		tabTextSize = a.getDimensionPixelSize(0, tabTextSize);
-//		tabTextColor = a.getColor(1, tabTextColor);
-//
-//		a.recycle();
+        tabTextSize = a.getDimensionPixelSize(0, tabTextSize);
+        tabTextColor = a.getColor(1, tabTextColor);
+
+        a.recycle();
 
         // get custom attrs
 
         a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
-
         tabTextSize = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_tabTextSize, tabTextSize);
         tabTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_tabTextColor, indicatorColor);
         selectedTabTextColor = a.getColor(R.styleable.PagerSlidingTabStrip_selectedTabTextColor, indicatorColor); //tab文字选中时的颜色,默认和滑动指示器的颜色一致
-
         indicatorColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsIndicatorColor, indicatorColor);
         underlineColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsUnderlineColor, underlineColor);
         dividerColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsDividerColor, dividerColor);
@@ -175,6 +176,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
         textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
         indicatorInFollower = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsIndicatorInFollower, indicatorInFollower);
+        selectedTabTextBold = a.getBoolean(R.styleable.PagerSlidingTabStrip_selectedTabTextBold, selectedTabTextBold);
 
         a.recycle();
 
@@ -230,9 +232,17 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
 
+            @SuppressWarnings("deprecation")
+            @SuppressLint("NewApi")
             @Override
             public void onGlobalLayout() {
-                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
                 currentPosition = pager.getCurrentItem();
                 scrollToChild(currentPosition, 0);
             }
@@ -246,6 +256,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         tab.setText(title);
         tab.setGravity(Gravity.CENTER);
         tab.setSingleLine();
+
         addTab(position, tab);
     }
 
@@ -289,17 +300,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 // setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
                 // pre-ICS-build
                 if (textAllCaps) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                        tab.setAllCaps(true);
-                    } else {
-                        tab.setText(tab.getText().toString().toUpperCase(locale));
-                    }
+                    tab.setAllCaps(true);
                 }
                 if (i == selectedPosition) {
                     tab.setTextColor(selectedTabTextColor);
-                    tab.getPaint().setFakeBoldText(true);
+                    tab.getPaint().setFakeBoldText(selectedTabTextBold);
                 } else {
-                    StyleSpan styleSpan = new StyleSpan(Typeface.NORMAL);
                     tab.getPaint().setFakeBoldText(false);
                 }
             }
@@ -428,13 +434,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
     public void setIndicatorColor(int indicatorColor) {
         this.indicatorColor = indicatorColor;
-
         invalidate();
     }
 
     public void setIndicatorColorResource(int resId) {
         this.indicatorColor = getResources().getColor(resId);
-
         invalidate();
     }
 
@@ -508,6 +512,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
     public void setShouldExpand(boolean shouldExpand) {
         this.shouldExpand = shouldExpand;
+        requestLayout();
         notifyDataSetChanged();
     }
 
@@ -618,7 +623,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             dest.writeInt(currentPosition);
         }
 
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);

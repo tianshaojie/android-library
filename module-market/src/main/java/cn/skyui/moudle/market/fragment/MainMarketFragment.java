@@ -1,6 +1,5 @@
 package cn.skyui.moudle.market.fragment;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,8 +25,6 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
-//    private RadioButton radioButtonMyStock;
-//    private RadioButton radioButtonMarket;
     private PagerSlidingTabStrip tabStrip;
 
     public static BaseLazyLoadFragment newInstance() {
@@ -46,13 +40,10 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mToolbar = view.findViewById(R.id.toolbar);
         mToolbar.inflateMenu(R.menu.menu_fragment_quote);
         tabStrip = view.findViewById(R.id.tabs);
-//        radioButtonMyStock = (RadioButton) view.findViewById(R.id.radio_btn_my_stock);
-//        radioButtonMarket = (RadioButton) view.findViewById(R.id.radio_btn_market);
-
-        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        mViewPager = view.findViewById(R.id.view_pager);
     }
 
     @Override
@@ -84,40 +75,6 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
             }
         });
         mViewPager.setAdapter(new QuoteAdapter(getChildFragmentManager()));
-//        radioButtonMyStock.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mViewPager.setCurrentItem(0);
-//            }
-//        });
-//
-//        radioButtonMarket.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mViewPager.setCurrentItem(1);
-//            }
-//        });
-
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                if(position == 0) {
-//                    radioButtonMyStock.setChecked(true);
-//                } else {
-//                    radioButtonMarket.setChecked(true);
-//                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         tabStrip.setViewPager(mViewPager);
     }
 
