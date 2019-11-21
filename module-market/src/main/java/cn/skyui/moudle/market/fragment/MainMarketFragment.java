@@ -80,7 +80,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(NoToolbarTempFragment.newInstance("自选"));
+        fragments.add(MyStockTabFragment.newInstance("自选"));
         fragments.add(MarketTabFragment.newInstance("市场"));
     }
 
