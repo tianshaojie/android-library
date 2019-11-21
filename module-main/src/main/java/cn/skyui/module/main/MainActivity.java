@@ -22,7 +22,8 @@ import cn.skyui.library.utils.ToastUtils;
 import cn.skyui.module.main.fragment.CustomViewPager;
 import cn.skyui.module.main.model.MainIntentProtocol;
 import cn.skyui.moudle.market.fragment.TempFragment;
-import cn.skyui.moudle.market.fragment.MainQuoteFragment;
+import cn.skyui.moudle.market.fragment.MainMarketFragment;
+import cn.skyui.moudle.market.fragment.TempListFragment;
 
 /**
  * @author tianshaojie
@@ -42,7 +43,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        ImmersionBar.with(this).statusBarColor(R.color.colorPrimary).init();
         initFragments();
         initView();
         initByIntent(getIntent());
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(MainQuoteFragment.newInstance());
+        fragments.add(MainMarketFragment.newInstance("行情"));
         fragments.add(TempFragment.newInstance("交易"));
         fragments.add(TempFragment.newInstance("资讯"));
         fragments.add(TempFragment.newInstance("我的"));

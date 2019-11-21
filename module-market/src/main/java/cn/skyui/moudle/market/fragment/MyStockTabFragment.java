@@ -17,19 +17,19 @@ import cn.skyui.moudle.market.R;
  * @date 2018/12/4
  * @desc:
  */
-public class MarketTabFragment extends BaseLazyLoadFragment {
+public class MyStockTabFragment extends BaseLazyLoadFragment {
 
     public static final String SELECTED_TAB_INDEX = "selectedTabIndex";
     public static final int DEFAULT_SELECTED_INDEX = 0;
     private int selectedTabIndex = DEFAULT_SELECTED_INDEX;
 
-    private static final String[] TITLES = {"智能", "全景", "沪深", "港通"};
+    private static final String[] TITLES = {"全部", "沪深", "港股", "美股"};
     private PagerSlidingTabStrip tabs;
     private ViewPager mViewPager;
 
 
-    public static MarketTabFragment newInstance(String title) {
-        MarketTabFragment fragment = new MarketTabFragment();
+    public static MyStockTabFragment newInstance(String title) {
+        MyStockTabFragment fragment = new MyStockTabFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         fragment.setArguments(bundle);
@@ -74,10 +74,10 @@ public class MarketTabFragment extends BaseLazyLoadFragment {
         MarketPagerAdapter(FragmentManager fm) {
             super(fm);
             fragments = new BaseFragment[] {
-                    TempListFragment.newInstance("智能"),
-                    TempListFragment.newInstance("全景"),
+                    TempListFragment.newInstance("全部"),
                     TempListFragment.newInstance("沪深"),
-                    TempListFragment.newInstance("港通")
+                    TempListFragment.newInstance("港股"),
+                    TempListFragment.newInstance("美股")
             };
         }
 

@@ -103,7 +103,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 //                getSupportActionBar().setDisplayShowTitleEnabled(false);
 //            }
 //        } else {
-            initImmersionBar();
+//            initImmersionBar();
 //        }
     }
 

@@ -7,7 +7,9 @@
     <color name="colorAccent">#FD9716</color>
 
     <!-- 主背景色值 -->
-    <color name="background_color">#ff02121F</color>
+<!--    <color name="background_color">#ff02121F</color>-->
+    <color name="background_color">#121E2E</color>
+
     <!-- 主页底栏色值 -->
     <color name="bottom_bar_primary">@color/fz_common_main_color</color>
     <color name="bottom_bar_text_primary">@color/fz_common_gray_03</color>

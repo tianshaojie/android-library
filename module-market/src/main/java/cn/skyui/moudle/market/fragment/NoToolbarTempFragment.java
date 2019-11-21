@@ -11,10 +11,10 @@ import cn.skyui.moudle.market.R;
  * @author tianshaojie
  * @date 2018/1/27
  */
-public class TempFragment extends BaseLazyLoadFragment {
+public class NoToolbarTempFragment extends BaseLazyLoadFragment {
 
-    public static TempFragment newInstance(String title) {
-        TempFragment fragment = new TempFragment();
+    public static NoToolbarTempFragment newInstance(String title) {
+        NoToolbarTempFragment fragment = new NoToolbarTempFragment();
         Bundle bundle = new Bundle();
         bundle.putString("title", title);
         fragment.setArguments(bundle);
@@ -26,7 +26,7 @@ public class TempFragment extends BaseLazyLoadFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_temp;
+        return R.layout.fragment_temp_no_toolbar;
     }
 
     @Override

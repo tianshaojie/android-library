@@ -20,11 +20,14 @@ import cn.skyui.moudle.market.R;
 
 public class TempListFragment extends BaseLazyLoadFragment {
 
-    public static TempListFragment newInstance() {
-        return new TempListFragment();
+    public static TempListFragment newInstance(String title) {
+        TempListFragment fragment = new TempListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
-    private View rootView;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private BaseQuickAdapter mAdapter;
@@ -36,18 +39,12 @@ public class TempListFragment extends BaseLazyLoadFragment {
             "Allgauer Emmentaler"};
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return rootView = inflater.inflate(R.layout.fragment_list_demo, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_list_demo;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView();
-        loadData();
-    }
-
-    private void initView() {
+    public void initView(View view) {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
         mSwipeRefreshLayout = rootView.findViewById(R.id.swipeLayout);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
@@ -71,10 +68,17 @@ public class TempListFragment extends BaseLazyLoadFragment {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
+    @Override
+    public void initData() {
+        loadData();
+    }
+
     private void loadData() {
-        mAdapter.setNewData(Arrays.asList(mStrings));
-        mAdapter.loadMoreComplete();
-        mSwipeRefreshLayout.setRefreshing(false);
+        mRecyclerView.postDelayed(() -> {
+            mAdapter.setNewData(Arrays.asList(mStrings));
+            mAdapter.loadMoreComplete();
+            mSwipeRefreshLayout.setRefreshing(false);
+        }, 1500);
     }
 
     @Override

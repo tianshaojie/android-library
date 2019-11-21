@@ -18,7 +18,7 @@ import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip;
 import cn.skyui.moudle.market.R;
 
-public class MainQuoteFragment extends BaseLazyLoadFragment {
+public class MainMarketFragment extends BaseLazyLoadFragment {
 
     public static final int DEFAULT_SELECTED_INDEX = 0;
     private int selectedIndex = DEFAULT_SELECTED_INDEX;
@@ -30,14 +30,17 @@ public class MainQuoteFragment extends BaseLazyLoadFragment {
     private ViewPager mViewPager;
     private PagerSlidingTabStrip tabStrip;
 
-    public static MainQuoteFragment newInstance() {
-        return new MainQuoteFragment();
+    public static MainMarketFragment newInstance(String title) {
+        MainMarketFragment fragment = new MainMarketFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        fragment.setArguments(bundle);
+        return fragment;
     }
-
     @Override
     public int getLayoutId() {
         title = "行情";
-        return R.layout.fragment_main_quote;
+        return R.layout.fragment_main_market;
     }
 
     @Override
@@ -77,8 +80,8 @@ public class MainQuoteFragment extends BaseLazyLoadFragment {
 
     private void initFragments() {
         fragments.clear();
-        fragments.add(TempFragment.newInstance("自选"));
-        fragments.add(TempFragment.newInstance("市场"));
+        fragments.add(NoToolbarTempFragment.newInstance("自选"));
+        fragments.add(MarketTabFragment.newInstance("市场"));
     }
 
     @Override

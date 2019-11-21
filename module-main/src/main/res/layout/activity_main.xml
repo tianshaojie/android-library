@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/background_color"
     android:orientation="vertical">
 
     <cn.skyui.module.main.fragment.CustomViewPager
@@ -15,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_bar_height"
+        android:background="@color/background_color"
         android:clipChildren="false">
 
         <RadioGroup
@@ -54,7 +53,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
-            android:background="@color/fz_common_form_split_color" />
+            android:background="@color/colorPrimary" />
 
     </RelativeLayout>
 
