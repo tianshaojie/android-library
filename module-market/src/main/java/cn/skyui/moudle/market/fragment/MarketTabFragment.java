@@ -1,17 +1,15 @@
 package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import cn.skyui.library.base.fragment.BaseFragment;
-import cn.skyui.library.widget.tabstrip.PagerSlidingTabStrip;
+import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
+import cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip;
 import cn.skyui.moudle.market.R;
 
 /**
@@ -19,7 +17,7 @@ import cn.skyui.moudle.market.R;
  * @date 2018/12/4
  * @desc:
  */
-public class MarketTabFragment extends BaseFragment {
+public class MarketTabFragment extends BaseLazyLoadFragment {
 
     public static final String SELECTED_TAB_INDEX = "selectedTabIndex";
     public static final int DEFAULT_SELECTED_INDEX = 0;
@@ -29,34 +27,40 @@ public class MarketTabFragment extends BaseFragment {
     private PagerSlidingTabStrip tabs;
     private ViewPager mViewPager;
 
-    public static Fragment newInstance() {
+    public static MarketTabFragment newInstance() {
         return new MarketTabFragment();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_quote_tab, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_quote_tab;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void initView(View view) {
         tabs = view.findViewById(R.id.tabs);
         mViewPager = view.findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(TITLES.length);
         mViewPager.setAdapter(new MarketPagerAdapter(getChildFragmentManager()));
         tabs.setViewPager(mViewPager);
-        updateByArguments();
     }
 
-    private void updateByArguments() {
+    @Override
+    public void initData() {
         Bundle bundle = getArguments();
         if(bundle != null) {
             selectedTabIndex = bundle.getInt(SELECTED_TAB_INDEX, DEFAULT_SELECTED_INDEX);
         }
         mViewPager.setCurrentItem(selectedTabIndex);
+    }
+
+    @Override
+    public void onShow() {
+    }
+
+    @Override
+    public void onHide() {
     }
 
     public class MarketPagerAdapter extends FragmentPagerAdapter {

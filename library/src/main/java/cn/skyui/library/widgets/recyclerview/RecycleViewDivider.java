@@ -1,4 +1,4 @@
-package cn.skyui.library.widget.recyclerview;
+package cn.skyui.library.widgets.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

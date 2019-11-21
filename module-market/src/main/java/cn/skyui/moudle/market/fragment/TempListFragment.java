@@ -15,9 +15,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.Arrays;
 
 import cn.skyui.library.base.fragment.BaseFragment;
+import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.moudle.market.R;
 
-public class TempListFragment extends BaseFragment {
+public class TempListFragment extends BaseLazyLoadFragment {
 
     public static TempListFragment newInstance() {
         return new TempListFragment();
@@ -74,5 +75,15 @@ public class TempListFragment extends BaseFragment {
         mAdapter.setNewData(Arrays.asList(mStrings));
         mAdapter.loadMoreComplete();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onShow() {
+
+    }
+
+    @Override
+    public void onHide() {
+
     }
 }

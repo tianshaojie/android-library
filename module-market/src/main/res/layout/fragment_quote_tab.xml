@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
-    <cn.skyui.library.widget.tabstrip.PagerSlidingTabStrip
+    <cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="34dp"

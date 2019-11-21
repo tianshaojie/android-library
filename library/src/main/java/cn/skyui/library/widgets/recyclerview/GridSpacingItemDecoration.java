@@ -1,4 +1,4 @@
-package cn.skyui.library.widget.recyclerview;
+package cn.skyui.library.widgets.recyclerview;
 
 import android.graphics.Color;
 import android.graphics.Paint;

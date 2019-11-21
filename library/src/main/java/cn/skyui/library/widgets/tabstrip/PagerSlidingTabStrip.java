@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package cn.skyui.library.widget.tabstrip;
+package cn.skyui.library.widgets.tabstrip;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -27,7 +27,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;

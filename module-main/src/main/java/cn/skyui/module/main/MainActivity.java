@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.skyui.library.base.activity.BaseActivity;
+import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.library.utils.StringUtils;
 import cn.skyui.library.utils.ToastUtils;
-import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.module.main.fragment.CustomViewPager;
 import cn.skyui.module.main.model.MainIntentProtocol;
 import cn.skyui.moudle.market.fragment.TempFragment;
@@ -114,13 +114,12 @@ public class MainActivity extends BaseActivity {
         if(index < 0 || index >= fragments.size()) {
             index = 0;
         }
-        if(index == selectedTabIndex) {
-            return;
-        }
-        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).hide());
+//        if (index != selectedTabIndex) {
+//            fragmentViewPager.post(() -> fragments.get(selectedTabIndex).hide());
+//        }
         selectedTabIndex = index;
         fragmentViewPager.setCurrentItem(selectedTabIndex);
-        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).show());
+//        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).show());
     }
 
     private void updateFragmentArguments(Bundle bundle) {

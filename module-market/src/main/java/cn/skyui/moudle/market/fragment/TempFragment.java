@@ -1,13 +1,8 @@
 package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.orhanobut.logger.Logger;
 
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.moudle.market.R;
@@ -27,44 +22,36 @@ public class TempFragment extends BaseLazyLoadFragment {
     }
 
     int i = 1;
-    String title;
     TextView textView;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_temp, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_temp;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initData();
-        initView(view);
-    }
-
-    public void initData() {
-        title = getArguments().getString("title");
-    }
-
-    public void initView(View rootView) {
-        textView = rootView.findViewById(R.id.textView);
+    public void initView(View view) {
+        textView = view.findViewById(R.id.textView);
         textView.setText(title);
+        textView.setText("--");
+    }
+
+    @Override
+    public void initData() {
+        textView.postDelayed(() -> textView.setText(title), 1000);
     }
 
     @Override
     public void onShow() {
-        Logger.i("show - %s", title);
         if(textView != null) {
-            textView.postDelayed(() -> textView.setText(title + (i++)), 500);
+            textView.postDelayed(() -> textView.setText(title + (i++)), 1000);
         }
     }
 
     @Override
     public void onHide() {
-        Logger.i("hide - %s", title);
         if(textView != null) {
-            textView.postDelayed(() -> textView.setText("--"), 500);
+            textView.postDelayed(() -> textView.setText("--"), 1000);
         }
     }
 }

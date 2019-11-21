@@ -1,4 +1,4 @@
-package cn.skyui.library.widget.progress;
+package cn.skyui.library.widgets.progress;
 
 import android.content.Context;
 import android.os.Bundle;

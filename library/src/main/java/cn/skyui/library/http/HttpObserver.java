@@ -13,7 +13,7 @@ import cn.skyui.library.utils.ActivityUtils;
 import cn.skyui.library.utils.StringUtils;
 import cn.skyui.library.utils.ToastUtils;
 import cn.skyui.library.utils.Utils;
-import cn.skyui.library.widget.progress.ProgressDialog;
+import cn.skyui.library.widgets.progress.ProgressDialog;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

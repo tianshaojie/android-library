@@ -1,4 +1,4 @@
-package cn.skyui.library.widget.pageloading;
+package cn.skyui.library.widgets.pageloading;
 
 import android.app.Activity;
 import android.view.View;

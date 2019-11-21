@@ -20,7 +20,7 @@
         app:popupTheme="@style/Theme.Toolbar.OverflowMenuTheme"
         app:theme="@style/Theme.Toolbar">
 
-        <cn.skyui.library.widget.tabstrip.PagerSlidingTabStrip
+        <cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip
             android:id="@+id/tabs"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
