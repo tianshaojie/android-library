@@ -7,7 +7,6 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/Theme.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/colorPrimary"
@@ -15,9 +14,12 @@
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:popupTheme="@style/Theme.Toolbar.OverflowMenuTheme"
-        app:theme="@style/Theme.Toolbar">
+        app:contentInsetStart="0dp">
+
+        <android.support.v7.widget.ActionMenuView
+            android:id="@+id/action_menu_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip
             android:id="@+id/tabs"

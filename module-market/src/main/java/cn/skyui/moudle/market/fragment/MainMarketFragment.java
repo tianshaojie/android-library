@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
+import cn.skyui.library.utils.AppUtils;
 import cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip;
 import cn.skyui.moudle.market.R;
 
@@ -39,25 +41,35 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     }
     @Override
     public int getLayoutId() {
-        title = "行情";
         return R.layout.fragment_main_market;
     }
 
     @Override
     public void initView(View view) {
         mToolbar = view.findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.menu_fragment_quote);
         tabStrip = view.findViewById(R.id.tabs);
         mViewPager = view.findViewById(R.id.view_pager);
 
-        initFragments();
+        ActionMenuView actionMenuView = mToolbar.findViewById(R.id.action_menu_view);
+        mActivity.getMenuInflater().inflate(R.menu.menu_fragment_quote_left, actionMenuView.getMenu());
+        actionMenuView.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.action_skin) {
+                AppUtils.changeNightMode(mActivity, !AppUtils.isNightMode());
+            }
+            return true;
+        });
+        mToolbar.inflateMenu(R.menu.menu_fragment_quote);
         mToolbar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
-            if(id == R.id.action_search) {
+            if (id == R.id.action_search) {
                 ARouter.getInstance().build("/market/search").navigation();
             }
             return true;
         });
+
+
+        initFragments();
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {

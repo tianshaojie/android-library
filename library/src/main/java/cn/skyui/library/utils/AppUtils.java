@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
+import android.app.UiModeManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
@@ -20,13 +21,19 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
+
+import com.tencent.mmkv.MMKV;
 
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.skyui.library.data.constant.Constants;
 
 /**
  * <pre>
@@ -1022,5 +1029,55 @@ public final class AppUtils {
             }
         }
         return "";
+    }
+
+    private static int cachedNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+
+    public static void initNightMode() {
+        cachedNightMode = getSavedNightMode();
+        AppCompatDelegate.setDefaultNightMode(cachedNightMode);
+    }
+
+    public static boolean isNightMode() {
+        return cachedNightMode == AppCompatDelegate.MODE_NIGHT_YES;
+    }
+
+    public static int getNightMode() {
+        return cachedNightMode;
+    }
+
+    @SuppressLint("WrongConstant")
+    public static void changeNightMode(AppCompatActivity context, boolean isNightMode) {
+        UiModeManager uiManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+        if (isNightMode) {
+            uiManager.enableCarMode(0);
+            uiManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
+        } else {
+            uiManager.disableCarMode(0);
+            uiManager.setNightMode(UiModeManager.MODE_NIGHT_NO);
+        }
+        int nightMode = isNightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
+        context.getDelegate().setLocalNightMode((nightMode));
+        saveNightMode(nightMode);
+    }
+
+    /**
+     * 是否设置为黑夜模式
+     *
+     * AppCompatDelegate
+     *     public static final int MODE_NIGHT_NO = 1;
+     *     public static final int MODE_NIGHT_YES = 2;
+     *     public static final int MODE_NIGHT_AUTO = 0;
+     *     public static final int MODE_NIGHT_FOLLOW_SYSTEM = -1;
+     *
+     * @param nightMode 黑夜模式，取值范围如上
+     */
+    private static void saveNightMode(int nightMode) {
+        cachedNightMode = nightMode;
+        MMKV.defaultMMKV().putInt(Constants.MMKV.NIGHT_MODE, nightMode);
+    }
+
+    private static int getSavedNightMode() {
+        return MMKV.defaultMMKV().getInt(Constants.MMKV.NIGHT_MODE, AppCompatDelegate.MODE_NIGHT_YES);
     }
 }

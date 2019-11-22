@@ -212,7 +212,8 @@
 }
 
 # https://github.com/gyf-dev/ImmersionBar
--keep class com.gyf.barlibrary.* {*;}
+-keep class com.gyf.immersionbar.* {*;}
+-dontwarn com.gyf.immersionbar.**
 
 # https://github.com/CymChad/BaseRecyclerViewAdapterHelper
 -keep class com.chad.library.adapter.** {

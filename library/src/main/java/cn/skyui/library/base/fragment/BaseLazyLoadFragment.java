@@ -131,7 +131,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        Log.e(TAG, "onActivityCreated isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
+        Log.e(TAG, "onActivityCreated isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
         if (!isFirstVisible && isVisibleToUser()) {
             onFirstUserVisible();
         }
@@ -156,7 +156,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             title = getArguments().getString("title", "--");
         }
         // 自己的显示状态
-//        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
+        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
         this.isVisibleToUser = isVisibleToUser;
         // setUserVisibleHint方法调用时，自己显示Parent也是显示状态
         // **** isParentVisibleToUser和真实的getParentFragment()的isVisibleToUser可能不同步 ****
@@ -166,7 +166,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             return;
         }
         if (isVisibleToUser) {
-            if (!isFirstVisible) {
+            if (!isFirstVisible && isVisibleToUser()) {
                 onFirstUserVisible();
             } else {
                 show();
@@ -335,6 +335,21 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             onHide();
             Log.e(TAG, "onPause onHide = " + title);
         }
+    }
+
+    /**
+     * 重置变量
+     * 夜间模式切换或者横竖屏切换，都会调用onDestroy方法
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isViewCreated = false;
+        isFirstVisible = false;
+        isVisibleToUser = false;
+        isParentVisibleToUser = false;
+        isFirstResume = true;
+        Log.e(TAG, "onDestroy = " + title);
     }
 
     /**

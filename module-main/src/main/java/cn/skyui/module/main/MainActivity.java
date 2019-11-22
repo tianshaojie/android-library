@@ -10,7 +10,6 @@ import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,8 @@ import cn.skyui.library.utils.StringUtils;
 import cn.skyui.library.utils.ToastUtils;
 import cn.skyui.module.main.fragment.CustomViewPager;
 import cn.skyui.module.main.model.MainIntentProtocol;
-import cn.skyui.moudle.market.fragment.TempFragment;
 import cn.skyui.moudle.market.fragment.MainMarketFragment;
-import cn.skyui.moudle.market.fragment.TempListFragment;
+import cn.skyui.moudle.market.fragment.TempFragment;
 
 /**
  * @author tianshaojie
@@ -114,12 +112,8 @@ public class MainActivity extends BaseActivity {
         if(index < 0 || index >= fragments.size()) {
             index = 0;
         }
-//        if (index != selectedTabIndex) {
-//            fragmentViewPager.post(() -> fragments.get(selectedTabIndex).hide());
-//        }
         selectedTabIndex = index;
         fragmentViewPager.setCurrentItem(selectedTabIndex);
-//        fragmentViewPager.post(() -> fragments.get(selectedTabIndex).show());
     }
 
     private void updateFragmentArguments(Bundle bundle) {

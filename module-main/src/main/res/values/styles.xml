@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <!-- Main不要设置android:windowIsTranslucent=true，会造成动画失效-->
-    <style name="AppTheme.Main" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <!-- 不加此属性，会造成4.4手机statusBar和toolbar之前多一条线 -->
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
+<!--    <style name="AppTheme.Main" parent="AppTheme.Base">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--        <item name="android:windowIsTranslucent">false</item>-->
+<!--        &lt;!&ndash; 不加此属性，会造成4.4手机statusBar和toolbar之前多一条线 &ndash;&gt;-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--    </style>-->
 
     <style name="footer_bar">
         <item name="android:layout_width">0dp</item>

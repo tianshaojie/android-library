@@ -37,14 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="cn.skyui.module.main.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-        </activity>
     </application>
 
 </manifest>

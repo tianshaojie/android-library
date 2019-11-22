@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.gyf.immersionbar.ImmersionBar;
 
 import cn.skyui.library.base.activity.BaseActivity;
 import cn.skyui.module.main.model.MainIntentProtocol;
@@ -21,7 +20,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         BaseActivity.APP_STATUS = BaseActivity.APP_STATUS_NORMAL;
         super.onCreate(savedInstanceState);
-        ImmersionBar.with(this).transparentBar().init();
+//        ImmersionBar.with(this).transparentBar().init();
         enter();
     }
 

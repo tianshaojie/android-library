@@ -2,13 +2,11 @@ package cn.skyui.library.data.model;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.tencent.mmkv.MMKV;
 
 import java.io.Serializable;
 
 import cn.skyui.library.data.constant.Constants;
 import cn.skyui.library.http.interceptor.HttpHeaderInterceptor;
-import cn.skyui.library.http.model.Header;
 import cn.skyui.library.utils.StringUtils;
 
 public class User implements Serializable {
@@ -32,7 +30,7 @@ public class User implements Serializable {
     }
 
     public User init() {
-        String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
+        String response = com.tencent.mmkv.MMKV.defaultMMKV().decodeString(Constants.MMKV.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
             this.token = object.getString("token");
@@ -60,11 +58,11 @@ public class User implements Serializable {
 
     public void updateStatus(int status) {
         this.status = status;
-        String response = MMKV.defaultMMKV().decodeString(Constants.SharedPreferences.USER, "");
+        String response = com.tencent.mmkv.MMKV.defaultMMKV().decodeString(Constants.MMKV.USER, "");
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
             object.put("status", status);
-            MMKV.defaultMMKV().encode(Constants.SharedPreferences.USER, object.toJSONString());
+            com.tencent.mmkv.MMKV.defaultMMKV().encode(Constants.MMKV.USER, object.toJSONString());
         }
     }
 }

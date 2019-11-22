@@ -3,7 +3,7 @@
 
   <!-- 01 APP主色 -->
   <color name="colorPrimary">#000F1A</color>
-  <color name="colorPrimaryDark">@color/colorPrimary</color>
+  <color name="colorPrimaryDark">#000F1A</color>
   <color name="colorAccent">#FD9716</color>
   <!-- 主背景色值 -->
   <color name="background_color">#ff02121F</color>

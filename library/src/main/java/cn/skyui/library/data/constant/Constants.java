@@ -8,8 +8,9 @@ public class Constants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
 
-    public static final class SharedPreferences {
+    public static final class MMKV {
         public static final String USER = "login_user";
+        public static final String NIGHT_MODE = "night_mode";
     }
 
 }

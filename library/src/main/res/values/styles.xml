@@ -3,7 +3,7 @@
 
 	<!-- Base application theme. -->
 	<!-- Application主题，即默认的Activity主题，设置为透明，可以配合swipeBack -->
-	<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+	<style name="AppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,10 +14,11 @@
 		<!-- Application主题即默认的Activity主题，设置为透明，配合swipeBack -->
 		<!-- 会对Activity转场动画有影响 -->
 		<!--<item name="android:windowIsTranslucent">true</item>-->
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
+<!--		<item name="windowActionBar">false</item>-->
+<!--		<item name="windowNoTitle">true</item>-->
 		<!-- 设置activity切换动画 -->
 		<!--<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>-->
+		<item name="android:windowIsTranslucent">false</item>
 	</style>
 
 	<style name="AppTheme" parent="AppTheme.Base">
@@ -64,7 +65,7 @@
 	</style>
 
 	<!-- Toolbar 溢出图标颜色 -->
-	<style name="Theme.Toolbar.OverflowMenuTheme" parent="Theme.AppCompat.NoActionBar">
+	<style name="Theme.Toolbar.OverflowMenuTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 		<!-- 设置Menu菜单背景色 -->
 		<item name="android:itemBackground">@android:color/white</item>
 		<!-- 设置Menu菜单字体颜色 -->
@@ -73,7 +74,7 @@
 		<item name="overlapAnchor">false</item>
 	</style>
 
-	<style name="TransparentDialog" parent="@style/AlertDialog.AppCompat.Light">
+	<style name="TransparentDialog" parent="@style/Theme.AppCompat.DayNight.Dialog">
 		<item name="android:windowFrame">@null</item>
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowBackground">@android:color/transparent</item>

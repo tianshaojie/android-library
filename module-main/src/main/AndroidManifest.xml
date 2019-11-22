@@ -1,2 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.skyui.module.main" />
+    package="cn.skyui.module.main" >
+
+    <application>
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+
+    </application>
+</manifest>

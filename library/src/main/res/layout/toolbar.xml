@@ -2,7 +2,6 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    style="@style/Theme.Toolbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
     android:background="@color/colorPrimary"
@@ -10,9 +9,7 @@
     app:contentInsetEnd="0dp"
     app:contentInsetLeft="0dp"
     app:contentInsetRight="0dp"
-    app:contentInsetStart="0dp"
-    app:popupTheme="@style/Theme.Toolbar.OverflowMenuTheme"
-    app:theme="@style/Theme.Toolbar">
+    app:contentInsetStart="0dp">
 
     <!--android:layout_height="?attr/actionBarSize"-->
     <!--android:minHeight="?attr/actionBarSize"-->

@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import cn.skyui.library.R;
@@ -62,7 +61,7 @@ public abstract class BaseFragment extends RxFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mIsActivityCreated = true;
-        if (immersionBarEnabled()) {
+        if (isImmersionBarEnabled()) {
             initImmersionBar();
         }
     }
@@ -70,17 +69,23 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (mIsActivityCreated && getUserVisibleHint() && immersionBarEnabled()) {
+        if (mIsActivityCreated && getUserVisibleHint() && isImmersionBarEnabled()) {
             initImmersionBar();
         }
     }
 
     public void initImmersionBar() {
-        if(toolbar != null) {
-            ImmersionBar.with(this).keyboardEnable(true).titleBar(toolbar).statusBarColor(R.color.colorPrimary).init();
-        } else {
-            ImmersionBar.with(this).keyboardEnable(true).statusBarColor(R.color.colorPrimary).init();
-        }
+//        if(toolbar != null) {
+//            ImmersionBar.with(this).keyboardEnable(true).titleBar(toolbar)
+//                    .statusBarColor(R.color.colorPrimary)
+//                    .navigationBarColor(R.color.colorPrimary)
+//                    .init();
+//        } else {
+//            ImmersionBar.with(this).keyboardEnable(true)
+//                    .statusBarColor(R.color.colorPrimary)
+//                    .navigationBarColor(R.color.colorPrimary)
+//                    .init();
+//        }
     }
 
     /**
@@ -89,8 +94,8 @@ public abstract class BaseFragment extends RxFragment {
      *
      * @return the boolean
      */
-    public boolean immersionBarEnabled() {
-        return true;
+    public boolean isImmersionBarEnabled() {
+        return false;
     }
 
 }

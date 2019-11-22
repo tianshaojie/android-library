@@ -83,7 +83,7 @@ dependencies {
     api 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
     // 基础依赖包，必须要依赖 https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+//    api 'com.gyf.immersionbar:immersionbar:3.0.0'
 
     // 侧滑返回：https://github.com/ikew0ng/SwipeBackLayout
     api 'me.imid.swipebacklayout.lib:library:1.1.0'

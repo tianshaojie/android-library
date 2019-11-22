@@ -2,13 +2,13 @@
 <resources>
 
     <!-- 01 APP主色 -->
-    <color name="colorPrimary">#000F1A</color>
-    <color name="colorPrimaryDark">@color/colorPrimary</color>
-    <color name="colorAccent">#FD9716</color>
+    <color name="colorPrimary">#3C94EB</color>
+    <color name="colorPrimaryDark">#3C94EB</color>
+    <color name="colorAccent">#E24848</color>
 
     <!-- 主背景色值 -->
 <!--    <color name="background_color">#ff02121F</color>-->
-    <color name="background_color">#121E2E</color>
+    <color name="background_color">@android:color/white</color>
 
     <!-- 主页底栏色值 -->
     <color name="bottom_bar_primary">@color/fz_common_main_color</color>
@@ -19,7 +19,7 @@
     <color name="fz_common_red">#FF325E</color>
     <color name="fz_common_green">#1ED489</color>
     <color name="fz_common_gray">#A4B1BF</color>
-    <color name="fz_common_white">#EEF2F4</color>
+    <color name="fz_common_white">#A4B1BF</color>
     <color name="fz_common_red_dark">#E24848</color>
     <color name="fz_common_blue">#1B7ECA</color>
 

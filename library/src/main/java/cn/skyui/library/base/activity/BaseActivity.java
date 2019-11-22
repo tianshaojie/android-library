@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import cn.skyui.library.R;
+import cn.skyui.library.utils.AppUtils;
 import cn.skyui.library.utils.KeyboardUtils;
 import cn.skyui.library.utils.imm.IMMLeaks;
 
@@ -31,14 +35,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public static int APP_STATUS = APP_STATUS_KILLED; // 记录App的启动状态
 
     protected Activity mActivity;
-    /**
-     * 沉浸式状态栏和沉浸式导航栏管理，支持Android 4.4 以上
-     */
-//    protected ImmersionBar mImmersionBar;
-    private TextView mToolbarTitle;
+    protected View toolbar;
+    protected TextView mToolbarTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // 设置主题
+        AppCompatDelegate.setDefaultNightMode(AppUtils.getNightMode());;
         super.onCreate(savedInstanceState);
         // 修复系统输入法Bug：在15<=API<=23存在内存泄漏，https://zhuanlan.zhihu.com/p/20828861
         IMMLeaks.fixFocusedViewLeak(getApplication());
@@ -80,31 +83,26 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-//        View toolbar = findViewById(R.id.toolbar);
-//        if (toolbar != null) {
-//            // 带Toolbar使用沉浸式，直接设置titleBar，结合SwipeBack，也需要在setContentView之后初始化ImmersionBar
-//            mImmersionBar = ImmersionBar.with(this)
-//                    .titleBar(toolbar)
-//                    .keyboardEnable(true)
-//                    .navigationBarColor(R.color.black);
-//            mImmersionBar.init();
-//
-//            if(toolbar instanceof Toolbar) {
-//                setSupportActionBar((Toolbar) toolbar);
-//                // 显示返回键
-//                if(getSupportActionBar() != null) {
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                }
-//            }
-//
-//            // 隐藏默认标题
-//            mToolbarTitle = toolbar.findViewById(R.id.toolbar_title);
-//            if (mToolbarTitle != null && getSupportActionBar() != null) {
-//                getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            }
-//        } else {
-//            initImmersionBar();
-//        }
+        toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            if(toolbar instanceof Toolbar) {
+                setSupportActionBar((Toolbar) toolbar);
+                // 显示返回键
+                if(getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                }
+            }
+
+            // 隐藏默认标题
+            mToolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+            if (mToolbarTitle != null && getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+        }
+
+        if(isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
     }
 
     /**
@@ -139,32 +137,37 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**
      * 布局没有Toolbar，初始化ImmersionBar
      * 子类可覆盖该方法，设置更多特殊属性，比如透明通栏
+     *
+     * 3.0版本，不需要在onDestroy方法里调用ImmersionBar的destroy方法
      */
-    protected void initImmersionBar() {
-        // 如果Activity+Fragment，Fragment自带Toolbar，并通过ToolImmersionBar.titleBar(toolbar)管理
-        // 则Activity不用fitsSystemWindows(true)
-//        mImmersionBar = ImmersionBar.with(this);
-//        mImmersionBar.keyboardEnable(true).init();
+    public void initImmersionBar() {
+//        if(toolbar != null) {
+//            ImmersionBar.with(this).keyboardEnable(true)
+//                    .titleBar(toolbar)
+//                    .statusBarColor(R.color.colorPrimary)
+//                    .navigationBarColor(R.color.colorPrimary)
+//                    .init();
+//        } else {
+//            ImmersionBar.with(this).keyboardEnable(true)
+//                    .statusBarColor(R.color.colorPrimary)
+//                    .navigationBarColor(R.color.colorPrimary)
+//                    .init();
+//        }
+    }
 
-        // 如果Activity&子Fragment布局没有Toolbar，可否覆盖该方法设置fitsSystemWindows(true)
-//        mImmersionBar = ImmersionBar.with(this)
-//                .fitsSystemWindows(true)
-//                .statusBarColor(R.color.colorPrimary)
-//                .navigationBarColor(R.color.colorPrimary);
-//        mImmersionBar.init();
+    /**
+     * 是否可以实现沉浸式，当为true的时候才可以执行initImmersionBar方法
+     * Immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isImmersionBarEnabled() {
+        return false;
     }
 
     @Override
     public void finish() {
         super.finish();
         KeyboardUtils.hideSoftInput(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        if (mImmersionBar != null) {
-//            mImmersionBar.destroy();
-//        }
     }
 }

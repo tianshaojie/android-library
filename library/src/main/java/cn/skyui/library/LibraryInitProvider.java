@@ -33,12 +33,17 @@ public class LibraryInitProvider extends ContentProvider {
         initUtils(context);
         initLogger();
         initMMKV();
+        initNightMode();
         initUser();
         initRouter();
         initStetho();
         Logger.e("isAppDebug = " + AppUtils.isAppDebug());
 //        initCrashReporter(context);
 //        initLeakCanary(context);
+    }
+
+    private static void initNightMode() {
+        AppUtils.initNightMode();
     }
 
     private static void initUtils(Context context) {
