@@ -65,11 +65,11 @@ public class TempListFragment extends BaseLazyLoadFragment {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             loadData();
         });
-        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void initData() {
+        mSwipeRefreshLayout.setRefreshing(true);
         loadData();
     }
 
