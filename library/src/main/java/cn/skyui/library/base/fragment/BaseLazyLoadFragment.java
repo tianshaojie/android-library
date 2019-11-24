@@ -1,6 +1,5 @@
 package cn.skyui.library.base.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +16,10 @@ import java.util.List;
  * @author tianshaojie
  *
  * 懒加载Fragment基类：支持ViewPager多级嵌套
+ *
+ * 注意：
+ * 在ViewPager内使用BaseLazyLoadFragment最佳；
+ * 非ViewPager内使用BaseFragment或BaseMvpFragment即可
  *
  * @see #getLayoutId()  当前界面的资源文件Id
  * @see #initView(View) 初始化控件，只做findViewById工作不加载数据
@@ -64,26 +67,11 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
      * 针对多级Fragment嵌套时，子Fragment持有父Fragment的显示状态
      *
      * 1. onFirstUserVisible时 ，isVisibleToUser与isParentVisibleToUser状态一致；
-     * 2. 在自身setUserVisibleHint触发时，iisVisibleToUser与isParentVisibleToUser状态一致；
+     * 2. 在自身setUserVisibleHint触发时，isVisibleToUser与isParentVisibleToUser状态一致；
      * 3. 在父Fragment调用showChildFragment，hideChildFragment，更新子Fragment的isParentVisibleToUser。
      *   （原因是：ViewPager切换时，只会调用Adapter的直接Fragment.setUserVisibleHint，不会调用Fragment的子Fragment，比如Fragment内还有ViewPager+Fragment的结构）
      */
     private boolean isParentVisibleToUser = false;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if(getArguments() != null) {
-            title = getArguments().getString("title", "--");
-        }
-//        Log.e(TAG, "onAttach isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        Log.e(TAG, "onCreate isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
-    }
 
     /**
      * 同一Activity下多个Fragment切换时会重复执行onCreateView方法
@@ -156,7 +144,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             title = getArguments().getString("title", "--");
         }
         // 自己的显示状态
-        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
+//        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
         this.isVisibleToUser = isVisibleToUser;
         // setUserVisibleHint方法调用时，自己显示Parent也是显示状态
         // **** isParentVisibleToUser和真实的getParentFragment()的isVisibleToUser可能不同步 ****
@@ -172,7 +160,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
                 show();
             }
         } else {
-            // 已经调用过onFirstUserVisible再调用hide，防止没有显示过还去调hide
+            // 已经show过的再调用hide，防止没有显示过还去调用hide
             if (isFirstVisible) {
                 hide();
             }
@@ -226,8 +214,6 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             }
         }
     }
-
-
 
     /**
      * 父Fragment被隐藏，同时调用隐藏子Fragment，只针对之前显示状态的子Fragment处理
