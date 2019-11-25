@@ -50,6 +50,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
 
     protected String title;
     protected View rootView;
+    protected Bundle savedInstanceState;
     
     private boolean isViewCreated = false;
 
@@ -85,6 +86,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
         if (rootView == null) {
             rootView = inflater.inflate(getLayoutId(), container, false);
             initView(rootView);
@@ -119,6 +121,10 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+        if(getArguments() != null) {
+            title = getArguments().getString("title", "--");
+        }
         Log.e(TAG, "onActivityCreated isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
         if (!isFirstVisible && isVisibleToUser()) {
             onFirstUserVisible();
@@ -144,7 +150,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
             title = getArguments().getString("title", "--");
         }
         // 自己的显示状态
-//        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
+        Log.e(TAG, "setUserVisibleHint isVisibleToUser = " + isVisibleToUser  + ", isParentVisibleToUser = " + isParentVisibleToUser + ", title = " + title);
         this.isVisibleToUser = isVisibleToUser;
         // setUserVisibleHint方法调用时，自己显示Parent也是显示状态
         // **** isParentVisibleToUser和真实的getParentFragment()的isVisibleToUser可能不同步 ****
@@ -153,8 +159,8 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
         if(!isViewCreated) {
             return;
         }
-        if (isVisibleToUser) {
-            if (!isFirstVisible && isVisibleToUser()) {
+        if (isVisibleToUser()) {
+            if (!isFirstVisible) {
                 onFirstUserVisible();
             } else {
                 show();
@@ -249,8 +255,8 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
         isVisibleToUser = true;
         isParentVisibleToUser = true;
         initData();
-        Log.e(TAG, "onFirstUserVisible = " + title);
         // 针对二级Fragments，非首个Fragment，下的ViewPager下的Fragment(三级)
+        Log.e(TAG, "onFirstUserVisible = " + title);
         initChildFragmentOnFirstUserVisible(getChildFragmentManager());
     }
 
@@ -345,21 +351,25 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
      * @return true 可见，false 不可见
      */
     private boolean isVisibleToUser() {
-        return isVisibleToUser && isParentVisibleToUser();
+        return isVisibleToUser && isParentVisibleToUser(getParentFragment());
     }
 
-    private boolean isParentVisibleToUser() {
-        boolean visible = false;
-        Fragment fragment = getParentFragment();
-        if(fragment == null) {
-            // 如果没有父级的Fragment，说明父级直接是Activity，设置为true
-            visible =  true;
-        } else if(fragment instanceof BaseLazyLoadFragment) {
+    private boolean isParentVisibleToUser(Fragment parent) {
+        if(parent != null && parent instanceof BaseLazyLoadFragment) {
             // **** isParentVisibleToUser和真实的getParentFragment()的isVisibleToUser可能不同步 ****
             // 因为ViewPager下的第一个Fragment永远会调用 setUserVisibleHint isVisibleToUser = true，不管它的父级Fragment有没有show
-            visible = ((BaseLazyLoadFragment)fragment).isVisibleToUser && isParentVisibleToUser;
+            BaseLazyLoadFragment parentFragment = ((BaseLazyLoadFragment)parent);
+            boolean visible = parentFragment.isVisibleToUser && isParentVisibleToUser;
+            if(visible) {
+                // 所有父级都显示才为显示
+                return isParentVisibleToUser(parentFragment.getParentFragment());
+            } else {
+                return false;
+            }
+        } else {
+            // 如果没有父级的Fragment，说明父级直接是Activity，直接 return isParentVisibleToUser
+            return isParentVisibleToUser;
         }
-        return visible;
     }
 
     /**

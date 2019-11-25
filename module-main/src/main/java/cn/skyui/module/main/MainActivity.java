@@ -30,7 +30,8 @@ import cn.skyui.moudle.market.fragment.TempFragment;
 @Route(path = "/main/main")
 public class MainActivity extends BaseActivity {
 
-    private int selectedTabIndex = MainIntentProtocol.DEFAULT_SELECTED_INDEX;
+    private static final String SELECTED_INDEX = "selectedIndex";
+    private int selectedIndex = MainIntentProtocol.DEFAULT_SELECTED_INDEX;
     // 外部跳转到首页的协议类
     private MainIntentProtocol protocol;
 
@@ -43,16 +44,22 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initFragments();
         initView();
-        initByIntent(getIntent());
+        initByIntent(getIntent(), savedInstanceState);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        initByIntent(intent);
+        initByIntent(intent, null);
     }
 
-    private void initByIntent(Intent intent) {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_INDEX, selectedIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void initByIntent(Intent intent, Bundle savedInstanceState) {
         if(intent == null) {
             return;
         }
@@ -60,7 +67,11 @@ public class MainActivity extends BaseActivity {
         if(protocol == null) {
             protocol =  MainIntentProtocol.DEFAULT;
         }
-        showSelectedFragment(protocol.primaryTabIndex);
+        selectedIndex = protocol.primaryTabIndex;
+        if (savedInstanceState != null) {
+            selectedIndex = savedInstanceState.getInt(SELECTED_INDEX, MainIntentProtocol.DEFAULT_SELECTED_INDEX);
+        }
+        showSelectedFragment(selectedIndex);
         updateFragmentArguments(protocol.bundle);
         if(StringUtils.isNotEmpty(protocol.openPageRouter)) {
             ARouter.getInstance().build(protocol.openPageRouter)
@@ -112,13 +123,13 @@ public class MainActivity extends BaseActivity {
         if(index < 0 || index >= fragments.size()) {
             index = 0;
         }
-        selectedTabIndex = index;
-        fragmentViewPager.setCurrentItem(selectedTabIndex);
+        selectedIndex = index;
+        fragmentViewPager.setCurrentItem(selectedIndex);
     }
 
     private void updateFragmentArguments(Bundle bundle) {
         if(bundle != null) {
-            fragments.get(selectedTabIndex).setArguments(bundle);
+            fragments.get(selectedIndex).setArguments(bundle);
         }
     }
 

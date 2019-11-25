@@ -22,6 +22,7 @@ import cn.skyui.moudle.market.R;
 
 public class MainMarketFragment extends BaseLazyLoadFragment {
 
+    private static final String SELECTED_INDEX = "selectedIndex";
     public static final int DEFAULT_SELECTED_INDEX = 0;
     private int selectedIndex = DEFAULT_SELECTED_INDEX;
 
@@ -39,6 +40,13 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_INDEX, selectedIndex);
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_main_market;
@@ -68,12 +76,12 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
             return true;
         });
 
-
         initFragments();
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                selectedIndex = position;
             }
         });
 
@@ -86,6 +94,9 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
         Bundle bundle = getArguments();
         if(bundle != null) {
             selectedIndex = bundle.getInt("selectedIndex", DEFAULT_SELECTED_INDEX);
+        }
+        if (savedInstanceState != null) {
+            selectedIndex = savedInstanceState.getInt(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);
         }
         mViewPager.setCurrentItem(selectedIndex);
     }

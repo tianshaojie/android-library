@@ -19,9 +19,9 @@ import cn.skyui.moudle.market.R;
  */
 public class MyStockTabFragment extends BaseLazyLoadFragment {
 
-    public static final String SELECTED_TAB_INDEX = "selectedTabIndex";
+    private static final String SELECTED_INDEX = "selectedIndex";
     public static final int DEFAULT_SELECTED_INDEX = 0;
-    private int selectedTabIndex = DEFAULT_SELECTED_INDEX;
+    private int selectedIndex = DEFAULT_SELECTED_INDEX;
 
     private static final String[] TITLES = {"全部", "沪深", "港股", "美股"};
     private PagerSlidingTabStrip tabs;
@@ -37,6 +37,12 @@ public class MyStockTabFragment extends BaseLazyLoadFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_INDEX, selectedIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.fragment_quote_tab;
     }
@@ -48,15 +54,25 @@ public class MyStockTabFragment extends BaseLazyLoadFragment {
         mViewPager.setOffscreenPageLimit(TITLES.length);
         mViewPager.setAdapter(new MarketPagerAdapter(getChildFragmentManager()));
         tabs.setViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                selectedIndex = position;
+            }
+        });
     }
 
     @Override
     public void initData() {
         Bundle bundle = getArguments();
         if(bundle != null) {
-            selectedTabIndex = bundle.getInt(SELECTED_TAB_INDEX, DEFAULT_SELECTED_INDEX);
+            selectedIndex = bundle.getInt(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);
         }
-        mViewPager.setCurrentItem(selectedTabIndex);
+        if (savedInstanceState != null) {
+            selectedIndex = savedInstanceState.getInt(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);
+        }
+        mViewPager.setCurrentItem(selectedIndex);
     }
 
     @Override
