@@ -1050,10 +1050,8 @@ public final class AppUtils {
     public static void changeNightMode(AppCompatActivity context, boolean isNightMode) {
         UiModeManager uiManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
         if (isNightMode) {
-            uiManager.enableCarMode(0);
             uiManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
         } else {
-            uiManager.disableCarMode(0);
             uiManager.setNightMode(UiModeManager.MODE_NIGHT_NO);
         }
         int nightMode = isNightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
