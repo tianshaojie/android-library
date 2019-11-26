@@ -102,8 +102,7 @@ public final class DeviceUtils {
                 Utils.getApp().getContentResolver(),
                 Settings.Secure.ANDROID_ID
         );
-        if ("9774d56d682e549c".equals(id)) return "";
-        return id == null ? "" : id;
+        return id == null ? UUID.randomUUID().toString() : id;
     }
 
     /**

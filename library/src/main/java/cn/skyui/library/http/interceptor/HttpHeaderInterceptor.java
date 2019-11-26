@@ -6,24 +6,33 @@ import java.util.HashMap;
 import cn.skyui.library.utils.AppUtils;
 import cn.skyui.library.utils.DeviceUtils;
 import cn.skyui.library.utils.StringUtils;
+import cn.skyui.library.utils.Utils;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.internal.Util;
 
 /**
  * 网络请求 公共Header 拦截器
  */
 public class HttpHeaderInterceptor implements Interceptor {
 
+    private static final String KEY_USER_AGENT = "User-Agent";
+    private static final String KEY_OP_STATION = "Op-Station";
+    private static final String KEY_DEVICE_ID = "DeviceID";
+
     private static HashMap<String, String> headers = new HashMap<>();
 
     static {
-        headers.put("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode());
-        headers.put("Accept", "application/json");
-        headers.put("Content-type", "application/json");
-        headers.put("channel", "github");
-        headers.put("version", AppUtils.getAppVersionCode() + "");
-        headers.put("device", DeviceUtils.getAndroidID());
+//        headers.put("User-Agent", "Android-" + AppUtils.getAppVersionName() + "-" + AppUtils.getAppVersionCode());
+//        headers.put("Accept", "application/json");
+//        headers.put("Content-type", "application/json");
+//        headers.put("channel", "github");
+//        headers.put("version", AppUtils.getAppVersionCode() + "");
+//        headers.put("device", DeviceUtils.getAndroidID());
+        headers.put(KEY_USER_AGENT, AppUtils.getUserAgent(Utils.getApp(), false));
+        headers.put(KEY_OP_STATION, AppUtils.getOpStation(Utils.getApp()));
+        headers.put(KEY_DEVICE_ID, DeviceUtils.getAndroidID());
     }
 
     /**

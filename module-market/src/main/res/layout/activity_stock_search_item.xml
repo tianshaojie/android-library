@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/space_16"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/stock_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/mystock_sh_icon"
+            android:drawablePadding="@dimen/space_2"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="贵州茅台"
+            android:textColor="@color/fz_common_gray_01"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/stock_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stock_name"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="600459"
+            android:textColor="@color/fz_common_gray_01"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/market_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:gravity="right|center_vertical"
+        android:maxLines="1"
+        android:text=""
+        android:textColor="@color/fz_common_gray_01"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/add_mystock_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="@dimen/space_16"
+        android:src="@drawable/mystock_cancel_collect_icon" />
+</LinearLayout>

@@ -59,7 +59,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
         mViewPager = view.findViewById(R.id.view_pager);
 
         ActionMenuView actionMenuView = mToolbar.findViewById(R.id.action_menu_view);
-        mActivity.getMenuInflater().inflate(R.menu.menu_fragment_quote_left, actionMenuView.getMenu());
+        mActivity.getMenuInflater().inflate(R.menu.menu_fragment_market_main_left, actionMenuView.getMenu());
         actionMenuView.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
             if (id == R.id.action_skin) {
@@ -67,7 +67,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
             }
             return true;
         });
-        mToolbar.inflateMenu(R.menu.menu_fragment_quote);
+        mToolbar.inflateMenu(R.menu.menu_fragment_market_main_right);
         mToolbar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
             if (id == R.id.action_search) {

@@ -54,9 +54,9 @@ public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
     @Override
     public void onNext(HttpResponse<T> response) {
         if (response.isSuccess()) {
-            onSuccess(response.getBody());
+            onSuccess(response.getInfo());
         } else {
-            onFailure(new ApiException(response.getCode(), response.getMsg()));
+            onFailure(new ApiException(response.getCode(), response.getMessage()));
         }
     }
 

@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
 import com.tencent.mmkv.MMKV;
 
 import java.io.File;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.skyui.library.data.constant.Constants;
+import cn.skyui.library.data.model.User;
 
 /**
  * <pre>
@@ -761,13 +763,13 @@ public final class AppUtils {
      */
     public static class AppInfo {
 
-        private String   packageName;
-        private String   name;
+        private String packageName;
+        private String name;
         private Drawable icon;
-        private String   packagePath;
-        private String   versionName;
-        private int      versionCode;
-        private boolean  isSystem;
+        private String packagePath;
+        private String versionName;
+        private int versionCode;
+        private boolean isSystem;
 
         public Drawable getIcon() {
             return icon;
@@ -1061,12 +1063,12 @@ public final class AppUtils {
 
     /**
      * 是否设置为黑夜模式
-     *
+     * <p>
      * AppCompatDelegate
-     *     public static final int MODE_NIGHT_NO = 1;
-     *     public static final int MODE_NIGHT_YES = 2;
-     *     public static final int MODE_NIGHT_AUTO = 0;
-     *     public static final int MODE_NIGHT_FOLLOW_SYSTEM = -1;
+     * public static final int MODE_NIGHT_NO = 1;
+     * public static final int MODE_NIGHT_YES = 2;
+     * public static final int MODE_NIGHT_AUTO = 0;
+     * public static final int MODE_NIGHT_FOLLOW_SYSTEM = -1;
      *
      * @param nightMode 黑夜模式，取值范围如上
      */
@@ -1078,4 +1080,42 @@ public final class AppUtils {
     private static int getSavedNightMode() {
         return MMKV.defaultMMKV().getInt(Constants.MMKV.NIGHT_MODE, AppCompatDelegate.MODE_NIGHT_YES);
     }
+
+    private static final String DEFAULT_VERSION = "unknown";
+    private static final String OP_STATION_TEMPLATE = "%s,MP:%s,MAC:%s,uuid/imei:%s,OS:Android,Ver:%s,IP:%s";
+    private static final String USER_AGENT_TEMPLATE = "%s/%s (%s;Android %s)";
+
+    public static String getUserAgent(Context context, boolean withSplash) {
+        /* 最新userAgent格式如下:
+         * [产品名]/[版本号] ([机型];Android [安卓系统版本号])
+         */
+        String productName = "manual", ver, model = "", OSV;
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            ver = pi.versionName;
+        } catch (Exception e) {
+            Logger.e(e.getMessage());
+            ver = DEFAULT_VERSION;
+        }
+        model = Build.MODEL;//机型
+        OSV = Build.VERSION.RELEASE;//安卓系统版本号
+
+        return String.format(USER_AGENT_TEMPLATE, productName, ver, model, OSV);
+    }
+
+
+    public static String getOpStation(Context context) {
+        /* 最新op_station格式如下:
+         * [产品名],MP:[手机号码],MAC:[MAC地址],uuid/imei:[UUID/IMEI],OS:[Android/iOS],Ver:[客户端版本号],IP:[IP地址]:
+         */
+        String productName = "manual", mobilePhone, uuid, ver;
+        mobilePhone = User.getInstance().user.getPhone();
+        String address = DeviceUtils.getMacAddress();
+        String ip = NetworkUtils.getIPAddress(true);
+        uuid = DeviceUtils.getAndroidID();
+        ver = AppUtils.getAppVersionName();
+        return String.format(OP_STATION_TEMPLATE, productName, mobilePhone, address, uuid, ver, ip);
+    }
+
 }

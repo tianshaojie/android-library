@@ -6,7 +6,7 @@
   <color name="colorPrimaryDark">#000F1A</color>
   <color name="colorAccent">#FD9716</color>
   <!-- 主背景色值 -->
-  <color name="background_color">#ff02121F</color>
+  <color name="background_color">#121E2E</color>
   <!-- 主页底栏色值 -->
   <color name="bottom_bar_primary">@color/fz_common_main_color</color>
   <color name="bottom_bar_text_primary">@color/fz_common_gray_03</color>
@@ -31,7 +31,7 @@
   <!-- 04 场景颜色 -->
   <color name="fz_common_main_color">#121E2E</color>
   <color name="fz_common_form_split_color">#2F3840</color>
-  <color name="fz_common_gray_01">#A4B1BF</color>
+  <color name="fz_common_gray_01">#EEF2F4</color>
   <color name="fz_common_gray_02">#5A6875</color>
   <color name="fz_common_gray_03">#657380</color>
 

@@ -12,12 +12,9 @@ import cn.skyui.library.utils.StringUtils;
 public class User implements Serializable {
 
     public String token = "";   // 登录Token
-    public String imToken = ""; // 融云 IM Token
     public long userId = 0;     // 业务用户ID，也是融云IM用户ID
-    public int status = 1;      // 用户资料完善状态，1：未完善，2：已完善；
     public boolean isLogin = false;
-    public UserDetailVO detail = new UserDetailVO();
-    public UserLocation location;
+    public UserVO user = new UserVO();
 
     private User() {}
 
@@ -34,11 +31,8 @@ public class User implements Serializable {
         if(!StringUtils.isEmpty(response)) {
             JSONObject object = JSON.parseObject(response);
             this.token = object.getString("token");
-            this.imToken = object.getString("imToken");
             this.userId = object.getLongValue("userId");
-            this.detail.getUser().setId(userId);
-            this.detail.getAccount().setId(userId);
-            this.status = object.getIntValue("status");
+            this.user.setId(userId);
             this.isLogin = true;
             HttpHeaderInterceptor.addHeader("token", this.token);
         }
@@ -47,22 +41,9 @@ public class User implements Serializable {
 
     public void clear() {
         this.token = "";
-        this.imToken = "";
         this.userId = 0;
         this.isLogin = true;
-        this.status = 1;
-        this.detail = new UserDetailVO();
-        this.location = null;
+        this.user = new UserVO();
         HttpHeaderInterceptor.removeHeader("token");
-    }
-
-    public void updateStatus(int status) {
-        this.status = status;
-        String response = com.tencent.mmkv.MMKV.defaultMMKV().decodeString(Constants.MMKV.USER, "");
-        if(!StringUtils.isEmpty(response)) {
-            JSONObject object = JSON.parseObject(response);
-            object.put("status", status);
-            com.tencent.mmkv.MMKV.defaultMMKV().encode(Constants.MMKV.USER, object.toJSONString());
-        }
     }
 }

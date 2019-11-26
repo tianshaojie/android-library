@@ -6,4 +6,4 @@
     android:layout_height="@dimen/space_45"
     android:gravity="left|center_vertical"
     android:paddingLeft="@dimen/space_16"
-    android:textColor="@color/fz_common_white" />
+    android:textColor="@color/fz_common_gray_01" />

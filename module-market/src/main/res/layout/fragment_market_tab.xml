@@ -12,15 +12,16 @@
         android:background="@color/colorPrimary"
         app:pstsTabPaddingLeftRight="0dp"
         app:pstsDividerColor="@android:color/transparent"
-        app:pstsDividerPadding="10dp"
+        app:pstsDividerPadding="0dp"
         app:pstsIndicatorColor="@color/colorAccent"
         app:pstsIndicatorHeight="2dp"
         app:pstsIndicatorInFollower="true"
         app:pstsShouldExpand="true"
+        app:selectedTabTextBold="true"
         app:pstsUnderlineColor="@android:color/transparent"
         app:pstsUnderlineHeight="0.5dp"
         app:selectedTabTextColor="@color/colorAccent"
-        app:tabTextColor="@color/fz_common_white"
+        app:tabTextColor="@color/fz_common_gray"
         app:tabTextSize="@dimen/text_size_15" />
 
 

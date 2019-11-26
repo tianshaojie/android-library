@@ -5,19 +5,12 @@ import java.io.Serializable;
 public class HttpResponse<T> implements Serializable {
 
     private int code;
-    private String msg;
-    private T body;
-
-    public HttpResponse() {
-    }
-
-    public HttpResponse(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
+    private String message;
+    private String status;
+    private T info;
 
     public boolean isSuccess() {
-        return code == 200;
+        return code == 200 || code == 0;
     }
 
     public int getCode() {
@@ -28,28 +21,27 @@ public class HttpResponse<T> implements Serializable {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public T getBody() {
-        return body;
+    public T getInfo() {
+        return info;
     }
 
-    public void setBody(T body) {
-        this.body = body;
+    public void setInfo(T info) {
+        this.info = info;
     }
 
-    @Override
-    public String toString() {
-        return "HttpResponse{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", body=" + body +
-                '}';
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

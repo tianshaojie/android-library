@@ -5,8 +5,7 @@
     <application>
         <activity
             android:name=".activity.SearchActivity"
-            android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

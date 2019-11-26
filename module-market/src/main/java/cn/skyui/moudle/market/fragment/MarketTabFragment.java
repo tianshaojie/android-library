@@ -44,7 +44,7 @@ public class MarketTabFragment extends BaseLazyLoadFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_quote_tab;
+        return R.layout.fragment_market_tab;
     }
 
     @Override

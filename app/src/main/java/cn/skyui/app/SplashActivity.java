@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void enter() {
-        MainIntentProtocol protocol = new MainIntentProtocol(1);
+        MainIntentProtocol protocol = new MainIntentProtocol(0);
         ARouter.getInstance().build("/main/main")
                 .withParcelable(MainIntentProtocol.MAIN_PROTOCOL, protocol)
                 .navigation();

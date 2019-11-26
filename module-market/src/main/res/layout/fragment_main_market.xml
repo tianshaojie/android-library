@@ -27,6 +27,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
+            app:pstsDividerColor="@android:color/transparent"
+            app:pstsDividerPadding="0dp"
             app:pstsTabPaddingLeftRight="15dp"
             app:pstsIndicatorHeight="0dp"
             app:pstsShouldExpand="true"
