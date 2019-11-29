@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @see #getLayoutId()  当前界面的资源文件Id
  * @see #initView(View) 初始化控件，只做findViewById工作不加载数据
- * @see #initData()     Fragment首次可以见调用，只调用一次，用来做初始化或加载数据工作；
+ * @see #onFirstShow()     Fragment首次可以见调用，只调用一次，用来做初始化或加载数据工作；
  * @see #onShow()       Fragment变为可见时回调
  * @see #onHide()       Fragment变为隐藏时回调
  *
@@ -254,7 +254,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
         isFirstVisible = true;
         isVisibleToUser = true;
         isParentVisibleToUser = true;
-        initData();
+        onFirstShow();
         // 针对二级Fragments，非首个Fragment，下的ViewPager下的Fragment(三级)
         Log.e(TAG, "onFirstUserVisible = " + title);
         initChildFragmentOnFirstUserVisible(getChildFragmentManager());
@@ -278,7 +278,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
                 if(childFragment.isVisibleToUser && !childFragment.isFirstVisible) {
                     childFragment.isFirstVisible = true;
                     childFragment.isParentVisibleToUser = true;
-                    childFragment.initData();
+                    childFragment.onFirstShow();
                     Log.e(TAG, "initChildFragmentOnFirstUserVisible = " + childFragment.title);
                     initChildFragmentOnFirstUserVisible(childFragment.getChildFragmentManager());
                 }
@@ -289,7 +289,7 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
     /**
      * 此方法只调用一次，用来做初始化或加载数据工作；
      */
-    public abstract void initData();
+    public abstract void onFirstShow();
 
 
     /**

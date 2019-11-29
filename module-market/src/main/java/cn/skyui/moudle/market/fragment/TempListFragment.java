@@ -68,7 +68,7 @@ public class TempListFragment extends BaseLazyLoadFragment {
     }
 
     @Override
-    public void initData() {
+    public void onFirstShow() {
         mSwipeRefreshLayout.setRefreshing(true);
         loadData();
     }

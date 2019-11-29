@@ -90,7 +90,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     }
 
     @Override
-    public void initData() {
+    public void onFirstShow() {
         Bundle bundle = getArguments();
         if(bundle != null) {
             selectedIndex = bundle.getInt("selectedIndex", DEFAULT_SELECTED_INDEX);

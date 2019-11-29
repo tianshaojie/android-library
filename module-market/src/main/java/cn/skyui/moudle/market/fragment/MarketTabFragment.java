@@ -64,7 +64,7 @@ public class MarketTabFragment extends BaseLazyLoadFragment {
     }
 
     @Override
-    public void initData() {
+    public void onFirstShow() {
         Bundle bundle = getArguments();
         if(bundle != null) {
             selectedIndex = bundle.getInt(SELECTED_INDEX, DEFAULT_SELECTED_INDEX);

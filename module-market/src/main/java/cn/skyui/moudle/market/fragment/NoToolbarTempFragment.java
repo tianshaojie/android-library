@@ -37,7 +37,7 @@ public class NoToolbarTempFragment extends BaseLazyLoadFragment {
     }
 
     @Override
-    public void initData() {
+    public void onFirstShow() {
         textView.postDelayed(() -> textView.setText(title), 1000);
     }
 
