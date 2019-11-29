@@ -45,13 +45,13 @@ import java.util.List;
  *
  */
 public abstract class BaseLazyLoadFragment extends BaseFragment {
-    
+
     private static final String TAG = "BaseLazyLoadFragment";
 
     protected String title;
     protected View rootView;
     protected Bundle savedInstanceState;
-    
+
     private boolean isViewCreated = false;
 
     /**
@@ -73,6 +73,14 @@ public abstract class BaseLazyLoadFragment extends BaseFragment {
      *   （原因是：ViewPager切换时，只会调用Adapter的直接Fragment.setUserVisibleHint，不会调用Fragment的子Fragment，比如Fragment内还有ViewPager+Fragment的结构）
      */
     private boolean isParentVisibleToUser = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            title = getArguments().getString("title", "--");
+        }
+    }
 
     /**
      * 同一Activity下多个Fragment切换时会重复执行onCreateView方法

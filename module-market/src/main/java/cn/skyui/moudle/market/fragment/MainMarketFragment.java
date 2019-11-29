@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -32,6 +33,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private PagerSlidingTabStrip tabStrip;
+    private FrameLayout frameLayout;
 
     public static MainMarketFragment newInstance(String title) {
         MainMarketFragment fragment = new MainMarketFragment();
@@ -57,6 +59,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
         mToolbar = view.findViewById(R.id.toolbar);
         tabStrip = view.findViewById(R.id.tabs);
         mViewPager = view.findViewById(R.id.view_pager);
+        frameLayout = view.findViewById(R.id.market_fragment_container);
 
         ActionMenuView actionMenuView = mToolbar.findViewById(R.id.action_menu_view);
         mActivity.getMenuInflater().inflate(R.menu.menu_fragment_market_main_left, actionMenuView.getMenu());

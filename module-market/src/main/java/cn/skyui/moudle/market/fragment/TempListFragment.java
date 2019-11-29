@@ -1,20 +1,17 @@
 package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.Arrays;
 
-import cn.skyui.library.base.fragment.BaseFragment;
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.moudle.market.R;
 
@@ -57,6 +54,13 @@ public class TempListFragment extends BaseLazyLoadFragment {
                 helper.setText(R.id.text_content, item);
             }
         };
+        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
+            FrameLayout frameLayout = mActivity.findViewById(R.id.market_fragment_container);
+            if(frameLayout != null) {
+                frameLayout.setVisibility(View.VISIBLE);
+                mActivity.getSupportFragmentManager().beginTransaction().add(R.id.market_fragment_container, TempFragment.newInstance("Temp")).commit();
+            }
+        });
 
         mAdapter.setOnLoadMoreListener(() -> mAdapter.loadMoreEnd(), mRecyclerView);
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
