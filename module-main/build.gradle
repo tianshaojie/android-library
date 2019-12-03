@@ -5,4 +5,5 @@ dependencies {
     implementation project(':library')
     implementation project(':module-market')
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    compile project(path: ':library-web')
 }

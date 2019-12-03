@@ -21,10 +21,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         BaseActivity.APP_STATUS = BaseActivity.APP_STATUS_NORMAL;
-        // 设置主题
         AppCompatDelegate.setDefaultNightMode(AppUtils.getNightMode());;
         super.onCreate(savedInstanceState);
-//        ImmersionBar.with(this).transparentBar().init();
         enter();
     }
 
@@ -32,7 +30,17 @@ public class SplashActivity extends AppCompatActivity {
         MainIntentProtocol protocol = new MainIntentProtocol(0);
         ARouter.getInstance().build("/main/main")
                 .withParcelable(MainIntentProtocol.MAIN_PROTOCOL, protocol)
-                .navigation();
+                .navigation(this);
         finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

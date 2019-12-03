@@ -5,4 +5,12 @@
     <string name="main_navigation_trade">交易</string>
     <string name="main_navigation_news">资讯</string>
     <string name="main_navigation_mine">我的</string>
+
+    <string-array name="main_fragment_titles">
+        <item>@string/main_navigation_market</item>
+        <item>@string/main_navigation_trade</item>
+        <item>@string/main_navigation_news</item>
+        <item>@string/main_navigation_mine</item>
+    </string-array>
+
 </resources>

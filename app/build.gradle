@@ -51,6 +51,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':library')
+    implementation project(':library-web')
     implementation project(':module-main')
     implementation project(':module-market')
 

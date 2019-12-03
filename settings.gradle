@@ -1,1 +1,1 @@
-include ':app', ':library', ':module-market', ':module-main'
+include ':app', ':library', ':module-market', ':module-main', ':library-web'

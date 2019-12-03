@@ -1,13 +1,17 @@
 package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 
-import cn.skyui.library.base.fragment.BaseFragment;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
 import cn.skyui.library.widgets.tabstrip.PagerSlidingTabStrip;
 import cn.skyui.moudle.market.R;
@@ -85,21 +89,44 @@ public class MyStockTabFragment extends BaseLazyLoadFragment {
 
     public class MarketPagerAdapter extends FragmentPagerAdapter {
 
-        private BaseFragment[] fragments;
+        private List<BaseLazyLoadFragment> fragments;
 
         MarketPagerAdapter(FragmentManager fm) {
             super(fm);
-            fragments = new BaseFragment[] {
-                    TempListFragment.newInstance("全部"),
-                    TempListFragment.newInstance("沪深"),
-                    TempListFragment.newInstance("港股"),
-                    TempListFragment.newInstance("美股")
-            };
+            fragments = new ArrayList<>(TITLES.length);
+            for (int i = 0; i < TITLES.length; i++) {
+                fragments.add(null);
+            }
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            return TITLES[position];
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return TempListFragment.newInstance(TITLES[position]);
+                case 1:
+                    return TempListFragment.newInstance(TITLES[position]);
+                case 2:
+                    return TempListFragment.newInstance(TITLES[position]);
+                case 3:
+                    return TempListFragment.newInstance(TITLES[position]);
+                default:
+                    return null;
+            }
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            BaseLazyLoadFragment object = (BaseLazyLoadFragment) super.instantiateItem(container, position);
+            fragments.set(position, object);
+            return object;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            super.destroyItem(container, position, object);
+            fragments.set(position, null);
         }
 
         @Override
@@ -108,8 +135,8 @@ public class MyStockTabFragment extends BaseLazyLoadFragment {
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return fragments[position];
+        public CharSequence getPageTitle(int position) {
+            return TITLES[position];
         }
 
     }

@@ -1,6 +1,7 @@
 package cn.skyui.moudle.market.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -28,7 +30,7 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     private int selectedIndex = DEFAULT_SELECTED_INDEX;
 
     private List<String> mTitleList = Arrays.asList("自选", "市场");
-    private List<BaseLazyLoadFragment> fragments = new ArrayList<>();
+    private List<BaseLazyLoadFragment> fragments;
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -105,9 +107,10 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
     }
 
     private void initFragments() {
-        fragments.clear();
-        fragments.add(MyStockTabFragment.newInstance("自选"));
-        fragments.add(MarketTabFragment.newInstance("市场"));
+        fragments = new ArrayList<>(mTitleList.size());
+        for (int i = 0; i < mTitleList.size(); i++) {
+            fragments.add(null);
+        }
     }
 
     @Override
@@ -127,17 +130,38 @@ public class MainMarketFragment extends BaseLazyLoadFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            switch (position) {
+                case 0:
+                    return MyStockTabFragment.newInstance(mTitleList.get(position));
+                case 1:
+                    return MarketTabFragment.newInstance(mTitleList.get(position));
+                default:
+                    return null;
+            }
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            BaseLazyLoadFragment object = (BaseLazyLoadFragment) super.instantiateItem(container, position);
+            fragments.set(position, object);
+            return object;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            super.destroyItem(container, position, object);
+            fragments.set(position, null);
+        }
+
+        @Override
+        public int getCount() {
+            return mTitleList.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return mTitleList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
         }
     }
 

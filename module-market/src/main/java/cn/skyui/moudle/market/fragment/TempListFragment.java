@@ -1,18 +1,21 @@
 package cn.skyui.moudle.market.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.Arrays;
 
 import cn.skyui.library.base.fragment.BaseLazyLoadFragment;
+import cn.skyui.library.web.activity.WebViewActivity;
 import cn.skyui.moudle.market.R;
 
 public class TempListFragment extends BaseLazyLoadFragment {
@@ -55,11 +58,12 @@ public class TempListFragment extends BaseLazyLoadFragment {
             }
         };
         mAdapter.setOnItemClickListener((adapter, view1, position) -> {
-            FrameLayout frameLayout = mActivity.findViewById(R.id.market_fragment_container);
-            if(frameLayout != null) {
-                frameLayout.setVisibility(View.VISIBLE);
-                mActivity.getSupportFragmentManager().beginTransaction().add(R.id.market_fragment_container, TempFragment.newInstance("Temp")).commit();
-            }
+//            FrameLayout frameLayout = mActivity.findViewById(R.id.market_fragment_container);
+//            if(frameLayout != null) {
+//                frameLayout.setVisibility(View.VISIBLE);
+//                mActivity.getSupportFragmentManager().beginTransaction().add(R.id.market_fragment_container, TempFragment.newInstance("Temp")).commit();
+//            }
+            showWebViewActivity(mActivity, "http://skyui.cn/interest/h5.html");
         });
 
         mAdapter.setOnLoadMoreListener(() -> mAdapter.loadMoreEnd(), mRecyclerView);
@@ -69,6 +73,17 @@ public class TempListFragment extends BaseLazyLoadFragment {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             loadData();
         });
+    }
+
+    public static void showWebViewActivity(Activity activity, String url) {
+//        Intent intent = new Intent();
+//        intent.putExtra("url", url);
+//        intent.setClass(activity, WebViewActivity.class);
+//        activity.startActivity(intent);
+
+        ARouter.getInstance().build("/web/h5")
+                .withString("url", url)
+                .navigation(activity);
     }
 
     @Override

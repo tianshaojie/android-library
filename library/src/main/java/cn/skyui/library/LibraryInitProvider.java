@@ -42,19 +42,19 @@ public class LibraryInitProvider extends ContentProvider {
 //        initLeakCanary(context);
     }
 
-    private static void initNightMode() {
+    public static void initNightMode() {
         AppUtils.initNightMode();
     }
 
-    private static void initUtils(Context context) {
+    public static void initUtils(Context context) {
         Utils.init(context);
     }
 
-    private static void initLogger() {
+    public static void initLogger() {
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
-    private static void initMMKV() {
+    public static void initMMKV() {
         MMKV.initialize(Utils.getApp());
     }
 
@@ -62,7 +62,7 @@ public class LibraryInitProvider extends ContentProvider {
         User.getInstance().init();
     }
 
-    private static void initRouter() {
+    public static void initRouter() {
         if (AppUtils.isAppDebug()) {
             ARouter.openLog();
             ARouter.openDebug();

@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.skyui.module.main" >
 
+    <uses-permission android:name="cn.skyui.aidl.permission.SERVICE_PERMISSION" />
+
     <application>
 
         <activity
@@ -9,6 +11,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
+
+        <service
+            android:name=".service.WebViewBridgeService"
+            android:exported="true"
+            android:permission="cn.skyui.aidl.permission.SERVICE_PERMISSION">
+            <intent-filter>
+                <action android:name="cn.skyui.aidl.IWebViewInterface" />
+            </intent-filter>
+        </service>
 
     </application>
 </manifest>

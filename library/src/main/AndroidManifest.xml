@@ -11,6 +11,7 @@
             android:authorities="${applicationId}.library.provider"
             android:name=".LibraryInitProvider"
             android:exported="false"
+            android:initOrder="400"
             android:multiprocess="true"/>
     </application>
 </manifest>

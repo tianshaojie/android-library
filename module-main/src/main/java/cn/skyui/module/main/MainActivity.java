@@ -2,10 +2,12 @@ package cn.skyui.module.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -37,7 +39,9 @@ public class MainActivity extends BaseActivity {
 
     private RadioGroup radioGroup;
     private CustomViewPager fragmentViewPager;
-    private List<BaseLazyLoadFragment> fragments = new ArrayList<>();
+
+    private String[] fragmentTitles;
+    private List<BaseLazyLoadFragment> fragments;
 
     @Override
     protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
@@ -81,11 +85,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        fragments.clear();
-        fragments.add(MainMarketFragment.newInstance("行情"));
-        fragments.add(TempFragment.newInstance("交易"));
-        fragments.add(TempFragment.newInstance("资讯"));
-        fragments.add(TempFragment.newInstance("我的"));
+        fragmentTitles = getResources().getStringArray(R.array.main_fragment_titles);
+        fragments = new ArrayList<>(fragmentTitles.length);
+        for (int i = 0; i < fragmentTitles.length; i++) {
+            fragments.add(null);
+        }
     }
 
     private void initView() {
@@ -95,12 +99,37 @@ public class MainActivity extends BaseActivity {
         fragmentViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return fragments.get(position);
+                switch (position) {
+                    case 0:
+                        return MainMarketFragment.newInstance(fragmentTitles[position]);
+                    case 1:
+                        return TempFragment.newInstance(fragmentTitles[position]);
+                    case 2:
+                        return TempFragment.newInstance(fragmentTitles[position]);
+                    case 3:
+                        return TempFragment.newInstance(fragmentTitles[position]);
+                    default:
+                        return null;
+                }
+            }
+
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                BaseLazyLoadFragment object = (BaseLazyLoadFragment) super.instantiateItem(container, position);
+                fragments.set(position, object);
+                return object;
+            }
+
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                super.destroyItem(container, position, object);
+                fragments.set(position, null);
             }
 
             @Override
             public int getCount() {
-                return fragments.size();
+                return fragmentTitles.length;
             }
         });
 
