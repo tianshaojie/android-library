@@ -2,8 +2,11 @@ apply plugin: 'com.android.library'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':library')
     implementation project(':module-market')
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    compile project(path: ':library-web')
+    implementation project(path: ':library-web')
 }
