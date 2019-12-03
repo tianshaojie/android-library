@@ -7,32 +7,18 @@
 
     <include layout="@layout/toolbar"/>
 
-    <FrameLayout
-        android:id="@+id/layoutWebViewParent"
+<!--    <FrameLayout-->
+<!--        android:id="@+id/layoutWebViewParent"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        android:background="@android:color/white">-->
+<!--    </FrameLayout>-->
+
+    <cn.skyui.library.web.widget.WithLoadingAndErrorWebView
+        android:id="@+id/withLoadingAndErrorWebView"
         android:layout_below="@+id/toolbar"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@android:color/white">
-
-        <!--
-        <include layout="@layout/layout_loading" android:id="@+id/webSrcLoadingView" />
-
-        <com.huayuan.ui.webview.CustomWebView
-            android:id="@+id/webView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-        -->
-
-    </FrameLayout>
-
-    <!--<ProgressBar-->
-        <!--android:layout_below="@+id/titleBar"-->
-        <!--android:id="@+id/progressBar"-->
-        <!--style="@android:style/Widget.ProgressBar.Horizontal"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:max="100"-->
-        <!--android:progress="1"-->
-        <!--android:progressDrawable="@drawable/webview_progress" />-->
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

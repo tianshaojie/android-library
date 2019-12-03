@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <cn.skyui.module.main.fragment.NestedScrollWebView
+        <cn.skyui.library.web.widget.NestedScrollWebView
             android:id="@+id/webview"
             android:fadingEdge="none"
             android:overScrollMode="never"

@@ -1,5 +1,6 @@
 package cn.skyui.library.web.widget;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,10 +18,10 @@ import cn.skyui.library.web.activity.WebViewActivity;
  */
 public class CustomWebViewClient extends BridgeWebViewClient {
 
-    private WebViewActivity mWebViewActivity;
+    private Activity mWebViewActivity;
     private CustomWebView mWebView;
 
-    public CustomWebViewClient(WebViewActivity mainActivity, CustomWebView mWebView) {
+    public CustomWebViewClient(Activity mainActivity, CustomWebView mWebView) {
         super(mWebView);
         mWebViewActivity = mainActivity;
     }
@@ -45,7 +46,7 @@ public class CustomWebViewClient extends BridgeWebViewClient {
         super.onPageFinished(view, url);
         try {
             mWebViewActivity.setTitle(view.getTitle());
-            mWebViewActivity.setCurrentUrl(url);
+            mWebView.setCurrentUrl(url);
             view.clearCache(true);
         } catch (Exception e) {
             e.printStackTrace();

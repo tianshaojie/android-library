@@ -20,18 +20,16 @@ import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import cn.skyui.library.web.activity.WebViewActivity;
-
 /**
  * @author tianshaojie
  * @date 2018/2/9
  */
 public class CustomWebChromeClient extends android.webkit.WebChromeClient {
 
-    private WebViewActivity mWebViewActivity;
+    private Activity mWebViewActivity;
     private UploadHandler mUploadHandler;
 
-    public CustomWebChromeClient(WebViewActivity mainActivity) {
+    public CustomWebChromeClient(Activity mainActivity) {
         super();
         mWebViewActivity = mainActivity;
     }

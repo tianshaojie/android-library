@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_webview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.skyui.library.web.widget.CustomWebView
+        android:id="@+id/fz_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <cn.skyui.library.web.widget.LoadErrorView
+        android:id="@+id/layout_error_view"
+        android:background="@color/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <cn.skyui.library.web.widget.LoadingView
+        android:id="@+id/layout_loading_view"
+        android:background="@color/background_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

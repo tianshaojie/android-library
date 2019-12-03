@@ -17,18 +17,26 @@ package cn.skyui.library.web.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.widget.AbsoluteLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
+
+import java.util.Map;
 
 import cn.skyui.library.web.R;
 
@@ -39,6 +47,7 @@ public class CustomWebView extends BridgeWebView {
 
     Context context;
     public ProgressBar mProgressBar;
+    private String currentUrl;  // 点击链接后的URL
 
     /**
      * Constructor.
@@ -133,8 +142,27 @@ public class CustomWebView extends BridgeWebView {
         String appCaceDir = context.getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath();
         settings.setAppCachePath(appCaceDir);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // chromium, enable hardware acceleration
+            setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            // older android version, disable hardware acceleration
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
 
-        // this.addJavascriptInterface((JavascriptInterface) this, "JavascriptInterface");
+        // WebView远程代码执行漏洞修复
+        removeJavascriptInterface("searchBoxJavaBridge_");
+        removeJavascriptInterface("accessibility");
+        removeJavascriptInterface("accessibilityTraversal");
+
+        setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
+
+        setDefaultHandler(new DefaultHandler());
     }
 
     public boolean isNetworkConnected() {
@@ -149,5 +177,25 @@ public class CustomWebView extends BridgeWebView {
         lp.y = t;
         mProgressBar.setLayoutParams(lp);
         super.onScrollChanged(l, t, oldl, oldt);
+    }
+
+    @Override
+    public void loadUrl(String url) {
+        super.loadUrl(url);
+        this.currentUrl = url;
+    }
+
+    @Override
+    public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
+        super.loadUrl(url, additionalHttpHeaders);
+        this.currentUrl = url;
+    }
+
+    public String getCurrentUrl() {
+        return currentUrl;
+    }
+
+    public void setCurrentUrl(String currentUrl) {
+        this.currentUrl = currentUrl;
     }
 }
