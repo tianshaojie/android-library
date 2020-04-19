@@ -23,7 +23,7 @@
             app:expandedTitleTextAppearance="@style/CollapsedAppBar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:scrimAnimationDuration="200"
-            app:title="特立独行的猪"
+            app:title="鲸鱼的主页"
             app:titleEnabled="true">
 
             <RelativeLayout
