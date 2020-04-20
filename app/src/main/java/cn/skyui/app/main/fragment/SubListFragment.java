@@ -25,7 +25,7 @@ public class SubListFragment extends BaseFragment {
 
     private View rootView;
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+//    private SwipeRefreshLayout mSwipeRefreshLayout;
     private BaseQuickAdapter mAdapter;
 
     private String[] mStrings = {"Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
@@ -48,8 +48,8 @@ public class SubListFragment extends BaseFragment {
 
     private void initView() {
         mRecyclerView = rootView.findViewById(R.id.recyclerView);
-        mSwipeRefreshLayout = rootView.findViewById(R.id.swipeLayout);
-        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+//        mSwipeRefreshLayout = rootView.findViewById(R.id.swipeLayout);
+//        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
 
@@ -64,15 +64,15 @@ public class SubListFragment extends BaseFragment {
         mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
 
         mRecyclerView.setAdapter(mAdapter);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            loadData();
-        });
-        mSwipeRefreshLayout.setRefreshing(true);
+//        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+//            loadData();
+//        });
+//        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     private void loadData() {
         mAdapter.setNewData(Arrays.asList(mStrings));
         mAdapter.loadMoreComplete();
-        mSwipeRefreshLayout.setRefreshing(false);
+//        mSwipeRefreshLayout.setRefreshing(false);
     }
 }

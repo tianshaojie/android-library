@@ -1,95 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:addStatesFromChildren="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:collapsedTitleGravity="left"
-            app:collapsedTitleTextAppearance="@style/CollapsedAppBar"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="left|bottom"
-            app:expandedTitleMarginBottom="40dp"
-            app:expandedTitleMarginEnd="15dp"
-            app:expandedTitleMarginStart="15dp"
-            app:expandedTitleTextAppearance="@style/CollapsedAppBar"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:scrimAnimationDuration="200"
-            app:title="鲸鱼的主页"
-            app:titleEnabled="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="top"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/img_mine_bg" />
-
-                <TextView
-                    android:id="@+id/tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="你的简介"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_15" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar1"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout1"
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            app:tl_indicator_color="@color/background_color"
-            app:tl_indicator_height="2dp"
-            app:tl_indicator_width="70dp"
-            app:tl_indicator_width_equal_title="false"
-            app:tl_tab_space_equal="false"
-            app:tl_textSelectColor="@color/white"
-            app:tl_textUnselectColor="@color/gray_light_drak"
-            app:tl_textsize="16sp"
-            app:tl_underline_color="@color/gray_white"
-            app:tl_underline_gravity="BOTTOM"
-            app:tl_underline_height="0.7dp" />
+            android:layout_height="180dp">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager1"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:collapsedTitleGravity="left"
+                app:collapsedTitleTextAppearance="@style/CollapsedAppBar"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleGravity="left|bottom"
+                app:expandedTitleMarginBottom="40dp"
+                app:expandedTitleMarginEnd="15dp"
+                app:expandedTitleMarginStart="15dp"
+                app:expandedTitleTextAppearance="@style/CollapsedAppBar"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:scrimAnimationDuration="200"
+                app:title="鲸鱼的主页"
+                app:titleEnabled="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    app:layout_collapseMode="none"
+                    app:layout_collapseParallaxMultiplier="0.5">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/img_mine_bg" />
+
+                    <TextView
+                        android:id="@+id/tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="你的简介"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_15" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</android.support.design.widget.CoordinatorLayout>
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/slidingTabLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimary"
+                app:tl_indicator_color="@color/background_color"
+                app:tl_indicator_height="2dp"
+                app:tl_indicator_width="70dp"
+                app:tl_indicator_width_equal_title="false"
+                app:tl_tab_space_equal="false"
+                app:tl_textSelectColor="@color/white"
+                app:tl_textUnselectColor="@color/gray_light_drak"
+                app:tl_textsize="16sp"
+                app:tl_underline_color="@color/gray_white"
+                app:tl_underline_gravity="BOTTOM"
+                app:tl_underline_height="0.7dp" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

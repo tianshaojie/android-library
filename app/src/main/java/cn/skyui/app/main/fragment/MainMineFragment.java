@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class MainMineFragment extends BaseLazyLoadFragment {
         return mainMineFragment;
     }
 
+    private RefreshLayout refreshLayout;
     private SlidingTabLayout tabLayout;
     private ViewPager fragmentViewPager;
     private List<Fragment> fragments = new ArrayList<>();
@@ -39,6 +42,9 @@ public class MainMineFragment extends BaseLazyLoadFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        refreshLayout = view.findViewById(R.id.swipe_layout);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(mActivity));
 
         fragments.add(SubListFragment.newInstance());
         fragments.add(SubListFragment.newInstance());
