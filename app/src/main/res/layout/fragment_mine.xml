@@ -4,7 +4,6 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:addStatesFromChildren="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.design.widget.CoordinatorLayout
@@ -59,13 +58,6 @@
                         android:textSize="@dimen/text_size_15" />
                 </RelativeLayout>
 
-<!--                <android.support.v7.widget.Toolbar-->
-<!--                    android:id="@+id/toolbar1"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    app:layout_collapseMode="pin"-->
-<!--                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
-
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar1"
                     android:layout_width="match_parent"
@@ -74,11 +66,12 @@
                     app:contentInsetLeft="0dp"
                     app:contentInsetRight="0dp"
                     app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
                     app:popupTheme="@style/Theme.Toolbar.OverflowMenuTheme"
-                    app:theme="@style/Theme.Toolbar"
-                    app:layout_collapseMode="pin">
+                    app:theme="@style/Theme.Toolbar">
 
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@color/transparent"

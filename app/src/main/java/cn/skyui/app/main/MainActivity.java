@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateSafely(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        ImmersionBar.with(this).statusBarColor(R.color.colorPrimary).init();
         initFragments();
         initView();
         showSelectedFragment(getIntent().getIntExtra(SELECTED_INDEX, DEFAULT_SELECTED_INDEX));

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,9 @@ public class MainHomeFragment extends BaseLazyLoadFragment {
 
     @Override
     public void onShow() {
-
+        ImmersionBar.with(this)
+                .titleBar(mActivity.findViewById(R.id.toolbarHome))
+                .init();
     }
 
     @Override

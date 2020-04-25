@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.gyf.immersionbar.ImmersionBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
@@ -69,7 +70,9 @@ public class MainMineFragment extends BaseLazyLoadFragment {
 
     @Override
     public void onShow() {
-
+        ImmersionBar.with(this)
+                .titleBar(mActivity.findViewById(R.id.toolbar1))
+                .init();
     }
 
     @Override
